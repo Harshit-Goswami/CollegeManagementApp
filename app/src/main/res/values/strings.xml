@@ -1,0 +1,20 @@
+<resources>
+    <string name="app_name">CollageApp</string>
+    <string name="image_description">ImageDescription</string>
+    <string name="upload_notes">Upload Notes</string>
+    <string name="upload_event">Upload Event</string>
+    <string name="take_attendance">Take Attendance</string>
+    <string name="txt_upload_notice">Upload Notice</string>
+    <string name="txt_upload_image">Upload Image</string>
+    <string name="txt_add_student">Add Student</string>
+    <string name="txt_upload_faculty">Upload Faculty</string>
+    <string name="txt_delete_notice">Delete Notice</string>
+    <string name="txt_upload_pdf">Upload pdf</string>
+    <string name="txt_document_name">Document Name</string>
+    <string name="txt_password">password</string>
+    <string name="username">username</string>
+    <string name="add">Add</string>
+    <string name="txt_department">Department</string>
+    <string name="txt_fullname">FullName</string>
+    <string name="add_image">Add Image</string>
+</resources>
