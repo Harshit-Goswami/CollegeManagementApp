@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".student.LoginActivity"
+    tools:context=".LoginActivity"
     android:background="#eeeeee">
 
     <TextView
@@ -92,15 +92,17 @@
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_RegToLogIn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="countinue without login- ->"
+        android:layout_margin="20dp"
+        android:text="Register as a Student to login- ->"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.898"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_margin="20dp"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"/>
+        android:visibility="gone"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

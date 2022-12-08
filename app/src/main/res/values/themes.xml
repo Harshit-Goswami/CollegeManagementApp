@@ -53,4 +53,8 @@
         <item name="textAppearanceCaption">@style/TextAppearance.App.Caption</item>
         <item name="editTextStyle">@style/Widget.MaterialComponents.TextInputEditText.*</item>-->
     </style>
+    <style name="ShapeAppearanceFAB" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">4dp</item>
+    </style>
 </resources>
