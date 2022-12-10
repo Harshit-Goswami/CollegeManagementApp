@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ResisterAsStutent">
+    tools:context=".ResisterAsStutent"
+    android:id="@+id/ActivityRegisterAsStudent">
 
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/RASimg_Student"

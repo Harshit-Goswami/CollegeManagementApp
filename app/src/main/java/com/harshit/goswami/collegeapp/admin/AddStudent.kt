@@ -1,7 +1,7 @@
 package com.harshit.goswami.collegeapp.admin
 
 import android.os.Bundle
-import android.util.Log
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -9,6 +9,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
 import com.harshit.goswami.collegeapp.admin.adapters.RegisterdStudentAdapter
 import com.harshit.goswami.collegeapp.admin.dataClasses.RegisteredStudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddStudentBinding
@@ -23,30 +24,40 @@ class AddStudent : AppCompatActivity() {
         binding = ActivityAdminAddStudentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        binding.rsvRegisteredStud.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rsvRegisteredStud.adapter = RegisterdStudentAdapter(RegStudList, this)
-        binding.rsvRegisteredStud.setHasFixedSize(true)
 
+        intitializeRecyclerView()
         fetchAllRegStud()
 
+        binding.ASTxtShowAll.setOnClickListener {
+            RegStudList.clear()
+            RegStudList.addAll(StoreRegStudList)
+            binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
+            binding.ASTxtTotalRegStudent.text = "Total Registered Student:-${RegStudList.size}"
+            binding.ASTxtShowAll.visibility = View.GONE
+        }
+
         binding.ASFABFy.setOnClickListener {
-            val tempList =ArrayList<RegisteredStudentData>()
+            val tempList = ArrayList<RegisteredStudentData>()
             tempList.addAll(StoreRegStudList)
             RegStudList.clear()
             for (i in 0 until tempList.size) {
                 if (tempList[i].year == "FY") {
                     RegStudList.add(tempList[i])
-                    binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
-                    Log.d("ListIndex",i.toString())
                 }
+
             }
+            binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
+            binding.AddStudProgbar.visibility = View.GONE
+            if (RegStudList.size == 0) {
+                Toast.makeText(this@AddStudent, "No FY Registered Student", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            binding.ASTxtShowAll.visibility = View.VISIBLE
+            binding.ASTxtTotalRegStudent.text = "Total FY Registered Student:-${RegStudList.size}"
         }
 
-
-
         binding.ASFABSy.setOnClickListener {
-            val tempList =ArrayList<RegisteredStudentData>()
+            val tempList = ArrayList<RegisteredStudentData>()
             tempList.addAll(StoreRegStudList)
             RegStudList.clear()
             for (i in 0 until tempList.size) {
@@ -55,10 +66,18 @@ class AddStudent : AppCompatActivity() {
                 }
             }
             binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
+            binding.AddStudProgbar.visibility = View.GONE
+            if (RegStudList.size == 0) {
+                Toast.makeText(this@AddStudent, "No SY Registered Student", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            binding.ASTxtShowAll.visibility = View.VISIBLE
+            binding.ASTxtTotalRegStudent.text = "Total SY Registered Student:-${RegStudList.size}"
+
         }
 
         binding.ASFABTy.setOnClickListener {
-            val tempList =ArrayList<RegisteredStudentData>()
+            val tempList = ArrayList<RegisteredStudentData>()
             tempList.addAll(StoreRegStudList)
             RegStudList.clear()
             for (i in 0 until tempList.size) {
@@ -67,27 +86,49 @@ class AddStudent : AppCompatActivity() {
                 }
             }
             binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
+            binding.AddStudProgbar.visibility = View.GONE
+            if (RegStudList.size == 0) {
+                Toast.makeText(this@AddStudent, "No TY Registered Student", Toast.LENGTH_SHORT)
+                    .show()
+            }
+            binding.ASTxtShowAll.visibility = View.VISIBLE
+            binding.ASTxtTotalRegStudent.text = "Total TY Registered Student:-${RegStudList.size}"
+
         }
     }
-       private fun fetchAllRegStud() {
-            RegStudList.clear()
-            FireRef.reference.child("BScIT").child("Registered Student")
-                .addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            for (RegStudData in snapshot.children) {
-                                RegStudList.add(RegStudData.getValue(RegisteredStudentData::class.java)!!)
-                                StoreRegStudList.add(RegStudData.getValue(RegisteredStudentData::class.java)!!)
-                            }
-                            binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
+
+    private fun intitializeRecyclerView() {
+        binding.rsvRegisteredStud.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        binding.rsvRegisteredStud.adapter = RegisterdStudentAdapter(RegStudList, this)
+        binding.rsvRegisteredStud.setHasFixedSize(true)
+
+    }
+
+    private fun fetchAllRegStud() {
+
+        FireRef.reference.child("BScIT").child("Registered Student")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+
+                    if (snapshot.exists()) {
+                        RegStudList.clear()
+                        StoreRegStudList.clear()
+                        for (RegStudData in snapshot.children) {
+                            RegStudList.add(RegStudData.getValue(RegisteredStudentData::class.java)!!)
+                            StoreRegStudList.add(RegStudData.getValue(RegisteredStudentData::class.java)!!)
                         }
+                        binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
+                        binding.AddStudProgbar.visibility = View.GONE
+                        binding.ASTxtShowAll.visibility = View.GONE
+                        binding.ASTxtTotalRegStudent.text = "Total Registered Student:-${RegStudList.size}"
                     }
+                }
 
-                    override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(this@AddStudent, error.message, Toast.LENGTH_SHORT).show()
-                    }
-                })
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(this@AddStudent, error.message, Toast.LENGTH_SHORT).show()
+                }
+            })
 
-            binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
-        }
     }
+}

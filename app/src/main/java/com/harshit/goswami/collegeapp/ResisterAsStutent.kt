@@ -1,9 +1,13 @@
 package com.harshit.goswami.collegeapp
 
+import android.graphics.Color
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.R
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.admin.dataClasses.RegisteredStudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminResisterAsStutentBinding
@@ -73,10 +77,10 @@ class ResisterAsStutent : AppCompatActivity() {
                 if (binding.RASpasswd.text.toString().length > 7) {
                     if (binding.RASpasswd.text.toString() == binding.RASrePasswd.text.toString()) {
                         Spassword = binding.RASpasswd.text.toString()
-                    } else  {
+                    } else {
                         binding.RASrePasswd.error = "Password does not match"
                     }
-                } else  {
+                } else {
                     binding.RASpasswd.error = "Password Should contain at least 8 characters"
                 }
             } else {
@@ -90,13 +94,51 @@ class ResisterAsStutent : AppCompatActivity() {
         if (Sfullname != "" && Srollno != "" && Sdepartment != "" && Spassword != "" && Scontact != "" && Syear != "") {
             FireRef.reference.child("BScIT").child("Registered Student").child(Sfullname).setValue(
                 RegisteredStudentData(
-                    "$Sfullname-","($Srollno)", Sdepartment, Syear, Scontact, Spassword
+                    Sfullname, Srollno, Sdepartment, Syear, Scontact, Spassword
                 )
-            ).addOnSuccessListener {
-
-            }.addOnCompleteListener {
-
-            }.addOnFailureListener {  }
+            ).addOnCompleteListener {
+                if (it.isSuccessful) {
+                   // Toast.makeText(this@ResisterAsStutent, "Done!! ", Toast.LENGTH_SHORT).show()
+                    val snackBar = Snackbar.make(
+                        binding.ActivityRegisterAsStudent, "Data Added Successfully..",
+                        Snackbar.LENGTH_LONG
+                    ).setAction("Action", null)
+                    snackBar.setActionTextColor(Color.WHITE)
+                    val snackBarView = snackBar.view
+                    snackBarView.setBackgroundColor(Color.GREEN)
+                    val textView =
+                        snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+                    textView.setTextColor(Color.WHITE)
+                    snackBar.show()
+                    binding.RASfullname.setText("")
+                    binding.RASdepartment.setText("")
+                    binding.RASyear.setText("")
+                    binding.RASContactNo.setText("")
+                    binding.RASrollNo.setText("")
+                    binding.RASpasswd.setText("")
+                    binding.RASrePasswd.setText("")
+                }
+                else{
+                    val snackBar = Snackbar.make(
+                        binding.ActivityRegisterAsStudent, "Error..${it.exception?.message}",
+                        Snackbar.LENGTH_LONG
+                    ).setAction("Action", null)
+                    snackBar.setActionTextColor(Color.WHITE)
+                    val snackBarView = snackBar.view
+                    snackBarView.setBackgroundColor(Color.RED)
+                    val textView =
+                        snackBarView.findViewById(com.google.android.material.R.id.snackbar_text) as TextView
+                    textView.setTextColor(Color.WHITE)
+                    snackBar.show()
+                    binding.RASfullname.setText("")
+                    binding.RASdepartment.setText("")
+                    binding.RASyear.setText("")
+                    binding.RASContactNo.setText("")
+                    binding.RASrollNo.setText("")
+                    binding.RASpasswd.setText("")
+                    binding.RASrePasswd.setText("")
+                }
+            }
         }
     }
 }

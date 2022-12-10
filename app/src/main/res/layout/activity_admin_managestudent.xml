@@ -6,45 +6,53 @@
     android:layout_height="match_parent"
     tools:context=".admin.ManageStudent">
 
-    <RadioGroup
-        android:id="@+id/AS_years_btns"
+    <LinearLayout
+        android:id="@+id/MS_years_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:weightSum="3"
-        android:layout_margin="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/materialRadioButton"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/MS_FAB_fy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="FY"
+            android:layout_margin="10dp"
             android:textStyle="bold"
             android:layout_weight="1"
+            android:gravity="center"
+            android:backgroundTint="@color/shrine_pink_100"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/materialRadioButton2"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/MS_FAB_sy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="SY"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/shrine_pink_100"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <com.google.android.material.radiobutton.MaterialRadioButton
-            android:id="@+id/materialRadioButton3"
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/MS_FAB_ty"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:textStyle="bold"
+            android:gravity="center"
+            android:layout_margin="10dp"
+            android:backgroundTint="@color/shrine_pink_100"
             android:text="TY" />
-    </RadioGroup>
+    </LinearLayout>
 
 
   <!--  <androidx.appcompat.widget.AppCompatButton
@@ -57,29 +65,31 @@
         app:layout_constraintTop_toTopOf="parent"
         android:backgroundTint="@color/shrine_pink_100"/>
 -->
+
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/MS_txt_total_student"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:text="Total Students:-"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/AS_years_btns" />
+        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/newStudentRegistrations"
+        android:id="@+id/MS_rsvYourStudents"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/MS_txt_total_student" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/circularProgressIndicator"
+        android:id="@+id/MS_ProgressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:backgroundTint="@color/white"
@@ -102,9 +112,20 @@
         app:icon="@drawable/ic_add"
         android:text="ADD Student"
         android:layout_margin="10dp"
+        android:backgroundTint="@color/shrine_pink_190"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SmallComponent"
         />
 
+    <TextView
+        android:id="@+id/MS_txt_showAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Show All-⋁"
+        android:textSize="20dp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/FABaddStud"
+        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns" />
 </androidx.constraintlayout.widget.ConstraintLayout>
