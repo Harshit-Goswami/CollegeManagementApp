@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.cr
+package com.harshit.goswami.collegeapp.teacher
 
 import android.annotation.SuppressLint
 import android.database.Cursor

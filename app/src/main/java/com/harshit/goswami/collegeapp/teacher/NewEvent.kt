@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.cr
+package com.harshit.goswami.collegeapp.teacher
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

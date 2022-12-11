@@ -30,6 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -37,20 +38,26 @@
             android:layout_margin="10dp"
             app:endIconMode="clear_text"
             android:hint="@string/username"
-            app:boxStrokeColor="@color/white"
+            android:enabled="true"
+            app:boxStrokeColor="@color/black"
             app:startIconTint="@color/black"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edt_bd"
             android:drawablePadding="10dp"
             android:minHeight="48dp"
             android:paddingStart="20dp"
-            android:textColorHint="#616161" />
+            android:textColorHint="#616161"
+            />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -58,12 +65,18 @@
             app:endIconMode="password_toggle"
             app:startIconTint="@color/black"
             app:startIconDrawable="@drawable/ic_lock"
+            app:hintTextColor="@color/black"
+            app:boxStrokeColor="@color/black"
+            app:boxCornerRadiusBottomEnd="10dp"
+            app:boxCornerRadiusBottomStart="10dp"
+            app:boxCornerRadiusTopEnd="10dp"
+            app:boxCornerRadiusTopStart="10dp"
+            style="@style/ThemeOverlay.Material3.TextInputEditText.OutlinedBox"
             >
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/edt_bd"
             android:drawablePadding="10dp"
             android:hint="@string/txt_password"
             android:inputType="textPassword"
@@ -71,13 +84,7 @@
             android:textColorHint="#546E7A" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Spinner
-            android:id="@+id/spinner"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:minHeight="48dp"
-            android:padding="10dp" />
+
 
         <com.google.android.material.button.MaterialButton
             android:id="@+id/login_btn"
@@ -85,16 +92,17 @@
             android:layout_height="50dp"
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"
+            android:layout_marginTop="10dp"
             android:text="Login"
             app:backgroundTint="@color/black"
-            android:background="@drawable/login_btn_bg"
+            app:cornerRadius="10dp"
             android:textAllCaps="false" />
     </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txt_RegToLogIn"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:layout_margin="20dp"
         android:text="Register as a Student to login- ->"
         android:textColor="@color/black"

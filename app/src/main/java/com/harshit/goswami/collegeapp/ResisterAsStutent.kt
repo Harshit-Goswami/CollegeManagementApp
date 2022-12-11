@@ -91,7 +91,9 @@ class ResisterAsStutent : AppCompatActivity() {
     }
 
     private fun sendData() {
+        FireRef.reference.keepSynced(true)
         if (Sfullname != "" && Srollno != "" && Sdepartment != "" && Spassword != "" && Scontact != "" && Syear != "") {
+
             FireRef.reference.child("BScIT").child("Registered Student").child(Sfullname).setValue(
                 RegisteredStudentData(
                     Sfullname, Srollno, Sdepartment, Syear, Scontact, Spassword

@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
@@ -25,6 +26,15 @@ class ManageStudent : AppCompatActivity() {
 
         initializeRecylerView()
         fetchStudData()
+        binding.MSRsvYourStudents.addOnScrollListener(object :RecyclerView.OnScrollListener(){
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                if (dy>0){
+                    binding.FABaddStud.shrink()
+                }else{
+                    binding.FABaddStud.extend()
+                }
+            }
+        })
 
         binding.FABaddStud.setOnClickListener {
             startActivity(
@@ -112,6 +122,7 @@ binding.MSTxtShowAll.setOnClickListener {
     }
 
     private fun fetchStudData(){
+        FirebaseDatabase.getInstance().reference.keepSynced(true)
         FirebaseDatabase.getInstance().reference.child("BScIT").child("Your Students").addValueEventListener(object :ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 studentList.clear()

@@ -7,15 +7,17 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
+import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
 import com.harshit.goswami.collegeapp.admin.adapters.FacultyAdapter
 import com.harshit.goswami.collegeapp.admin.dataClasses.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminFacultyinfoBinding
 
 class ManageFaculty : AppCompatActivity() {
     private lateinit var binding: ActivityAdminFacultyinfoBinding
-    var facultyList = ArrayList<FacultyData>()
+   companion object{ var facultyList = ArrayList<FacultyData>()}
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminFacultyinfoBinding.inflate(layoutInflater)
@@ -37,33 +39,21 @@ class ManageFaculty : AppCompatActivity() {
     }
 
     private fun retrieveFacultyData() {
-        binding.facultyProgbar.visibility= View.VISIBLE
-        facultyList = ArrayList()
-        FirebaseDatabase.getInstance().reference.child("FacultyData")
-            .addChildEventListener(object : ChildEventListener {
-                @SuppressLint("NotifyDataSetChanged")
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    if (snapshot.exists()) {
-                            facultyList.add(snapshot.getValue(FacultyData::class.java)!!)
-                            Log.d(
-                                "teacher data",
-                                snapshot.value.toString()
-                            )
+        FirebaseDatabase.getInstance().reference.child("BScIT").child("Faculty Data")
+            .addValueEventListener(object :ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
+                        facultyList.clear()
+                        for (list in snapshot.children) {
+                            facultyList.add(list.getValue(FacultyData::class.java)!!)
+                        }
                         binding.rsvFaculty.adapter?.notifyDataSetChanged()
                         binding.facultyProgbar.visibility= View.GONE
                     }
-                }
 
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                }
-                override fun onChildRemoved(snapshot: DataSnapshot) {
-                }
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(this@ManageFaculty,error.message,Toast.LENGTH_SHORT).show()
                 }
-
             })
 
     }

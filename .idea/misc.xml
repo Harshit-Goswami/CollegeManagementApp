@@ -21,7 +21,7 @@
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_studentinfo.xml" value="0.16574074074074074" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_crdashboard.xml" value="0.18645833333333334" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_delete_notice.xml" value="0.25" />
-        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_login.xml" value="0.25" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_login.xml" value="0.33" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_main.xml" value="0.18645833333333334" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_manage_faculty.xml" value="0.3314814814814815" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_manage_student.xml" value="0.22" />
@@ -37,6 +37,9 @@
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/item_notice_adapter.xml" value="0.22" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/item_resistered_student.xml" value="0.2" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/item_your_students.xml" value="0.22" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/menu/faculty_menu.xml" value="0.16574074074074074" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/menu/students.xml" value="0.16574074074074074" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/menu/your_student_menu.xml" value="0.16574074074074074" />
         <entry key="..\:/Harshit/android applications/caches/transforms-3/c050a1d0d07d79f3431ace22db2a2a7a/transformed/appcompat-1.4.2/res/layout/support_simple_spinner_dropdown_item.xml" value="0.18645833333333334" />
       </map>
     </option>

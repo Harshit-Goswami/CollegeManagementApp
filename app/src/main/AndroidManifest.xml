@@ -11,6 +11,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:name=".NetworkSecurity"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CollageApp"
@@ -28,10 +29,10 @@
             android:name=".admin.AddFaculty"
             android:exported="false" />
         <activity
-            android:name=".cr.NewEvent"
+            android:name=".teacher.NewEvent"
             android:exported="false" />
         <activity
-            android:name=".cr.UploadNotes"
+            android:name=".teacher.UploadNotes"
             android:exported="false" />
         <activity
             android:name=".admin.DeleteNotice"
@@ -52,7 +53,7 @@
             android:name=".student.MainActivity"
             android:exported="false" />
         <activity
-            android:name=".cr.CRdashboard"
+            android:name=".teacher.TeacherDashboard"
             android:exported="false" />
         <activity
             android:name=".admin.AdminDashboard"

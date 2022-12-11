@@ -9,7 +9,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
 import com.harshit.goswami.collegeapp.admin.adapters.RegisterdStudentAdapter
 import com.harshit.goswami.collegeapp.admin.dataClasses.RegisteredStudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddStudentBinding
@@ -106,7 +105,7 @@ class AddStudent : AppCompatActivity() {
     }
 
     private fun fetchAllRegStud() {
-
+        FirebaseDatabase.getInstance().reference.keepSynced(true)
         FireRef.reference.child("BScIT").child("Registered Student")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -121,7 +120,13 @@ class AddStudent : AppCompatActivity() {
                         binding.rsvRegisteredStud.adapter?.notifyDataSetChanged()
                         binding.AddStudProgbar.visibility = View.GONE
                         binding.ASTxtShowAll.visibility = View.GONE
-                        binding.ASTxtTotalRegStudent.text = "Total Registered Student:-${RegStudList.size}"
+                        binding.ASTxtTotalRegStudent.text =
+                            "Total Registered Student:-${RegStudList.size}"
+                        if (RegStudList.size == 0) {
+                            Toast.makeText(this@AddStudent, "No Registration!", Toast.LENGTH_SHORT)
+                                .show()
+                            binding.AddStudProgbar.visibility = View.GONE
+                        }
                     }
                 }
 

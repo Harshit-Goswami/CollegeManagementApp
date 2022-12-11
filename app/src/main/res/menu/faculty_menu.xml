@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/deleteFaculty"
+        android:title="Delete Faculty"
+        />
+    <item
+        android:id="@+id/assignFaculty"
+        android:title="Assign To Class"
+        />
+<item
+        android:id="@+id/view_profile"
+        android:title="Send a massage"
+        />
+
+</menu>

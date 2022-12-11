@@ -1,49 +1,71 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal">
+    app:cardCornerRadius="8dp"
+    app:cardUseCompatPadding="true"
+    android:elevation="5dp"
+    android:backgroundTint="#FBE7E7"
+    >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
     <com.google.android.material.imageview.ShapeableImageView
-       android:id="@+id/faculty_dp"
+       android:id="@+id/I_Fi_faculty_dp"
         android:layout_width="80dp"
         android:layout_height="80dp"
         android:scaleType="centerCrop"
         android:layout_gravity="center_vertical"
         android:background="@drawable/circular_img_bg"
         app:shapeAppearanceOverlay="@style/circular"
+        android:src="@drawable/ic_person"
 
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginEnd="40dp">
+        android:layout_marginEnd="40dp"
+        android:layout_gravity="center">
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_facultyName"
+            android:id="@+id/I_Fi_tv_facultyName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
+            android:layout_marginStart="10dp"
             android:textSize="25sp"
             android:hint="Teacher Name"
             android:textColor="@color/black"
             android:textAllCaps="false"
             style="@style/Widget.AppCompat.TextView"/>
         <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/tv_facultyDepartment"
+            android:id="@+id/I_Fi_tv_facultyDepartment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:hint="Department"
-            android:layout_margin="10dp"
             android:textSize="25sp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            android:textAllCaps="false"
+            style="@style/Widget.AppCompat.TextView"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/I_Fi_txt_ContactNo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="ContactNo."
+            android:textSize="25sp"
+            android:layout_marginStart="10dp"
             android:textColor="@color/black"
             android:textAllCaps="false"
             style="@style/Widget.AppCompat.TextView"/>
     </LinearLayout>
 
     <ImageView
-        android:id="@+id/btn_faculty_manage"
+        android:id="@+id/I_Fi_btn_more_option"
         android:layout_width="40dp"
         android:layout_height="50dp"
         android:src="@drawable/ic_more_vert"
@@ -51,5 +73,5 @@
         android:layout_marginStart="-40dp"
         tools:ignore="ContentDescription" />
 
-
-</LinearLayout>
+    </LinearLayout>
+</com.google.android.material.card.MaterialCardView>
