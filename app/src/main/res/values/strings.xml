@@ -17,4 +17,6 @@
     <string name="txt_department">Department</string>
     <string name="txt_fullname">FullName</string>
     <string name="add_image">Add Image</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
