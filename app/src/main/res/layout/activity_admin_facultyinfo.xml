@@ -34,10 +34,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
-        android:backgroundTint="@color/purple_200"
+        android:backgroundTint="@color/shrine_pink_190"
         android:contentDescription="@string/image_description"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SmallComponent"
-        android:src="@drawable/ic_add">
+        android:src="@drawable/ic_add"
+        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SmallComponent">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 

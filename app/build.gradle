@@ -48,4 +48,6 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth-ktx:21.0.8'
     implementation 'com.google.firebase:firebase-database-ktx:20.0.6'
     implementation 'com.google.firebase:firebase-storage-ktx:20.0.2'
+    implementation 'com.github.denzcoskun:ImageSlideshow:0.1.0'
+
 }

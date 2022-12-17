@@ -52,7 +52,7 @@ class AddStudent : AppCompatActivity() {
                     .show()
             }
             binding.ASTxtShowAll.visibility = View.VISIBLE
-            binding.ASTxtTotalRegStudent.text = "Total FY Registered Student:-${RegStudList.size}"
+            binding.ASTxtTotalRegStudent.text = "FY Registered Student:-${RegStudList.size}"
         }
 
         binding.ASFABSy.setOnClickListener {
@@ -71,7 +71,7 @@ class AddStudent : AppCompatActivity() {
                     .show()
             }
             binding.ASTxtShowAll.visibility = View.VISIBLE
-            binding.ASTxtTotalRegStudent.text = "Total SY Registered Student:-${RegStudList.size}"
+            binding.ASTxtTotalRegStudent.text = "SY Registered Student:-${RegStudList.size}"
 
         }
 
@@ -91,7 +91,7 @@ class AddStudent : AppCompatActivity() {
                     .show()
             }
             binding.ASTxtShowAll.visibility = View.VISIBLE
-            binding.ASTxtTotalRegStudent.text = "Total TY Registered Student:-${RegStudList.size}"
+            binding.ASTxtTotalRegStudent.text = "TY Registered Student:-${RegStudList.size}"
 
         }
     }

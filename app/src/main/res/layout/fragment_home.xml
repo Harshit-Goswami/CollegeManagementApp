@@ -1,16 +1,811 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/drawer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
     tools:context=".student.HomeFragment"
-    android:background="#EF9A9A">
+    tools:openDrawer="start">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Home"
-        android:gravity="center"/>
+        android:layout_height="wrap_content"
+        android:background="#e6e6e6">
 
-</LinearLayout>
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/AppBar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:elevation="2dp"
+            android:fitsSystemWindows="true"
+            android:theme="@style/AppTheme.AppBarOverlay"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?actionBarSize"
+                android:background="#F4511E"
+                android:popupTheme="@style/AppTheme.popUpOverlay"
+                app:layout_scrollFlags="scroll|enterAlways">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="start"
+                    android:gravity="center"
+                    android:text="Welcome to Chetana H.S Collage"
+                    android:textColor="#fff"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+            </com.google.android.material.appbar.MaterialToolbar>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:id="@+id/scrollView3"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:scrollbars="none"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/AppBar">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/materialCardView5"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:elevation="5dp"
+                    app:cardCornerRadius="20dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
+
+                    <com.denzcoskun.imageslider.ImageSlider
+                        android:id="@+id/image_slider"
+                        android:layout_width="match_parent"
+                        android:layout_height="170dp"
+                        app:iss_auto_cycle="true"
+                        app:iss_delay="0"
+                        app:iss_period="3000" />
+                </com.google.android.material.card.MaterialCardView>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_about_chetana_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@color/black"
+                    android:text="-About Chetana-"
+                    android:textAlignment="center"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_about_chetana"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:elevation="2dp"
+                    android:padding="2dp"
+                    app:cardUseCompatPadding="true">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_about_chetana"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="fill"
+                        android:text="@string/discription_about_chetana"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_admission_guidelines_heading"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@color/black"
+                    android:text="-Addmission Guidelines-"
+                    android:textAlignment="center"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_admission_guidelines"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:elevation="2dp"
+                    android:padding="2dp"
+                    app:cardUseCompatPadding="true"
+                    app:layout_constraintTop_toBottomOf="@+id/txt_about_chetana_heading">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/txt_admission_guidelines"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="fill"
+                        android:text="@string/discription_about_chetana"
+                        android:textColor="#0B0A0A"
+                        android:textSize="16sp"
+                        android:textStyle="normal" />
+
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/materialTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:drawableBottom="@color/black"
+                    android:paddingTop="8dp"
+                    android:text="-Our Cources-"
+                    android:textAlignment="textStart"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="@+id/materialCardView5"
+                    app:layout_constraintTop_toBottomOf="@+id/card_about_chetana" />
+
+
+                <LinearLayout
+                    android:id="@+id/linearLayout3"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/card_bscit"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#96ACED"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardUseCompatPadding="true"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/txt_bscit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="2dp"
+                                android:text="BScIT"
+                                android:textColor="#000"
+                                android:textStyle="bold" />
+                            <!--                            android:shadowColor="@color/shrine"-->
+                            <!--                            android:shadowDx="0.4"-->
+                            <!--                            android:shadowDy="0.4"-->
+                            <!--                            android:shadowRadius="3"-->
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/cardview_baf"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#96ACED"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardUseCompatPadding="true"
+                            app:layout_constraintStart_toStartOf="@+id/materialCardView8"
+                            app:layout_constraintTop_toBottomOf="@+id/materialCardView8">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/txt_baf"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="BAF"
+                                android:textColor="#000"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:weightSum="2">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/card_bmm"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#96ACED"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardUseCompatPadding="true"
+                            app:layout_constraintStart_toStartOf="parent"
+                            app:layout_constraintTop_toTopOf="parent">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/txt_bmm"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="2dp"
+                                android:text="BMM"
+                                android:textColor="#000"
+                                android:textStyle="bold" />
+                            <!--                            android:shadowColor="@color/shrine"-->
+                            <!--                            android:shadowDx="0.4"-->
+                            <!--                            android:shadowDy="0.4"-->
+                            <!--                            android:shadowRadius="3"-->
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/materialCardView7"
+                            android:layout_width="0dp"
+                            android:layout_height="70dp"
+                            android:layout_marginStart="15dp"
+                            android:layout_marginEnd="15dp"
+                            android:layout_weight="1"
+                            android:backgroundTint="#96ACED"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="8dp"
+                            app:cardUseCompatPadding="true"
+                            app:layout_constraintStart_toStartOf="@+id/materialCardView8"
+                            app:layout_constraintTop_toBottomOf="@+id/materialCardView8">
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/materialTextView2"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:text="BMS"
+                                android:textColor="#000"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+                    </LinearLayout>
+
+
+                </LinearLayout>
+
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_magazine"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="-Magazine-"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/materialCardView12"
+                            android:layout_width="300dp"
+                            android:layout_height="250dp"
+                            android:layout_margin="10dp"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardUseCompatPadding="true">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:padding="2dp"
+                                android:src="@drawable/chaitanya1" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/txt_magazine2"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="#8D000000"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="2021-2022"
+                                android:textColor="#eeeeee"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/materialCardView11"
+                            android:layout_width="300dp"
+                            android:layout_height="250dp"
+                            android:layout_margin="10dp"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardUseCompatPadding="true">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/chaitanya1" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/txt_magazine3"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="#8D000000"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="2020-2021"
+                                android:textColor="#eeeeee"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/materialCardView13"
+                            android:layout_width="300dp"
+                            android:layout_height="250dp"
+                            android:layout_margin="10dp"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardUseCompatPadding="true">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/chaitanya1" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/txt_magazine4"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="#8D000000"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="2019-2020"
+                                android:textColor="#eeeeee"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/materialCardView15"
+                            android:layout_width="300dp"
+                            android:layout_height="250dp"
+                            android:layout_margin="10dp"
+                            android:elevation="5dp"
+                            app:cardCornerRadius="5dp"
+                            app:cardUseCompatPadding="true">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:src="@drawable/chaitanya1" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/txt_magazine1"
+                                style="@style/TextAppearance.Material3.BodyMedium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="bottom"
+                                android:background="#8D000000"
+                                android:gravity="center"
+                                android:padding="10dp"
+                                android:text="2018-2019"
+                                android:textColor="#eeeeee"
+                                android:textStyle="bold" />
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_alumni"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@color/black"
+                    android:text="-Alumni-"
+                    android:textAlignment="center"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:background="#FFECB3"
+                    android:padding="10dp">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:orientation="horizontal"
+                        android:padding="10dp"
+                        android:weightSum="2">
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/bulletin_board" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/materialTextView1"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="2dp"
+                                android:text="gallary"
+                                android:textColor="#000"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:orientation="vertical">
+
+                            <com.google.android.material.imageview.ShapeableImageView
+                                android:layout_width="60dp"
+                                android:layout_height="60dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/connection" />
+
+                            <com.google.android.material.textview.MaterialTextView
+                                android:id="@+id/materialTextView43"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:padding="2dp"
+                                android:text="Registration"
+                                android:textColor="#000"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+                        <!--                            android:shadowColor="@color/shrine"-->
+                        <!--                            android:shadowDx="0.4"-->
+                        <!--                            android:shadowDy="0.4"-->
+                        <!--                            android:shadowRadius="3"-->
+
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_testimonial"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@color/black"
+                    android:text="-Testimonials-"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <HorizontalScrollView
+                    android:id="@+id/horizontalScrollView2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="#FFECB3"
+                            android:elevation="20dp"
+                            android:padding="10dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardUseCompatPadding="true"
+                            app:contentPadding="2dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="180dp"
+                                android:orientation="vertical"
+                                android:layout_marginBottom="10dp">
+
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:layout_width="300dp"
+                                    android:layout_height="wrap_content"
+                                    android:padding="8dp"
+                                    android:text="&quot;This place have given me unforgettable three years of my life. It has a positive atmosphere, and in every step, you get an opportunity to knowledge something new. My college taught me corporate life which happened to be my key success.&quot;" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_margin="8dp"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_person" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/materialTextView00"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:padding="2dp"
+                                        android:text="Rahul"
+                                        android:textColor="#000"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="#FFECB3"
+                            android:elevation="20dp"
+                            android:padding="10dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardUseCompatPadding="true"
+                            app:contentPadding="2dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="180dp"
+                                android:orientation="vertical">
+
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:layout_width="300dp"
+                                    android:layout_height="wrap_content"
+                                    android:padding="8dp"
+                                    android:text="&quot;The three years spent here were splendid and has helped me to grow better professionally and personally. I would like to thank CSFC and  all the faculties and staff for making me a Better Person .&quot;" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_margin="8dp"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_person" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/materialTextView10"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:padding="2dp"
+                                        android:text="Rahul"
+                                        android:textColor="#000"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
+                            android:background="#FFECB3"
+                            android:elevation="20dp"
+                            android:padding="10dp"
+                            app:cardCornerRadius="20dp"
+                            app:cardUseCompatPadding="true"
+                            app:contentPadding="2dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="180dp"
+                                android:orientation="vertical">
+
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:layout_width="300dp"
+                                    android:layout_height="wrap_content"
+                                    android:padding="8dp"
+                                    android:text="&quot;The students and faculties have an amiable relationship, and the faculty members are always there to help whenever we need them. I have built time management and leadership skills, and it has also helped me to face any situation with confidence.&quot;" />
+
+                                <LinearLayout
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="end|center_vertical"
+                                    android:layout_margin="8dp"
+                                    android:orientation="horizontal">
+
+                                    <com.google.android.material.imageview.ShapeableImageView
+                                        android:layout_width="60dp"
+                                        android:layout_height="60dp"
+                                        android:layout_gravity="center"
+                                        android:src="@drawable/ic_person" />
+
+                                    <com.google.android.material.textview.MaterialTextView
+                                        android:id="@+id/materialTextView20"
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_gravity="center"
+                                        android:padding="2dp"
+                                        android:text="Rahul"
+                                        android:textColor="#000"
+                                        android:textStyle="bold" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/txt_socialMediaLinks"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableBottom="@color/black"
+                    android:text="-Social Media Links-"
+                    android:layout_marginTop="10dp"
+                    android:textAlignment="center"
+                    android:textAllCaps="true"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_youtube" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/img_instagram"
+                        android:layout_weight="1"/>
+                    <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                        android:layout_weight="1"
+                    android:src="@drawable/img_email_ic" />
+                    <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_gravity="center"
+                        android:layout_weight="1"
+                    android:src="@drawable/img_facebook" />
+
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="10dp"
+                    android:background="#C5CAE9">
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Contact Details"
+                        android:textColor="@color/white"
+                        android:padding="8dp"
+                        android:background="#F57C00"/>
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Phone No. 1234567890"
+                        android:textColor="#000000"
+                        android:padding="8dp"
+                        />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email Address :-chetana_csfc_123@gmail.com"
+                        android:textColor="#000000"
+                        android:padding="8dp"
+                        />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address :- Chetana's H.S. college of comm. and eco. Bandra(E) Mumbai "
+                        android:textColor="#000000"
+                        android:padding="8dp"
+                        />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="match_parent"
+                        android:layout_height="190dp"
+                        android:scaleType="fitXY"
+                        android:src="@drawable/img_college_location"/>
+
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@android:color/transparent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                   />
+            </LinearLayout>
+        </ScrollView>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!--
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/shrine_pink_100"
+            app:headerLayout="@layout/nav_header"
+            android:clipToPadding="false"
+            app:itemHorizontalPadding="20dp"
+            app:itemTextColor="@color/shrine"
+            app:itemIconTint="@color/shrine"
+            app:itemIconSize="25dp"
+            app:itemIconPadding="40dp"
+            app:menu="@menu/navigation_bar_menu"
+            />
+    -->
+
+</androidx.drawerlayout.widget.DrawerLayout>

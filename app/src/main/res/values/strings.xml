@@ -3,7 +3,7 @@
     <string name="image_description">ImageDescription</string>
     <string name="upload_notes">Upload Notes</string>
     <string name="upload_event">Upload Event</string>
-    <string name="take_attendance">Take Attendance</string>
+    <string name="take_attendance">Edit Profile</string>
     <string name="txt_upload_notice">Upload Notice</string>
     <string name="txt_upload_image">Upload Image</string>
     <string name="txt_add_student">Add Student</string>
@@ -18,5 +18,7 @@
     <string name="txt_fullname">FullName</string>
     <string name="add_image">Add Image</string>
     <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="close">Close</string>
+    <string name="open">Open</string>
+    <string name="discription_about_chetana">The meaning of the word “Chetana” is consciousness. Consciousness is the essence of all creation.\n It is all-pervasive and infinite. It is the essence that unifies all beings and things. The cultural advancement of the human race itself can be attributed to the awareness of this consciousness. This consciousness requires a blend of emotional awareness and wisdom, which are the primary goals of education. Hence this name was suggested by Late Smt. Kusumtai Chaudhari while forming this profound education movement. Chetana, a service oriented educational trust was established on 09th September, 1969 by Respected Balasaheb Madhukarrao Chaudhari (former Education and Finance Minister, Government of Maharashtra and Ex-Speaker, Maharashtra Legislative Assembly)</string>
 </resources>
