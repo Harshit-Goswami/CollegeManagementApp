@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".admin.UploadNotice"
-    android:background="#EEEEEE">
+    tools:context=".admin.AddNewEvent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -71,20 +71,38 @@
                 app:layout_constraintTop_toBottomOf="@+id/card_img_notice">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edt_notice"
+                    android:id="@+id/edt_event_title"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Notice Title"
+                    android:hint="Title"
                     android:layout_margin="10dp"
                     />
+
+            </com.google.android.material.textfield.TextInputLayout>
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textInputEditText2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/card_img_notice">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edt_notice_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Description"
+                    android:layout_margin="10dp"
+                    />
+
             </com.google.android.material.textfield.TextInputLayout>
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_uploadNotice"
+                android:id="@+id/btn_uploadEvent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
                 android:textAllCaps="false"
-                android:text="Upload Notice"
+                android:text="Upload"
                 android:backgroundTint="#EE131313"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -122,6 +140,4 @@
             </com.google.android.material.card.MaterialCardView>
         </LinearLayout>
     </ScrollView>
-
-
 </androidx.constraintlayout.widget.ConstraintLayout>

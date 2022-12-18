@@ -17,5 +17,6 @@ class AdminDashboard : AppCompatActivity() {
         binding.uploadBook.setOnClickListener { startActivity(Intent(this,ManageStudent::class.java)) }
         binding.updateFaculty.setOnClickListener { startActivity(Intent(this,ManageFaculty::class.java)) }
         binding.deleteNotice.setOnClickListener { startActivity(Intent(this,DeleteNotice::class.java)) }
+        binding.AddEvent.setOnClickListener { startActivity(Intent(this, UploadedEvents::class.java)) }
     }
 }

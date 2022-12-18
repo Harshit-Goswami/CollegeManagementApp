@@ -1,60 +1,78 @@
 package com.harshit.goswami.collegeapp.student
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.harshit.goswami.collegeapp.R
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.harshit.goswami.collegeapp.admin.DeleteNotice
+import com.harshit.goswami.collegeapp.admin.adapters.DeleteNoticeAdapter
+import com.harshit.goswami.collegeapp.admin.dataClasses.NoticeData
+import com.harshit.goswami.collegeapp.databinding.FragmentNoticeBinding
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [NoticeFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class NoticeFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
-
+    var noticeList = ArrayList<NoticeData>()
+    private lateinit var binding: FragmentNoticeBinding
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_notice, container, false)
+    ): View {
+        binding = FragmentNoticeBinding.inflate(inflater, container, false)
+        retrieveNotices()
+        binding.FNRsvNotices.layoutManager =
+            LinearLayoutManager(container?.context, LinearLayoutManager.VERTICAL, false)
+        binding.FNRsvNotices.adapter =
+            container?.context?.let {
+                DeleteNoticeAdapter(
+                    noticeList,
+                    it,
+                    "NoticeFragment"
+                )
+            }
+        binding.FNRsvNotices.setHasFixedSize(true)
+        binding.FNRsvNotices.adapter?.notifyDataSetChanged()
+
+
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment NoticeFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            NoticeFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    fun retrieveNotices() {
+        noticeList = ArrayList()
+        FirebaseDatabase.getInstance().reference.child("Notices")
+            .addChildEventListener(object : ChildEventListener {
+                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                    if (snapshot.exists()) {
+                        noticeList.add(snapshot.getValue(NoticeData::class.java)!!)
+                        Log.d(snapshot.value.toString(), "teacher data")
+                        binding.FNRsvNotices.adapter?.notifyDataSetChanged()
+
+                    }
                 }
-            }
+
+                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                }
+
+                override fun onChildRemoved(snapshot: DataSnapshot) {
+
+                }
+
+                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+
+                }
+
+            })
+
     }
+
 }

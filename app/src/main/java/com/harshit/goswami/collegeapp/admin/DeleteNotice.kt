@@ -10,11 +10,13 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
+import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.noticeList
 import com.harshit.goswami.collegeapp.admin.adapters.DeleteNoticeAdapter
 import com.harshit.goswami.collegeapp.admin.dataClasses.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDeleteNoticeBinding
 
-class DeleteNotice : AppCompatActivity() {
+open class DeleteNotice : AppCompatActivity() {
     companion object {
         lateinit var binding: ActivityAdminDeleteNoticeBinding
         var noticeList = ArrayList<NoticeData>()
@@ -27,11 +29,11 @@ class DeleteNotice : AppCompatActivity() {
         retrieveNotices()
         binding.rsvNotices.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rsvNotices.adapter = DeleteNoticeAdapter(noticeList, this)
+        binding.rsvNotices.adapter = DeleteNoticeAdapter(noticeList, this,"DeleteNotice")
         binding.rsvNotices.setHasFixedSize(true)
     }
 
-    private fun retrieveNotices() {
+   fun retrieveNotices() {
         binding.deleteNoticeProgbar.visibility = View.VISIBLE
         noticeList = ArrayList()
         FirebaseDatabase.getInstance().reference.child("Notices")

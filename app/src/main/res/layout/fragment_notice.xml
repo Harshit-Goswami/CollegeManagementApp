@@ -3,14 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#80DEEA"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#E6E6E6"
+    android:orientation="vertical"
     tools:context=".student.NoticeFragment">
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/AppBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?actionBarSize"
+            android:background="#F4511E"
+            android:popupTheme="@style/AppTheme.popUpOverlay"
+            app:layout_scrollFlags="scroll|enterAlways">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Notices"
+                android:textColor="#fff"
+                android:textSize="25sp"
+                android:textStyle="bold" />
+        </com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/FN_rsv_notices"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Notice"
-        android:gravity="center"/>
+        android:layout_marginTop="10dp"
+        />
 
 </LinearLayout>

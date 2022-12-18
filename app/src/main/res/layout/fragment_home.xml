@@ -82,7 +82,9 @@
                         android:layout_height="170dp"
                         app:iss_auto_cycle="true"
                         app:iss_delay="0"
-                        app:iss_period="3000" />
+                        app:iss_period="3000"
+                        app:iss_selected_dot="@android:color/transparent"
+                        app:iss_unselected_dot="@android:color/transparent"/>
                 </com.google.android.material.card.MaterialCardView>
 
 
@@ -110,7 +112,8 @@
                         android:id="@+id/txt_about_chetana"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="fill"
+                        android:gravity="center"
+                        android:padding="15dp"
                         android:text="@string/discription_about_chetana"
                         android:textColor="#0B0A0A"
                         android:textSize="16sp"
@@ -138,16 +141,64 @@
                     android:padding="2dp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toBottomOf="@+id/txt_about_chetana_heading">
-
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/txt_admission_guidelines"
+                    <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:gravity="fill"
-                        android:text="@string/discription_about_chetana"
-                        android:textColor="#0B0A0A"
-                        android:textSize="16sp"
-                        android:textStyle="normal" />
+                        android:orientation="vertical">
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ADMISSION NOTICE"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:drawableEnd="@drawable/ic_double_arrow_down"
+                        android:background="#FBC02D"
+                        android:layout_margin="5dp"
+                        android:padding="10dp" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ADMISSION NOTICE"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:background="#FBC02D"
+                        android:drawableEnd="@drawable/ic_double_arrow_down"
+                        android:layout_margin="5dp"
+                        android:padding="10dp" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="ADMISSION GUIDELINES"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/black"
+                        android:background="#FBC02D"
+                        android:drawableEnd="@drawable/ic_double_arrow_down"
+                        android:layout_margin="5dp"
+                        android:padding="10dp" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="PROSPECTUS"
+                        android:textColor="@color/black"
+                        android:gravity="center_vertical"
+                        android:background="#FBC02D"
+                        android:drawableEnd="@drawable/ic_double_arrow_down"
+                        android:layout_margin="5dp"
+                        android:padding="10dp" />
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black"
+                        android:text="MERIT LIST"
+                        android:gravity="center_vertical"
+                        android:background="#FBC02D"
+                        android:drawableEnd="@drawable/ic_double_arrow_down"
+                        android:padding="10dp"
+                        android:layout_margin="5dp"/>
+
+                    </LinearLayout>
 
                 </com.google.android.material.card.MaterialCardView>
 
@@ -455,7 +506,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-                    android:background="#FFECB3"
+                    android:backgroundTint="#EEEEEE"
                     android:padding="10dp">
 
                     <LinearLayout
@@ -556,8 +607,8 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="180dp"
-                                android:orientation="vertical"
-                                android:layout_marginBottom="10dp">
+                                android:layout_marginBottom="10dp"
+                                android:orientation="vertical">
 
 
                                 <com.google.android.material.textview.MaterialTextView
@@ -692,105 +743,110 @@
 
                     </LinearLayout>
                 </HorizontalScrollView>
+
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_socialMediaLinks"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
                     android:drawableBottom="@color/black"
                     android:text="-Social Media Links-"
-                    android:layout_marginTop="10dp"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="#F4511E"
                     android:textSize="20sp"
                     android:textStyle="bold" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    >
+                    android:orientation="horizontal">
+
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
                         android:src="@drawable/img_youtube" />
+
                     <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/img_instagram"
-                        android:layout_weight="1"/>
-                    <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
-                    android:src="@drawable/img_email_ic" />
+                        android:src="@drawable/img_instagram" />
+
                     <com.google.android.material.imageview.ShapeableImageView
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
                         android:layout_weight="1"
-                    android:src="@drawable/img_facebook" />
+                        android:src="@drawable/img_email_ic" />
+
+                    <com.google.android.material.imageview.ShapeableImageView
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
+                        android:layout_gravity="center"
+                        android:layout_weight="1"
+                        android:src="@drawable/img_facebook" />
 
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical"
                     android:layout_marginTop="10dp"
-                    android:background="#C5CAE9">
-                    <com.google.android.material.textview.MaterialTextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Contact Details"
-                        android:textColor="@color/white"
-                        android:padding="8dp"
-                        android:background="#F57C00"/>
+                    android:background="#C5CAE9"
+                    android:orientation="vertical">
 
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:background="#F57C00"
+                        android:padding="8dp"
+                        android:text="Contact Details"
+                        android:textColor="@color/white" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="8dp"
                         android:text="Phone No. 1234567890"
-                        android:textColor="#000000"
-                        android:padding="8dp"
-                        />
+                        android:textColor="#000000" />
+
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:padding="8dp"
                         android:text="Email Address :-chetana_csfc_123@gmail.com"
-                        android:textColor="#000000"
-                        android:padding="8dp"
-                        />
+                        android:textColor="#000000" />
+
                     <com.google.android.material.textview.MaterialTextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Address :- Chetana's H.S. college of comm. and eco. Bandra(E) Mumbai "
-                        android:textColor="#000000"
                         android:padding="8dp"
-                        />
+                        android:text="Address :- Chetana's H.S. college of comm. and eco. Bandra(E) Mumbai "
+                        android:textColor="#000000" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:layout_width="match_parent"
                         android:layout_height="190dp"
                         android:scaleType="fitXY"
-                        android:src="@drawable/img_college_location"/>
+                        android:src="@drawable/img_college_location" />
 
                 </LinearLayout>
+
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="parent"
-                   />
+                    app:layout_constraintStart_toStartOf="parent" />
             </LinearLayout>
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <!--
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -806,6 +862,5 @@
             app:itemIconPadding="40dp"
             app:menu="@menu/navigation_bar_menu"
             />
-    -->
 
 </androidx.drawerlayout.widget.DrawerLayout>

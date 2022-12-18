@@ -109,7 +109,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
                         android:gravity="center"
-                        android:text="@string/upload_event"
+                        android:text="Upload Assignment"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />
