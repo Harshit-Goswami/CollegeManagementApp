@@ -1,34 +1,35 @@
 package com.harshit.goswami.collegeapp.student
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.noticeList
 import com.harshit.goswami.collegeapp.admin.adapters.DeleteNoticeAdapter
 import com.harshit.goswami.collegeapp.admin.dataClasses.NoticeData
 import com.harshit.goswami.collegeapp.databinding.FragmentEventBinding
-import com.harshit.goswami.collegeapp.databinding.FragmentHomeBinding
 
 
 class EventFragment : Fragment() {
+    companion object {
+    }
+
     private lateinit var binding: FragmentEventBinding
     private var eventList = ArrayList<NoticeData>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentEventBinding.inflate(inflater, container, false)
         // Inflate the layout for this fragment
+        binding.FEBtnBack.setOnClickListener {
+            activity?.onBackPressed()
+        }
         retrieveEvents()
         binding.rsvEvent.layoutManager =
             LinearLayoutManager(container?.context, LinearLayoutManager.VERTICAL, false)

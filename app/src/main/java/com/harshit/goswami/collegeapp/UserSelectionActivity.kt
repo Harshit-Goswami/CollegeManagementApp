@@ -12,22 +12,22 @@ class UserSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.USAdmin.setOnClickListener {
+        binding.cardUSAdmin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("SelectedUser", "admin")
             startActivity(intent)
         }
-        binding.USTeacher.setOnClickListener {
+        binding.cardUSTeacher.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("SelectedUser", "teacher")
             startActivity(intent)
         }
-        binding.USStudent.setOnClickListener {
+        binding.cardUSStudent.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             intent.putExtra("SelectedUser", "student")
             startActivity(intent)
         }
-        binding.USOther.setOnClickListener {
+        binding.cardUSOther.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
            // intent.putExtra("SelectedUser", "other")
             startActivity(intent)

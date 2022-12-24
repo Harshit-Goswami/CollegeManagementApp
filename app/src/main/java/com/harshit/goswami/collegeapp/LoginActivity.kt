@@ -14,6 +14,7 @@ import com.harshit.goswami.collegeapp.admin.AdminDashboard
 import com.harshit.goswami.collegeapp.admin.dataClasses.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityLoginBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
+import com.harshit.goswami.collegeapp.student.ResisterAsStutent
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard
 
 class LoginActivity : AppCompatActivity() {

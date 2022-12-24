@@ -22,7 +22,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentEnd="true"
-            android:elevation="2dp"
+          app:cardElevation="2dp"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:layout_constraintEnd_toEndOf="parent"
@@ -34,7 +34,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:background="#F4511E"
-                android:popupTheme="@style/AppTheme.popUpOverlay"
+                android:popupTheme="@style/ThemeOverlay.Material3.Light"
                 app:layout_scrollFlags="scroll|enterAlways">
 
                 <com.google.android.material.textview.MaterialTextView
@@ -68,8 +68,7 @@
                     android:id="@+id/materialCardView5"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:elevation="5dp"
+                    app:cardElevation="10dp"
                     app:cardCornerRadius="20dp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -103,9 +102,8 @@
                     android:id="@+id/card_about_chetana"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:elevation="2dp"
-                    android:padding="2dp"
+                    app:cardElevation="5dp"
+                    app:cardCornerRadius="2dp"
                     app:cardUseCompatPadding="true">
 
                     <com.google.android.material.textview.MaterialTextView
@@ -113,10 +111,11 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:padding="15dp"
+                        android:justificationMode="inter_word"
+                        android:padding="10dp"
                         android:text="@string/discription_about_chetana"
-                        android:textColor="#0B0A0A"
-                        android:textSize="16sp"
+                        android:textColor="#000aaa"
+                        android:textSize="14sp"
                         android:textStyle="normal" />
 
                 </com.google.android.material.card.MaterialCardView>
@@ -127,6 +126,7 @@
                     android:layout_height="wrap_content"
                     android:drawableBottom="@color/black"
                     android:text="-Addmission Guidelines-"
+                    android:layout_marginTop="10dp"
                     android:textAlignment="center"
                     android:textColor="#F4511E"
                     android:textSize="20sp"
@@ -136,8 +136,7 @@
                     android:id="@+id/card_admission_guidelines"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:elevation="2dp"
+                    app:cardElevation="2dp"
                     android:padding="2dp"
                     app:cardUseCompatPadding="true"
                     app:layout_constraintTop_toBottomOf="@+id/txt_about_chetana_heading">
@@ -199,7 +198,6 @@
                         android:layout_margin="5dp"/>
 
                     </LinearLayout>
-
                 </com.google.android.material.card.MaterialCardView>
 
                 <com.google.android.material.textview.MaterialTextView
@@ -207,10 +205,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="10dp"
+                    android:layout_marginTop="10dp"
                     android:drawableBottom="@color/black"
-                    android:paddingTop="8dp"
-                    android:text="-Our Cources-"
-                    android:textAlignment="textStart"
+                    android:text="Our Cources"
+                    android:textAlignment="center"
                     android:textColor="#F4511E"
                     android:textSize="20sp"
                     android:textStyle="bold"
@@ -218,14 +216,16 @@
                     app:layout_constraintStart_toStartOf="@+id/materialCardView5"
                     app:layout_constraintTop_toBottomOf="@+id/card_about_chetana" />
 
-
                 <LinearLayout
                     android:id="@+id/linearLayout3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:background="#63FFFFFF"
                     android:padding="10dp"
-                    android:paddingBottom="10dp">
+                    >
 
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -241,7 +241,7 @@
                             android:layout_marginEnd="15dp"
                             android:layout_weight="1"
                             android:backgroundTint="#96ACED"
-                            android:elevation="5dp"
+                            app:cardElevation="5dp"
                             app:cardCornerRadius="8dp"
                             app:cardUseCompatPadding="true"
                             app:layout_constraintStart_toStartOf="parent"
@@ -256,10 +256,6 @@
                                 android:text="BScIT"
                                 android:textColor="#000"
                                 android:textStyle="bold" />
-                            <!--                            android:shadowColor="@color/shrine"-->
-                            <!--                            android:shadowDx="0.4"-->
-                            <!--                            android:shadowDy="0.4"-->
-                            <!--                            android:shadowRadius="3"-->
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
@@ -270,7 +266,7 @@
                             android:layout_marginEnd="15dp"
                             android:layout_weight="1"
                             android:backgroundTint="#96ACED"
-                            android:elevation="5dp"
+                            app:cardElevation="5dp"
                             app:cardCornerRadius="8dp"
                             app:cardUseCompatPadding="true"
                             app:layout_constraintStart_toStartOf="@+id/materialCardView8"
@@ -302,7 +298,7 @@
                             android:layout_marginEnd="15dp"
                             android:layout_weight="1"
                             android:backgroundTint="#96ACED"
-                            android:elevation="5dp"
+                          app:cardElevation="5dp"
                             app:cardCornerRadius="8dp"
                             app:cardUseCompatPadding="true"
                             app:layout_constraintStart_toStartOf="parent"
@@ -317,10 +313,6 @@
                                 android:text="BMM"
                                 android:textColor="#000"
                                 android:textStyle="bold" />
-                            <!--                            android:shadowColor="@color/shrine"-->
-                            <!--                            android:shadowDx="0.4"-->
-                            <!--                            android:shadowDy="0.4"-->
-                            <!--                            android:shadowRadius="3"-->
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
@@ -331,7 +323,7 @@
                             android:layout_marginEnd="15dp"
                             android:layout_weight="1"
                             android:backgroundTint="#96ACED"
-                            android:elevation="5dp"
+                          app:cardElevation="5dp"
                             app:cardCornerRadius="8dp"
                             app:cardUseCompatPadding="true"
                             app:layout_constraintStart_toStartOf="@+id/materialCardView8"
@@ -352,14 +344,14 @@
 
                 </LinearLayout>
 
-
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_magazine"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    android:text="-Magazine-"
+                    android:text="Magazine"
                     android:textColor="#F4511E"
+                    android:gravity="center"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -378,15 +370,13 @@
                             android:id="@+id/materialCardView12"
                             android:layout_width="300dp"
                             android:layout_height="250dp"
-                            android:layout_margin="10dp"
-                            android:elevation="5dp"
+                            app:cardElevation="5dp"
                             app:cardCornerRadius="5dp"
                             app:cardUseCompatPadding="true">
 
                             <com.google.android.material.imageview.ShapeableImageView
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:padding="2dp"
                                 android:src="@drawable/chaitanya1" />
 
                             <com.google.android.material.textview.MaterialTextView
@@ -407,8 +397,7 @@
                             android:id="@+id/materialCardView11"
                             android:layout_width="300dp"
                             android:layout_height="250dp"
-                            android:layout_margin="10dp"
-                            android:elevation="5dp"
+                          app:cardElevation="5dp"
                             app:cardCornerRadius="5dp"
                             app:cardUseCompatPadding="true">
 
@@ -435,8 +424,7 @@
                             android:id="@+id/materialCardView13"
                             android:layout_width="300dp"
                             android:layout_height="250dp"
-                            android:layout_margin="10dp"
-                            android:elevation="5dp"
+                          app:cardElevation="5dp"
                             app:cardCornerRadius="5dp"
                             app:cardUseCompatPadding="true">
 
@@ -463,8 +451,7 @@
                             android:id="@+id/materialCardView15"
                             android:layout_width="300dp"
                             android:layout_height="250dp"
-                            android:layout_margin="10dp"
-                            android:elevation="5dp"
+                            app:cardElevation="5dp"
                             app:cardCornerRadius="5dp"
                             app:cardUseCompatPadding="true">
 
@@ -487,7 +474,6 @@
                                 android:textStyle="bold" />
                         </com.google.android.material.card.MaterialCardView>
 
-
                     </LinearLayout>
                 </HorizontalScrollView>
 
@@ -495,32 +481,34 @@
                     android:id="@+id/txt_alumni"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableBottom="@color/black"
-                    android:text="-Alumni-"
+                    android:text="Alumni"
                     android:textAlignment="center"
                     android:textColor="#F4511E"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.card.MaterialCardView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:backgroundTint="#EEEEEE"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true"
+                    android:backgroundTint="#AAFFFFFF"
                     android:padding="10dp">
 
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
                         android:orientation="horizontal"
-                        android:padding="10dp"
                         android:weightSum="2">
 
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
+                            android:layout_margin="10dp"
+                            android:padding="5dp"
+                            android:background="@color/shrine_pink_100"
                             android:orientation="vertical">
 
                             <com.google.android.material.imageview.ShapeableImageView
@@ -543,7 +531,10 @@
                         <LinearLayout
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
+                            android:layout_margin="10dp"
                             android:layout_weight="1"
+                            android:padding="5dp"
+                            android:background="@color/shrine_pink_100"
                             android:orientation="vertical">
 
                             <com.google.android.material.imageview.ShapeableImageView
@@ -574,11 +565,11 @@
                     android:id="@+id/txt_testimonial"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:drawableBottom="@color/black"
-                    android:text="-Testimonials-"
+                    android:text="Testimonials"
                     android:textAlignment="center"
                     android:textAllCaps="true"
                     android:textColor="#F4511E"
+                    android:layout_marginTop="10dp"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -596,10 +587,8 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
                             android:background="#FFECB3"
-                            android:elevation="20dp"
-                            android:padding="10dp"
+                            app:cardElevation="10dp"
                             app:cardCornerRadius="20dp"
                             app:cardUseCompatPadding="true"
                             app:contentPadding="2dp">
@@ -607,7 +596,6 @@
                             <LinearLayout
                                 android:layout_width="wrap_content"
                                 android:layout_height="180dp"
-                                android:layout_marginBottom="10dp"
                                 android:orientation="vertical">
 
 
@@ -646,10 +634,8 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
                             android:background="#FFECB3"
-                            android:elevation="20dp"
-                            android:padding="10dp"
+                            app:cardElevation="10dp"
                             app:cardCornerRadius="20dp"
                             app:cardUseCompatPadding="true"
                             app:contentPadding="2dp">
@@ -695,10 +681,8 @@
                         <com.google.android.material.card.MaterialCardView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_margin="10dp"
                             android:background="#FFECB3"
-                            android:elevation="20dp"
-                            android:padding="10dp"
+                            app:cardElevation="10dp"
                             app:cardCornerRadius="20dp"
                             app:cardUseCompatPadding="true"
                             app:contentPadding="2dp">
@@ -838,7 +822,7 @@
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="50dp"
+                    android:layout_height="70dp"
                     android:background="@android:color/transparent"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -847,7 +831,7 @@
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <com.google.android.material.navigation.NavigationView
+       <!-- <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -861,6 +845,6 @@
             app:itemIconSize="25dp"
             app:itemIconPadding="40dp"
             app:menu="@menu/navigation_bar_menu"
-            />
+            />-->
 
 </androidx.drawerlayout.widget.DrawerLayout>

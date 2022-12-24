@@ -26,7 +26,7 @@
             android:name=".LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".ResisterAsStutent"
+            android:name=".student.ResisterAsStutent"
             android:exported="false" />
         <activity
             android:name=".admin.AddStudent"

@@ -20,9 +20,17 @@
             android:layout_width="match_parent"
             android:layout_height="?actionBarSize"
             android:background="#F4511E"
-            android:popupTheme="@style/AppTheme.popUpOverlay"
+            android:popupTheme="@style/ThemeOverlay.Material3.Light"
             app:layout_scrollFlags="scroll|enterAlways">
-
+            <ImageButton
+                android:id="@+id/FN_btn_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_arrow_back"
+                android:layout_gravity="center_vertical"
+                android:background="@android:color/transparent"
+                app:tint="@color/white"
+                tools:ignore="ContentDescription" />
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

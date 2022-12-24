@@ -3,16 +3,245 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#9575CD"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#F4511E"
     tools:context=".student.AboutCollegeFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:orientation="horizontal"
+        >
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+        <ImageButton
+            android:id="@+id/FA_btn_back"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="5dp"
+            android:text="About"
+            android:textColor="#fff"
+            android:textSize="25sp" />
+    </RelativeLayout>
+
+
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="About"
-        android:gravity="center"
-        />
+        android:layout_marginTop="-30dp"
+
+        >
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/top_bar_bg"
+        android:orientation="vertical">
+<!--    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:background="#FFA000"
+        android:gravity="center_horizontal"
+        android:textStyle="bold"
+        android:layout_margin="10dp"
+        android:textSize="25dp"
+        android:padding="5dp"
+        android:text="Our Inspiration"/>-->
+    <com.google.android.material.imageview.ShapeableImageView
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="5dp"
+        android:layout_gravity="center_horizontal"
+        android:src="@drawable/collage_precident"
+        app:shapeAppearanceOverlay="@style/circular"
+      />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="368dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:fontFamily="@font/aclonica"
+        android:padding="5dp"
+        android:textColor="#F57C00"
+        android:text="Late Shri Madhukarrao Chaudhari"
+        android:textAlignment="center"
+        android:textSize="25dp"
+         />
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="5dp"
+        android:text="Founder precident-Chetana Trust\nFormer Education and finance Minister, the Government of Maharashtra
+ Ex-Speaker Maharashtra Legislative Assembly
+16th June, 1928 - 8th July, 2010 "
+        android:textAlignment="center"
+        android:textColor="#827717"
+        android:textSize="18dp"
+         />
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:padding="10dp"
+        android:justificationMode="inter_word"
+        android:text="Chetana’s was established with the twin objective of providing quality education  infusing students with dynamism. Chetana has created many success stories and today it has become one of the most preferred Institutes in India.
+Our high caliber faculty with vast experience would add the required momentum to the whole process. Apart from core faculty, who are always a source of motivation for the students, we have an erudite industry experts that comprises of top managers from the corporate world who share their rich experience with the students.
+\n\t\nI take pride in welcoming you all to Chetana’s Institute."
+        android:textAlignment="center"
+        android:background="@color/white"
+        android:textColor="@color/black"
+        android:textSize="18dp"
+         />
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/FA_aboutUs_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:background="#FFA000"
+            android:gravity="start"
+            android:textStyle="bold"
+            android:layout_marginTop="10dp"
+            android:textSize="25dp"
+            android:padding="5dp"
+            android:text="About Us"
+            android:drawableRight="@drawable/ic_double_arrow_down"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/FA_txt_aboutUs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:justificationMode="inter_word"
+            android:text="@string/text_about_us"
+            android:textAlignment="center"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            tools:targetApi="o" />
+        <HorizontalScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="350dp"
+                    android:layout_height="230dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true"
+                    android:backgroundTint="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:background="#FFA000"
+                            android:gravity="start"
+                            android:textStyle="bold"
+                            android:layout_margin="10dp"
+                            android:textSize="25sp"
+                            android:padding="5dp"
+                            android:text="Our Vision"/>
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|center_vertical"
+                            android:padding="10dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/black"
+                            android:justificationMode="inter_word"
+                            android:text="To raise our institution to higher levels of academic and cultural excellence and create an urge to enrich the personality of our students to serve humanity as one global family."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="350dp"
+                    android:layout_height="230dp"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true"
+                    android:backgroundTint="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:background="#FFA000"
+                            android:gravity="start"
+                            android:textStyle="bold"
+                            android:layout_margin="10dp"
+                            android:textSize="25sp"
+                            android:padding="5dp"
+                            android:text="Our Mission"/>
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/black"
+                            android:justificationMode="inter_word"
+                            android:text="Chetana Family solemnly resolves to provide quality education to the students and mould them into responsible citizens and dynamic leaders of resurgent India."
+                            />
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+            </LinearLayout>
+        </HorizontalScrollView>
 
 
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/FA_ourGoals_heading"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:background="#FFA000"
+            android:gravity="start"
+            android:textStyle="bold"
+            android:drawableEnd="@drawable/ic_double_arrow_down"
+            android:textSize="25dp"
+            android:padding="5dp"
+            android:text="Our Goals"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/FA_txt_ourGoals"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:visibility="gone"
+            android:justificationMode="inter_word"
+            android:text="@string/text_goals"
+            android:background="@color/white"
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            tools:targetApi="o" />
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+    </LinearLayout>
+    </ScrollView>
 </LinearLayout>

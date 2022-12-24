@@ -3,12 +3,15 @@
     <style name="circular">
         <item name="cornerSize">50%</item>
     </style>
+    <style name="all_corner_radius">
+        <item name="cornerSize">20%</item>
+    </style>
 
-    <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+ <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
         <item name="cornerFamily">cut</item>
         <item name="cornerSize">4dp</item>
     </style>
-    <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+    <!--   <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
         <item name="hintTextColor">?attr/colorOnSurface</item>
@@ -28,6 +31,6 @@
         <item name="colorOnSurface">@color/shrine_pink_900</item>
         <item name="colorError">#B00020</item>
         <item name="shapeAppearanceSmallComponent">@style/ShapeAppearance.App.SmallComponent</item>
-    </style>
+    </style>-->
 
 </resources>

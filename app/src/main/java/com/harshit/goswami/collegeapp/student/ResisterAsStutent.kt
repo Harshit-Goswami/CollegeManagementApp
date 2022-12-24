@@ -1,10 +1,9 @@
-package com.harshit.goswami.collegeapp
+package com.harshit.goswami.collegeapp.student
 
 import android.graphics.Color
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.R
 import com.google.android.material.snackbar.Snackbar
@@ -100,7 +99,7 @@ class ResisterAsStutent : AppCompatActivity() {
                 )
             ).addOnCompleteListener {
                 if (it.isSuccessful) {
-                   // Toast.makeText(this@ResisterAsStutent, "Done!! ", Toast.LENGTH_SHORT).show()
+                    // Toast.makeText(this@ResisterAsStutent, "Done!! ", Toast.LENGTH_SHORT).show()
                     val snackBar = Snackbar.make(
                         binding.ActivityRegisterAsStudent, "Data Added Successfully..",
                         Snackbar.LENGTH_LONG
@@ -119,8 +118,7 @@ class ResisterAsStutent : AppCompatActivity() {
                     binding.RASrollNo.setText("")
                     binding.RASpasswd.setText("")
                     binding.RASrePasswd.setText("")
-                }
-                else{
+                } else {
                     val snackBar = Snackbar.make(
                         binding.ActivityRegisterAsStudent, "Error..${it.exception?.message}",
                         Snackbar.LENGTH_LONG
