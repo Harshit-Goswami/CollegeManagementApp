@@ -1,12 +1,13 @@
-package com.harshit.goswami.collegeapp.teacher
+package com.harshit.goswami.collegeapp.student
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.harshit.goswami.collegeapp.R
 
-class NewEvent : AppCompatActivity() {
+class AssignmentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_teacher_assignment)
+        setContentView(R.layout.activity_student_assignment)
+
     }
 }

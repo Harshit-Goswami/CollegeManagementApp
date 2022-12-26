@@ -2,14 +2,11 @@ package com.harshit.goswami.collegeapp.student
 
 import android.app.Activity
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
-import com.denzcoskun.imageslider.ImageSlider
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.appbar.MaterialToolbar
@@ -39,12 +36,19 @@ class HomeFragment : Fragment() {
 //        toolbar.setSubtitle("");
         //toolbar.setLogo(R.drawable.ic_toolbar);*/
         toggle = ActionBarDrawerToggle(
-            container?.context as Activity? , drawerLayout, toolbar,
+            container?.context as Activity?, drawerLayout, toolbar,
             R.string.open, R.string.close
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 
+        binding.scrollView3.viewTreeObserver.addOnScrollChangedListener {
+            val x = binding.scrollView3.scrollX
+            val y = binding.scrollView3.scrollY
+            if (y>500) {
+                MainActivity.binding.cordinatorNavBar.visibility = View.GONE
+            } else MainActivity.binding.cordinatorNavBar.visibility = View.VISIBLE
+        }
 
 //        binding.navView.setNavigationItemSelectedListener {
 //            when (it.itemId) {
@@ -56,14 +60,14 @@ class HomeFragment : Fragment() {
 //        }
         val imageList = ArrayList<SlideModel>() // Create image list
 
-        imageList.add(SlideModel(R.drawable.slide1 ))
-        imageList.add(SlideModel(R.drawable.slide5 ))
-        imageList.add(SlideModel( R.drawable.slide6))
-        imageList.add(SlideModel( R.drawable.slide_gps_map_camera))
-        imageList.add(SlideModel( R.drawable.slide_best_college_certificate))
-        imageList.add(SlideModel( R.drawable.slide_college_iso_certificate))
+        imageList.add(SlideModel(R.drawable.slide1))
+        imageList.add(SlideModel(R.drawable.slide5))
+        imageList.add(SlideModel(R.drawable.slide6))
+        imageList.add(SlideModel(R.drawable.slide_gps_map_camera))
+        imageList.add(SlideModel(R.drawable.slide_best_college_certificate))
+        imageList.add(SlideModel(R.drawable.slide_college_iso_certificate))
 
-        binding.imageSlider.setImageList(imageList,ScaleTypes.FIT)
+        binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
 
 
         return binding.root

@@ -17,6 +17,12 @@
         android:theme="@style/Theme.CollageApp"
         tools:targetApi="31">
         <activity
+            android:name=".admin.UploadClass"
+            android:exported="false" />
+        <activity
+            android:name=".student.AssignmentActivity"
+            android:exported="false" />
+        <activity
             android:name=".admin.AddNewEvent"
             android:exported="false" />
         <activity

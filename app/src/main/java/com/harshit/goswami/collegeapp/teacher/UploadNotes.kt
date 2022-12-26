@@ -11,12 +11,12 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.harshit.goswami.collegeapp.databinding.ActivityUploadNotesBinding
+import com.harshit.goswami.collegeapp.databinding.ActivityTeacherUploadNotesBinding
 import java.util.*
 
 
 class UploadNotes : AppCompatActivity() {
-    private lateinit var bindind: ActivityUploadNotesBinding
+    private lateinit var bindind: ActivityTeacherUploadNotesBinding
     private var fileUri: Uri? = null
     private val firebaseDatabase = FirebaseDatabase.getInstance()
     private val firebaseStorage = FirebaseStorage.getInstance()
@@ -44,7 +44,7 @@ class UploadNotes : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        bindind = ActivityUploadNotesBinding.inflate(layoutInflater)
+        bindind = ActivityTeacherUploadNotesBinding.inflate(layoutInflater)
         setContentView(bindind.root)
         bindind.cardSelectpdf.setOnClickListener { getResult.launch("application/*") }
         bindind.btnUploadBook.setOnClickListener {

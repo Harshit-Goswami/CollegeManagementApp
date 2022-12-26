@@ -8,174 +8,428 @@
     android:orientation="vertical"
     tools:context=".student.MyClassFragment">
 
-        <RelativeLayout
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?android:actionBarSize"
-            android:popupTheme="@style/ThemeOverlay.Material3.Light"
-            app:layout_scrollFlags="scroll|enterAlways">
+    <RelativeLayout
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?android:actionBarSize"
+        android:background="#F4511E"
+        android:popupTheme="@style/ThemeOverlay.Material3.Light"
+        app:layout_scrollFlags="scroll|enterAlways">
 
-            <ImageButton
-                android:id="@+id/FMC_btn_back"
-                android:layout_width="wrap_content"
+        <ImageButton
+            android:id="@+id/FMC_btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back"
+            app:tint="@color/white"
+            tools:ignore="ContentDescription" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="30dp"
+            android:layout_toEndOf="@+id/FMC_btn_back"
+            android:text="Classroom"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/FMC_student_image"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:src="@drawable/ic_person"
+            app:shapeAppearanceOverlay="@style/circular"
+            app:strokeColor="@color/white"
+            app:strokeWidth="2dp"
+            app:tint="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="3dp"
+            android:layout_alignParentBottom="true"
+            android:background="#424242" />
+    </RelativeLayout>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="-5dp"
+        android:text="Class"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textStyle="bold" />
+
+  <!--  <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/rsv_student_class_time"/>-->
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="10dp"
+            android:background="#eeeeee"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+
+                android:orientation="vertical"
+                android:padding="10dp">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Tomarrow"
+                    android:textColor="#121212"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="2dp"
+                    android:background="@color/black" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Business Intelligence"
+                    android:textColor="#161616"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="-Saravaman Raddy"
+                    android:textColor="#161616"
+                    android:textSize="14sp" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:text="9AM - 10AM"
+                    android:textAlignment="center"
+                    android:textColor="#161616"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="Room no -701"
+                    android:textColor="#161616"
+                    android:textSize="14sp" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true">
+
+
+        <RelativeLayout
+            android:id="@+id/FMC_card_assignment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            >
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:background="@android:color/transparent"
-                android:src="@drawable/ic_arrow_back"
-                app:tint="#121212"
-                tools:ignore="ContentDescription" />
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_book" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="30dp"
-                android:layout_toEndOf="@+id/FMC_btn_back"
-                android:text="Classroom"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Assignment"
                 android:textColor="#121212"
-                android:textSize="25sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
-                android:background="@color/shrine_pink_100"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_person"
-                app:shapeAppearanceOverlay="@style/circular" />
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="3dp"
-                android:background="@color/black"
-                android:layout_alignParentBottom="true"
-                />
+                android:tint="@color/black"
+                android:src="@drawable/ic_arrow_forward"
+                 />
         </RelativeLayout>
 
-       <!-- <com.google.android.material.textview.MaterialTextView
-            android:layout_wid
-            th="wrap_content"
+    </com.google.android.material.card.MaterialCardView>
+  <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true">
+
+
+        <RelativeLayout
+            android:id="@+id/FMC_card_notes"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
-            android:text="Class"
-            android:textColor="@color/black"
-            android:textSize="30dp"
-            android:textStyle="bold" />-->
+            android:padding="5dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_notes" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Notes"
+                android:textColor="#121212"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@color/black"
+                android:src="@drawable/ic_arrow_forward"
+                 />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+  <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true">
+
+
+        <RelativeLayout
+            android:id="@+id/FMC_card_previousPapers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="5dp">
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentStart="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/ic_text_p" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="Previous year papers"
+                android:textColor="#121212"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.imageview.ShapeableImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:layout_marginBottom="10dp"
+                android:scaleType="fitCenter"
+                android:tint="@color/black"
+                android:src="@drawable/ic_arrow_forward"
+                 />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:layout_weight="3"
-       android:gravity="bottom">
+        android:gravity="bottom"
+        android:orientation="horizontal">
 
 
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="10dp"
-        android:layout_weight="1"
-        app:cardUseCompatPadding="true">
-
-
-        <LinearLayout
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:padding="5dp">
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-               android:layout_gravity="center_horizontal"
-                android:background="@color/shrine_pink_100"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_person"
-                app:shapeAppearanceOverlay="@style/circular" />
-            <com.google.android.material.textview.MaterialTextView
+            android:layout_weight="1"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="true">
+
+
+            <LinearLayout
+                android:id="@+id/FMC_card_faculty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Faculty"
-                android:textColor="#121212"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-        </LinearLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_person"
+                    />
 
-    </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="10dp"
-        android:layout_weight="1"
-        app:cardUseCompatPadding="true">
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Faculty"
+                    android:textColor="#121212"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
+            </LinearLayout>
 
-        <LinearLayout
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:padding="5dp">
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-               android:layout_gravity="center_horizontal"
-                android:background="@color/shrine_pink_100"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_book"
-                app:shapeAppearanceOverlay="@style/circular" />
-            <com.google.android.material.textview.MaterialTextView
+            android:layout_weight="1"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="true">
+
+
+            <LinearLayout
+                android:id="@+id/FMC_card_result"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Result"
-                android:textColor="#121212"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-        </LinearLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:src="@drawable/ic_book"
+                    />
 
-    </com.google.android.material.card.MaterialCardView>
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="10dp"
-        android:layout_weight="1"
-        app:cardUseCompatPadding="true">
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Result"
+                    android:textColor="#121212"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-        <LinearLayout
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_gravity="center"
-            android:padding="5dp">
-            <com.google.android.material.imageview.ShapeableImageView
-                android:layout_width="45dp"
-                android:layout_height="45dp"
-               android:layout_gravity="center_horizontal"
-                android:background="@color/shrine_pink_100"
-                android:scaleType="fitCenter"
-                android:tint="@color/black"
-                android:src="@drawable/common_full_open_on_phone"
-                app:shapeAppearanceOverlay="@style/circular" />
-            <com.google.android.material.textview.MaterialTextView
+            android:layout_weight="1"
+            app:cardCornerRadius="5dp"
+            app:cardElevation="10dp"
+            app:cardUseCompatPadding="true">
+
+            <LinearLayout
+                android:id="@+id/FMC_card_query"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_toEndOf="@+id/FMC_btn_back"
-                android:text="Query"
-                android:textColor="#121212"
-                android:textSize="15sp"
-                android:textStyle="bold" />
+                android:layout_gravity="center"
+                android:orientation="vertical"
+                android:padding="5dp">
 
-        </LinearLayout>
+                <com.google.android.material.imageview.ShapeableImageView
+                    android:layout_width="45dp"
+                    android:layout_height="45dp"
+                    android:layout_gravity="center_horizontal"
+                    android:scaleType="fitCenter"
+                    android:src="@android:drawable/ic_dialog_alert"
+                    android:tint="@color/black"
+                     />
 
-    </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/FMC_btn_back"
+                    android:text="Query"
+                    android:textColor="#121212"
+                    android:textSize="15sp"
+                    android:textStyle="bold" />
 
-</LinearLayout>
+            </LinearLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 </LinearLayout>

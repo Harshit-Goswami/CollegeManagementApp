@@ -1,5 +1,6 @@
 package com.harshit.goswami.collegeapp.student
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,23 @@ class MyClassFragment : Fragment() {
         binding.FMCBtnBack.setOnClickListener {
             activity?.onBackPressed()
         }
+
+        binding.FMCCardAssignment.setOnClickListener {
+            val intent = Intent(context,AssignmentActivity::class.java)
+            intent.putExtra("cardClick","assignment")
+            startActivity(intent)  }
+        binding.FMCCardNotes.setOnClickListener {
+            val intent = Intent(context,AssignmentActivity::class.java)
+            intent.putExtra("cardClick","notes")
+            startActivity(intent)
+        }
+        binding.FMCCardPreviousPapers.setOnClickListener {
+            val intent = Intent(context,AssignmentActivity::class.java)
+            intent.putExtra("cardClick","previousPaper")
+            startActivity(intent)
+        }
+
+
 
         return binding.root
     }

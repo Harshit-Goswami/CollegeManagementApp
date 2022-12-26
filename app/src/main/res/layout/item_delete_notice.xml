@@ -80,7 +80,7 @@
             android:layout_marginTop="2dp"
             android:scaleType="fitXY"
             android:layout_gravity="center"
-            android:src="@drawable/ic_launcher_background" />
+             />
        <!-- android:elevation="3dp"
         android:focusable="true"-->
     </LinearLayout>

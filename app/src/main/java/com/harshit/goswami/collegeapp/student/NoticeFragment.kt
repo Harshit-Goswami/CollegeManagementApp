@@ -1,6 +1,5 @@
 package com.harshit.goswami.collegeapp.student
 
-import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -8,19 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.ChildEventListener
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.R
+import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.admin.adapters.DeleteNoticeAdapter
 import com.harshit.goswami.collegeapp.admin.dataClasses.NoticeData
 import com.harshit.goswami.collegeapp.databinding.FragmentNoticeBinding
 
-class NoticeFragment : Fragment(), Backpressedlistener {
-    companion object {
-        var backpressedlistener: Backpressedlistener? = null
-    }
+class NoticeFragment : Fragment() {
 
     var noticeList = ArrayList<NoticeData>()
     private lateinit var binding: FragmentNoticeBinding
@@ -30,19 +26,7 @@ class NoticeFragment : Fragment(), Backpressedlistener {
     ): View {
         binding = FragmentNoticeBinding.inflate(inflater, container, false)
         binding.FNBtnBack.setOnClickListener {
-            val homeFrag = activity?.supportFragmentManager?.beginTransaction()
-            homeFrag?.replace(R.id.fragment_container, HomeFragment())?.commit()
-            MainActivity.binding.textViewHome.setTextColor(Color.parseColor("#FF6F00"))
-            MainActivity.binding.imageViewHome.setColorFilter(Color.parseColor("#FF6F00"))
-
-            MainActivity.binding.textViewMyclass.setTextColor(Color.BLACK)
-            MainActivity.binding.textViewNotice.setTextColor(Color.BLACK)
-            MainActivity.binding.imageViewNotice.setColorFilter(Color.BLACK)
-            MainActivity.binding.textViewEvent.setTextColor(Color.BLACK)
-            MainActivity.binding.imageViewEvent.setColorFilter(Color.BLACK)
-            MainActivity.binding.textViewAbout.setTextColor(Color.BLACK)
-            MainActivity.binding.imageViewAbout.setColorFilter(Color.BLACK)
-
+            activity?.onBackPressed()
         }
         retrieveNotices()
         binding.FNRsvNotices.layoutManager =
@@ -58,32 +42,27 @@ class NoticeFragment : Fragment(), Backpressedlistener {
         binding.FNRsvNotices.setHasFixedSize(true)
         binding.FNRsvNotices.adapter?.notifyDataSetChanged()
 
-
+        binding.FNScrollView.viewTreeObserver.addOnScrollChangedListener {
+            val y = binding.FNScrollView.scrollY
+            if (y>200) {
+                MainActivity.binding.cordinatorNavBar.visibility = View.GONE
+            } else MainActivity.binding.cordinatorNavBar.visibility = View.VISIBLE
+        }
 
         return binding.root
     }
 
     fun retrieveNotices() {
-        noticeList = ArrayList()
         FirebaseDatabase.getInstance().reference.child("Notices")
-            .addChildEventListener(object : ChildEventListener {
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    noticeList.clear()
                     if (snapshot.exists()) {
-                        noticeList.add(snapshot.getValue(NoticeData::class.java)!!)
-                        Log.d(snapshot.value.toString(), "teacher data")
+                        for (i in snapshot.children) {
+                            noticeList.add(i.getValue(NoticeData::class.java)!!)
+                        }
                         binding.FNRsvNotices.adapter?.notifyDataSetChanged()
-
                     }
-                }
-
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                }
-
-                override fun onChildRemoved(snapshot: DataSnapshot) {
-
-                }
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -93,31 +72,5 @@ class NoticeFragment : Fragment(), Backpressedlistener {
             })
 
     }
-
-    override fun onPause() {
-        backpressedlistener = null
-        super.onPause()
-    }
-
-    override fun onResume() {
-        super.onResume()
-        backpressedlistener = this
-    }
-
-    override fun onBackPressed() {
-        val homeFrag = activity?.supportFragmentManager?.beginTransaction()
-        homeFrag?.replace(R.id.fragment_container, HomeFragment())?.commit()
-        MainActivity.binding.textViewHome.setTextColor(Color.parseColor("#FF6F00"))
-        MainActivity.binding.imageViewHome.setColorFilter(Color.parseColor("#FF6F00"))
-
-        MainActivity.binding.textViewMyclass.setTextColor(Color.BLACK)
-        MainActivity.binding.textViewNotice.setTextColor(Color.BLACK)
-        MainActivity.binding.imageViewNotice.setColorFilter(Color.BLACK)
-        MainActivity.binding.textViewEvent.setTextColor(Color.BLACK)
-        MainActivity.binding.imageViewEvent.setColorFilter(Color.BLACK)
-        MainActivity.binding.textViewAbout.setTextColor(Color.BLACK)
-        MainActivity.binding.imageViewAbout.setColorFilter(Color.BLACK)
-    }
-
 
 }
