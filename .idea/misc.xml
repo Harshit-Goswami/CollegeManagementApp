@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable-mdpi/dialog_bg.xml" value="0.144" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.144" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/circular_img_bg.xml" value="0.184" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/dialog_bg.xml" value="0.144" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/edt_bd.xml" value="0.1785" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/ic_check_circle.xml" value="0.1805" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/ic_delete.xml" value="0.1995" />
@@ -17,19 +19,20 @@
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/menu_item_padding.xml" value="0.177" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/top_bar_bg.xml" value="0.1805" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/drawable/yellow_bg.xml" value="0.184" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/font/aclonica.xml" value="0.1778537836682343" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_add_faculty.xml" value="0.2" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_add_new_event.xml" value="0.2" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_add_faculty.xml" value="0.21" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_add_student.xml" value="0.2" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_dashboard.xml" value="0.18" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_delete_notice.xml" value="0.16574074074074074" />
-        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_facultyinfo.xml" value="0.16574074074074074" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_facultyinfo.xml" value="0.5" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_managestudent.xml" value="0.16574074074074074" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_resister_as_stutent.xml" value="0.21" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_studentinfo.xml" value="0.16574074074074074" />
-        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_upload_class.xml" value="0.18" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_upload_class.xml" value="0.16" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_upload_notice.xml" value="0.15305686190679776" />
-        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_uploaded_events.xml" value="0.15305686190679776" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_admin_uploaded_events.xml" value="0.33" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_cr_dashboard.xml" value="0.25" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_crdashboard.xml" value="0.18645833333333334" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_delete_notice.xml" value="0.25" />
@@ -45,6 +48,8 @@
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_upload_notes.xml" value="0.16574074074074074" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_upload_notice.xml" value="0.18645833333333334" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/activity_user_selection.xml" value="0.25" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/dialog_admin_add_class.xml" value="0.22" />
+        <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/dialog_admin_add_subject.xml" value="0.33" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/faculty_info_item.xml" value="0.16574074074074074" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/fragment_about_college.xml" value="0.2" />
         <entry key="..\:/Harshit/AndroidDevelopment/AppProjects/CollageApp/app/src/main/res/layout/fragment_event.xml" value="0.16574074074074074" />

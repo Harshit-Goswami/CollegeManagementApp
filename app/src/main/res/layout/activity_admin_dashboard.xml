@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".admin.AdminDashboard">
-
-
-<!--
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:background="#FF6D00"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />-->
 
     <ScrollView
         android:id="@+id/scrollView2"
@@ -241,7 +231,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/materialCardView2">
 
                 <LinearLayout
-                    android:id="@+id/ClassTT"
+                    android:id="@+id/AddClass"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -267,7 +257,7 @@
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
-                        android:text="AddClassTime"
+                        android:text="Manage Class"
                         android:textColor="@color/black"
                         android:textSize="16sp"
                         android:textStyle="bold" />

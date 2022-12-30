@@ -6,6 +6,7 @@ import android.os.Bundle
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDashboardBinding
 
 
+
 class AdminDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityAdminDashboardBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,5 +19,6 @@ class AdminDashboard : AppCompatActivity() {
         binding.updateFaculty.setOnClickListener { startActivity(Intent(this,ManageFaculty::class.java)) }
         binding.deleteNotice.setOnClickListener { startActivity(Intent(this,DeleteNotice::class.java)) }
         binding.AddEvent.setOnClickListener { startActivity(Intent(this, UploadedEvents::class.java)) }
+        binding.AddClass.setOnClickListener { startActivity(Intent(this, UploadClass::class.java)) }
     }
 }

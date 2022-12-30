@@ -3,14 +3,19 @@
     <style name="circular">
         <item name="cornerSize">50%</item>
     </style>
-    <style name="all_corner_radius">
-        <item name="cornerSize">20%</item>
+ <style name="ShapeCornerCut" parent="ShapeAppearance.MaterialComponents.SmallComponent">
+        <item name="cornerFamily">cut</item>
+        <item name="cornerSize">14dp</item>
     </style>
 
- <style name="ShapeAppearance.App.SmallComponent" parent="ShapeAppearance.MaterialComponents.SmallComponent">
-        <item name="cornerFamily">cut</item>
-        <item name="cornerSize">4dp</item>
+
+    <style name="BottomSheetStyle" parent="Theme.Material3.Light.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/bottomSheetModal</item>
     </style>
+    <style name="bottomSheetModal" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/dialog_bg</item>
+    </style>
+
     <!--   <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="materialThemeOverlay">@style/ThemeOverlay.App.TextInputLayout</item>
         <item name="shapeAppearance">@style/ShapeAppearance.App.SmallComponent</item>
