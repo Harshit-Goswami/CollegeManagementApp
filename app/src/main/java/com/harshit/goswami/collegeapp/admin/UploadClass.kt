@@ -10,8 +10,12 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.admin.dataClasses.ClassData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddSubjectBinding
@@ -32,11 +36,11 @@ class UploadClass : AppCompatActivity() {
         setContentView(binding.root)
         binding.addClass.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                AddClassDialog()
+                addClassDialog()
             }
         }
         binding.AddSubject.setOnClickListener {
-           addSubject()
+            addSubjectDialog()
         }
         binding.seeClasses.setOnClickListener {
 
@@ -45,53 +49,66 @@ class UploadClass : AppCompatActivity() {
 
     }
 
-    private fun addSubject() {
-            addSubjectBindind = DialogAdminAddSubjectBinding.inflate(layoutInflater)
-            val bottomDialog = BottomSheetDialog(this, R.style.BottomSheetStyle)
-            bottomDialog.setContentView(addSubjectBindind.root)
-            bottomDialog
-                .setCanceledOnTouchOutside(false)
-            bottomDialog.show()
-            autoCompleteTextViewSetUp()
+    private fun addSubjectDialog() {
+//        try {
+        addSubjectBindind = DialogAdminAddSubjectBinding.inflate(layoutInflater)
+        val bottomDialog = BottomSheetDialog(this, R.style.BottomSheetStyle)
+        bottomDialog.setContentView(addSubjectBindind.root)
+        bottomDialog
+            .setCanceledOnTouchOutside(false)
+        bottomDialog.show()
+//        } catch (e: Exception) {
+//            Log.d("dialogError","${e.message}")
+//        }
+        val itemsYear = listOf("FY", "SY", "TY")
+        val adapterYear = ArrayAdapter(
+            this,
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            itemsYear
+        )
+        addSubjectBindind.ASClassYear.setAdapter(adapterYear)
 
-            addSubjectBindind.ASBtnAdd.setOnClickListener {
-                var classYear = ""
-                var subject = ""
-                if (addSubjectBindind.ASClassYear.text.toString() != "") classYear =
-                    addSubjectBindind.ASClassYear.text.toString()
-                else addSubjectBindind.ASClassYear.error = "Please select year!"
-                if (addSubjectBindind.ASEdtSubject.text.toString() != "") classYear =
-                    addSubjectBindind.ASEdtSubject.text.toString()
-                else addSubjectBindind.ASEdtSubject.error = "Please add subject!"
+        addSubjectBindind.ASBtnAdd.setOnClickListener {
+            var subjectClassYear = ""
+            var subjectName = ""
+            if (addSubjectBindind.ASClassYear.text.toString() != "") subjectClassYear =
+                addSubjectBindind.ASClassYear.text.toString()
+            else addSubjectBindind.ASClassYear.error = "Please select year!"
+            if (addSubjectBindind.ASEdtSubject.text.toString() != "") subjectName =
+                addSubjectBindind.ASEdtSubject.text.toString()
+            else addSubjectBindind.ASEdtSubject.error = "Please add subject!"
 
-                if (classYear != "" && subject != "") {
-                    FirebaseDatabase.getInstance().reference
-                        .child("BScIT")
-                        .child("Subjects")
-                        .child(classYear)
-                        .setValue(SubjectData(classYear, subject))
-                        .addOnSuccessListener {  Toast.makeText(
+            if (subjectClassYear != "" && subjectName != "") {
+                FirebaseDatabase.getInstance().reference
+                    .child("BScIT")
+                    .child("Subjects")
+                    .child(subjectClassYear)
+                    .child(subjectName)
+                    .setValue(subjectName)
+                    .addOnSuccessListener {
+                        Toast.makeText(
                             this@UploadClass,
                             "Successfully Added",
                             Toast.LENGTH_SHORT
                         )
-                            .show()}
-                        .addOnFailureListener {
-                            Toast.makeText(
-                                this@UploadClass,
-                                "Error :${it.message}",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
-                        }
-                }
-
+                            .show()
+                    }
+                    .addOnFailureListener {
+                        Toast.makeText(
+                            this@UploadClass,
+                            "Error :${it.message}",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                    }
             }
+
+        }
     }
-
-
     @RequiresApi(Build.VERSION_CODES.N)
-    private fun AddClassDialog() {
+    private fun addClassDialog() {
+//        try {
+
         addClassBinding = DialogAdminAddClassBinding.inflate(layoutInflater)
         val bottomDialog = BottomSheetDialog(this, R.style.BottomSheetStyle)
         bottomDialog.setContentView(addClassBinding.root)
@@ -102,23 +119,28 @@ class UploadClass : AppCompatActivity() {
             ViewGroup.LayoutParams.MATCH_PARENT,
             ViewGroup.LayoutParams.MATCH_PARENT
         )
+//        } catch (e: Exception) {
+//            Log.d("dialogError","${e.message}")
+//        }
         autoCompleteTextViewSetUp()
         addClassBinding.ACClassDate.setOnClickListener {
             classDatePickerDialog()
         }
         addClassBinding.ACBtnAdd.setOnClickListener {
             validation()
-            uploadClass()
+            addClass()
         }
 
     }
 
-    private fun uploadClass() {
+
+
+    private fun addClass() {
         if (classDate != "" && classTime != "" && classSubject != "" && classRoom != "" && classYear != "") {
             FirebaseDatabase.getInstance().reference
                 .child("BScIT")
                 .child("Class TimeTable")
-                .child(classYear)
+                .child(classYear).child(classSubject)
                 .setValue(ClassData(classDate, classTime, classSubject, classYear, classRoom))
                 .addOnSuccessListener {
                     Toast.makeText(
@@ -134,7 +156,6 @@ class UploadClass : AppCompatActivity() {
                 }
         }
     }
-
     private fun validation() {
         if (addClassBinding.ACClassDate.text != "") classDate =
             addClassBinding.ACClassDate.text.toString()
@@ -156,7 +177,6 @@ class UploadClass : AppCompatActivity() {
             addClassBinding.ACClassYear.text.toString()
         else addClassBinding.ACClassYear.error = "Please select class!"
     }
-
     private fun autoCompleteTextViewSetUp() {
         val itemsYear = listOf("FY", "SY", "TY")
         val adapterYear = ArrayAdapter(
@@ -165,58 +185,79 @@ class UploadClass : AppCompatActivity() {
             itemsYear
         )
         addClassBinding.ACClassYear.setAdapter(adapterYear)
-        addSubjectBindind.ASClassYear.setAdapter(adapterYear)
 
         addClassBinding.ACClassYear.setOnItemClickListener { _, _, i, _ ->
+            val subjects = ArrayList<String>()
             if (i == 0) {
-                val subjects = listOf(
-                    "Imperative Programming",
-                    "Digital Electronics",
-                    "Operating Systems",
-                    "Discrete Mathematics",
-                    "Communication Skills"
-                )
-                val adapterSubject = ArrayAdapter(
-                    this,
-                    com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
-                    subjects
-                )
-                addClassBinding.ACSubject.setAdapter(adapterSubject)
+                FirebaseDatabase.getInstance().reference
+                    .child("BScIT")
+                    .child("Subjects")
+                    .child("FY").addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                subjects.clear()
+                                for (subject in snapshot.children) {
+                                    subjects.add(subject.value.toString())
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    })
             }
             if (i == 1) {
-                val subjects = listOf(
-                    "Python Programming",
-                    "Data Structures",
-                    "Computer Networks",
-                    "Database Management Systems",
-                    "Applied Mathematics"
-                )
-                val adapterSubject = ArrayAdapter(
-                    this,
-                    com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
-                    subjects
-                )
-                addClassBinding.ACSubject.setAdapter(adapterSubject)
+                FirebaseDatabase.getInstance().reference
+                    .child("BScIT")
+                    .child("Subjects")
+                    .child("SY").addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                subjects.clear()
+                                for (subject in snapshot.children) {
+                                    subjects.add(subject.value.toString())
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    })
+
             }
             if (i == 2) {
-                val subjects = listOf(
-                    "Software Project Management",
-                    "Internet of Things",
-                    "Advanced Web Programming",
-                    "Linux System Administration",
-                    "Enterprise Java",
-                )
-                val adapterSubject = ArrayAdapter(
-                    this,
-                    com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
-                    subjects
-                )
-                addClassBinding.ACSubject.setAdapter(adapterSubject)
+                FirebaseDatabase.getInstance().reference
+                    .child("BScIT")
+                    .child("Subjects")
+                    .child("TY").addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                subjects.clear()
+                                for (subject in snapshot.children) {
+                                    subjects.add(subject.value.toString())
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
+                                .show()
+                        }
+                    })
             }
+            val adapterSubject = ArrayAdapter(
+                this,
+                com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+                subjects
+            )
+            addClassBinding.ACSubject.setAdapter(adapterSubject)
         }
 
     }
-
     @RequiresApi(Build.VERSION_CODES.N)
     private fun classDatePickerDialog() {
         val c = Calendar.getInstance()
@@ -242,11 +283,5 @@ class UploadClass : AppCompatActivity() {
 
 }
 
-data class ClassData(
-    val date: String = "",
-    val time: String = "",
-    val subject: String = "",
-    val year: String = "",
-    val roomNo: String = ""
-)
-data class SubjectData(val year: String = "", val subject: String = "")
+
+//data class SubjectData(val year: String = "", val subject: String = "")

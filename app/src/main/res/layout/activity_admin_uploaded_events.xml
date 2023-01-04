@@ -43,6 +43,6 @@
         android:backgroundTint="@color/shrine_pink_190"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SmallComponent"
+        app:shapeAppearanceOverlay="@style/ShapeCornerCut"
         />
 </androidx.constraintlayout.widget.ConstraintLayout>

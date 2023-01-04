@@ -6,22 +6,35 @@
     android:icon="@drawable/ic_home"/>
 
     <item
-        android:id="@+id/notice"
-        android:title="Notices"
+        android:id="@+id/imp_links"
+        android:title="Important Links"
         android:icon="@drawable/ic_notice"
         />
     <item
-        android:id="@+id/myclass"
-        android:title="Result"
+        android:id="@+id/theme"
+        android:title="Theme"
         android:icon="@drawable/ic_book"
         />
     <item
-        android:id="@+id/event"
-        android:title="Theme"
+        android:id="@+id/faculty"
+        android:title="Faculty"
         android:icon="@drawable/ic_event_note"
         />
     <item
         android:id="@+id/about"
-        android:title="About"
+        android:title="Log Out"
         android:icon="@drawable/ic_about"/>
+    <group android:id="@+id/group2"
+        >
+        <item android:id="@+id/developer"
+            android:title="Developer"
+            android:icon="@drawable/ic_person"/>
+        <item android:id="@+id/map"
+            android:title="Map"
+            android:icon="@drawable/img_college_location"/>
+         <item android:id="@+id/term_n_condition"
+            android:title="Term And Condition"
+            android:icon="@drawable/ic_notice"/>
+
+    </group>
 </menu>

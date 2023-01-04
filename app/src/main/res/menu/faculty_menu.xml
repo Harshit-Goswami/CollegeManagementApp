@@ -6,7 +6,7 @@
         />
     <item
         android:id="@+id/assignFaculty"
-        android:title="Assign To Class"
+        android:title="Assign Subject"
         />
 <item
         android:id="@+id/view_profile"

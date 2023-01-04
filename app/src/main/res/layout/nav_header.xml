@@ -1,33 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-xmlns:android="http://schemas.android.com/apk/res/android"
-android:layout_width="match_parent"
-android:layout_height="250dp"
-android:background="#0E66B9"
-android:paddingTop="16dp"
-android:paddingRight="16dp"
-android:paddingLeft="16dp"
-android:layout_marginBottom="-70dp"
-    >
-<ImageView
-    android:layout_width="60dp"
-    android:layout_height="60dp"
-    android:layout_marginTop="80dp"
-    android:layout_marginLeft="10dp"
-    android:src="@drawable/ic_person"
-    android:layout_centerVertical="true"
-    android:id="@+id/imageView"
-    />
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="250dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/img"
+    android:paddingTop="16dp"
+    android:paddingRight="16dp"
+    android:paddingLeft="16dp">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:layout_marginBottom="20dp"
+        android:src="@drawable/ic_person"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:tint="@color/black" />
 
     <TextView
         android:id="@+id/name"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginLeft="20dp"
-        android:layout_toRightOf="@+id/imageView"
+        android:layout_alignTop="@+id/imageView"
+        android:layout_alignParentBottom="true"
+        android:layout_toEndOf="@+id/imageView"
         android:fontFamily="@font/nunito_sans"
-        android:text="Chike Mgbemena"
-        android:textColor="#fff"
-        android:textSize="14sp" />
-</RelativeLayout>
+        android:text="Harshit Goshwami"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/imageView"
+        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imageView" />
+</androidx.constraintlayout.widget.ConstraintLayout>

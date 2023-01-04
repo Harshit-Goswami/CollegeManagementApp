@@ -37,7 +37,7 @@
         android:backgroundTint="@color/shrine_pink_190"
         android:contentDescription="@string/image_description"
         android:src="@drawable/ic_add"
-        app:shapeAppearanceOverlay="@style/ShapeAppearance.App.SmallComponent">
+        app:shapeAppearanceOverlay="@style/ShapeCornerCut">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
 

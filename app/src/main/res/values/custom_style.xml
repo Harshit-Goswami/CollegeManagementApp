@@ -13,7 +13,10 @@
         <item name="bottomSheetStyle">@style/bottomSheetModal</item>
     </style>
     <style name="bottomSheetModal" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/dialog_bg</item>
+        <item name="android:background">@drawable/bottom_dialog_bg</item>
+    </style>
+    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/alert_dialog_bg</item>
     </style>
 
     <!--   <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

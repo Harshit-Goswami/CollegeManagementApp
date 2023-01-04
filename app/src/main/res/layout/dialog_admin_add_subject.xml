@@ -9,11 +9,11 @@
     android:layout_marginTop="50dp"
     android:orientation="vertical"
     >
-    <View
+    <com.google.android.material.button.MaterialButton
         android:layout_width="50dp"
         android:layout_height="5dp"
-        style="@style/circular"
-        android:background="@color/grey_font"
+        android:backgroundTint="@color/grey_font"
+        app:cornerRadius="10dp"
         android:layout_gravity="center_horizontal"/>
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="match_parent"
@@ -23,24 +23,11 @@
                 android:gravity="center"
                 android:padding="5dp"
                 android:textSize="20sp"
-                android:text="Add Class"
+                android:text="Add Subject"
                 android:textStyle="bold"
                 style="@style/TextAppearance.AppCompat.Headline"
                 android:textColor="@color/black"
                />
-    <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/AC_class_date"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-               android:layout_margin="10dp"
-                android:gravity="start|center_vertical"
-                android:paddingStart="30dp"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                android:textColor="#00838F"
-                android:background="#e6e6e6"
-                android:hint="Select Date"
-                android:drawableEnd="@drawable/ic_event_note"/>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -48,7 +35,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:hint="Select Class">
             <AutoCompleteTextView
-                android:id="@+id/AC_classYear"
+                android:id="@+id/AS_classYear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
@@ -58,50 +45,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="5dp"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
-            android:hint="Select Subject">
-            <AutoCompleteTextView
-                android:id="@+id/AC_subject"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:inputType="none"
-                tools:ignore="LabelFor" />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="Enter time"
+            android:hint="Subject Name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/AC_edt_class_time"
+                android:id="@+id/AS_edt_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="ex.9AM To 10AM"
-                android:text=""
-               />
-        </com.google.android.material.textfield.TextInputLayout>
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="5dp"
-            android:hint="Room no"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/AC_edt_class_room"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="701"
                />
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/AC_btnAdd"
+            android:id="@+id/AS_btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

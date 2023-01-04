@@ -71,77 +71,11 @@
         android:textSize="25sp"
         android:textStyle="bold" />
 
-  <!--  <androidx.recyclerview.widget.RecyclerView
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/rsv_student_class_time"/>-->
+        android:id="@+id/rsv_student_class_time"/>
 
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="250dp"
-            android:layout_height="wrap_content"
-            app:cardCornerRadius="10dp"
-            app:cardElevation="10dp"
-            android:background="#eeeeee"
-            app:cardUseCompatPadding="true">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-
-                android:orientation="vertical"
-                android:padding="10dp">
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Tomarrow"
-                    android:textColor="#121212"
-                    android:textSize="15sp"
-                    android:textStyle="bold" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="2dp"
-                    android:background="@color/black" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Business Intelligence"
-                    android:textColor="#161616"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="-Saravaman Raddy"
-                    android:textColor="#161616"
-                    android:textSize="14sp" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="9AM - 10AM"
-                    android:textAlignment="center"
-                    android:textColor="#161616"
-                    android:textSize="16sp"
-                    android:textStyle="bold" />
-
-                <com.google.android.material.textview.MaterialTextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Room no -701"
-                    android:textColor="#161616"
-                    android:textSize="14sp" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
 
 
     <com.google.android.material.card.MaterialCardView
@@ -197,6 +131,7 @@
         </RelativeLayout>
 
     </com.google.android.material.card.MaterialCardView>
+
   <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
