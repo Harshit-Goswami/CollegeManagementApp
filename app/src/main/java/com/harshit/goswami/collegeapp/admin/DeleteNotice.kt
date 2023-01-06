@@ -10,10 +10,8 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.noticeList
-import com.harshit.goswami.collegeapp.admin.adapters.DeleteNoticeAdapter
-import com.harshit.goswami.collegeapp.admin.dataClasses.NoticeData
+import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
+import com.harshit.goswami.collegeapp.dataClasses.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDeleteNoticeBinding
 
 open class DeleteNotice : AppCompatActivity() {

@@ -8,8 +8,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.admin.dataClasses.RegisteredStudentData
-import com.harshit.goswami.collegeapp.databinding.ActivityAdminResisterAsStutentBinding
+import com.harshit.goswami.collegeapp.dataClasses.RegisteredStudentData
+import com.harshit.goswami.collegeapp.databinding.ActivityStudentResisterAsStutentBinding
 
 class ResisterAsStutent : AppCompatActivity() {
     private var Sfullname = ""
@@ -19,10 +19,10 @@ class ResisterAsStutent : AppCompatActivity() {
     private var Spassword = ""
     private var Srollno = ""
     private val FireRef = FirebaseDatabase.getInstance()
-    private lateinit var binding: ActivityAdminResisterAsStutentBinding
+    private lateinit var binding: ActivityStudentResisterAsStutentBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityAdminResisterAsStutentBinding.inflate(layoutInflater)
+        binding = ActivityStudentResisterAsStutentBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val itemsDeparment = listOf("BScIT", "BMS", "BAF", "BMM")

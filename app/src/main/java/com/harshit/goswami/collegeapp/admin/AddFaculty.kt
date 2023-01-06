@@ -14,8 +14,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
-import com.harshit.goswami.collegeapp.admin.dataClasses.FacultyData
+import com.harshit.goswami.collegeapp.dataClasses.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddFacultyBinding
 import java.io.IOException
 import java.util.*

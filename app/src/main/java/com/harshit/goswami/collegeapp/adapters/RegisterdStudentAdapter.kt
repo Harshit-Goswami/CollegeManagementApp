@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.admin.adapters
+package com.harshit.goswami.collegeapp.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.admin.dataClasses.RegisteredStudentData
+import com.harshit.goswami.collegeapp.dataClasses.RegisteredStudentData
 import com.harshit.goswami.collegeapp.databinding.ItemResisteredStudentBinding
 
 class RegisterdStudentAdapter(

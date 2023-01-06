@@ -11,8 +11,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.harshit.goswami.collegeapp.admin.adapters.YourStudentAdapter
-import com.harshit.goswami.collegeapp.admin.dataClasses.RegisteredStudentData
+import com.harshit.goswami.collegeapp.adapters.YourStudentAdapter
+import com.harshit.goswami.collegeapp.dataClasses.RegisteredStudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminManagestudentBinding
 
 class ManageStudent : AppCompatActivity() {

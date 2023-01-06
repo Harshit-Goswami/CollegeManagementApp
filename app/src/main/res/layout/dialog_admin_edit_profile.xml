@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/alert_dialog_bg_edit_profile"
+    android:orientation="vertical"
+    >
+<com.google.android.material.imageview.ShapeableImageView
+    android:id="@+id/DEP_img_admin"
+    android:layout_width="80dp"
+    android:layout_height="80dp"
+    android:layout_margin="10dp"
+    android:scaleType="centerCrop"
+    android:layout_gravity="center_horizontal"
+    app:shapeAppearanceOverlay="@style/circular"
+    />
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="@string/txt_fullname">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/DEP_edt_Fullname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text=""/>
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="Department">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/DEP_edt_department"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        android:hint="userId">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/DEP_edt_userId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp"
+        app:endIconMode="password_toggle"
+        android:hint="Enter password">
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/DEP_edt_password"
+        android:inputType="textPassword"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/DEP_btnSubmit"
+        android:layout_width="300dp"
+        android:layout_height="60dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="Update"
+        app:shapeAppearance="@style/ShapeCornerCut"
+        android:textAllCaps="false"
+        android:layout_margin="5dp"
+        android:textSize="18sp"
+        android:textColor="#121212"
+        android:backgroundTint="#FF6F00"
+        />
+</LinearLayout>

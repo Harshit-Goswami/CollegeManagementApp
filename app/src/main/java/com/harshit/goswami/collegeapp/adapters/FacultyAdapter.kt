@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.admin.adapters
+package com.harshit.goswami.collegeapp.adapters
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.admin.dataClasses.FacultyData
+import com.harshit.goswami.collegeapp.dataClasses.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ItemFacultyinfoBinding
 
 class FacultyAdapter(
@@ -30,7 +30,7 @@ class FacultyAdapter(
             with(facultyList[position]) {
                 binding.IFiTvFacultyName.text = this.name
                 binding.IFiTvFacultyDepartment.text = this.department
-                    binding.IFiTxtContactNo.text = this.ContactNo
+                    binding.IFiTxtContactNo.text = this.contactNo
                 Glide.with(context).load(this.downloadUrl).into(binding.IFiFacultyDp)
                 binding.IFiBtnMoreOption.setOnClickListener {
                     val popupMenu = PopupMenu(context, binding.IFiBtnMoreOption)

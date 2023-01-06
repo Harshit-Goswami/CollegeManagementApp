@@ -1,8 +1,12 @@
 package com.harshit.goswami.collegeapp.student
 
 import android.app.Activity
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
@@ -12,7 +16,6 @@ import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.appbar.MaterialToolbar
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.databinding.FragmentHomeBinding
-
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -30,7 +33,7 @@ class HomeFragment : Fragment() {
 //        getSupportActionBar().setDisplayShowTitleEnabled(false);
 //         activity!!.applicationContext as Activity
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
-        (activity as AppCompatActivity?)!!.getSupportActionBar()!!.setDisplayShowTitleEnabled(false)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayShowTitleEnabled(false)
 //        toolbar.setNavigationIcon(R.drawable.ic_home);
 //        toolbar.setTitle("");
 //        toolbar.setSubtitle("");
@@ -45,10 +48,20 @@ class HomeFragment : Fragment() {
         binding.scrollView3.viewTreeObserver.addOnScrollChangedListener {
             val x = binding.scrollView3.scrollX
             val y = binding.scrollView3.scrollY
-            if (y>500) {
+            if (y > 500) {
                 MainActivity.binding.cordinatorNavBar.visibility = View.GONE
             } else MainActivity.binding.cordinatorNavBar.visibility = View.VISIBLE
         }
+        binding.FHYoutubeIcon.setOnClickListener {
+            getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")
+        }
+        binding.FHInstaIcon.setOnClickListener { getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en") }
+        binding.FHFacebookIcon.setOnClickListener { getByUrl("https://www.facebook.com/profile.php?id=100064103347725") }
+        binding.FHEmailIcon.setOnClickListener {
+            val email = Intent(Intent.ACTION_SEND)
+            email.putExtra(Intent.EXTRA_EMAIL, "harshitgoswami103@gmail.com")
+            email.type = "message/rfc822"
+            startActivity(Intent.createChooser(email, "Choose an Email client :")); }
 
 //        binding.navView.setNavigationItemSelectedListener {
 //            when (it.itemId) {
@@ -71,6 +84,12 @@ class HomeFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    private fun getByUrl(s: String) {
+        val uri = Uri.parse(s)
+        startActivity(Intent(Intent.ACTION_VIEW, uri))
+
     }
 
 }

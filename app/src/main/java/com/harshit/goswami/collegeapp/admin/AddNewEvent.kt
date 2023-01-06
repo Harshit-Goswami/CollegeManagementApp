@@ -16,7 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
-import com.harshit.goswami.collegeapp.admin.dataClasses.NoticeData
+import com.harshit.goswami.collegeapp.dataClasses.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAddNewEventBinding
 import java.io.IOException
 import java.util.*

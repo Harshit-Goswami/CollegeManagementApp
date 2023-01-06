@@ -15,8 +15,11 @@
     <style name="bottomSheetModal" parent="Widget.Design.BottomSheet.Modal">
         <item name="android:background">@drawable/bottom_dialog_bg</item>
     </style>
-    <style name="CustomAlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+    <style name="CustomAlertDialogViewProfile" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:windowBackground">@drawable/alert_dialog_bg</item>
+    </style>
+    <style name="CustomAlertDialogEditProfile" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:windowBackground">@drawable/alert_dialog_bg_edit_profile</item>
     </style>
 
     <!--   <style name="Widget.App.TextInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">

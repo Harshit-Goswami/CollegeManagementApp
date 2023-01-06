@@ -1,18 +1,13 @@
 package com.harshit.goswami.collegeapp.admin
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
-import com.harshit.goswami.collegeapp.admin.adapters.FacultyAdapter
-import com.harshit.goswami.collegeapp.admin.dataClasses.FacultyData
+import com.harshit.goswami.collegeapp.adapters.FacultyAdapter
+import com.harshit.goswami.collegeapp.dataClasses.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminFacultyinfoBinding
 
 class ManageFaculty : AppCompatActivity() {

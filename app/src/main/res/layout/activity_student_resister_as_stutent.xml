@@ -92,6 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        app:endIconMode="password_toggle"
         android:hint="Enter password">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/RASpasswd"
@@ -103,6 +104,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
+        app:endIconMode="password_toggle"
         android:hint="ReEnter Password">
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/RASrePasswd"

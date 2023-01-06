@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.admin.dataClasses
+package com.harshit.goswami.collegeapp.dataClasses
 
 data class RegisteredStudentData(val fullName: String = "",
                                  val rollNo: String = "",

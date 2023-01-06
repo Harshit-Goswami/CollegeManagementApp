@@ -9,7 +9,6 @@
     tools:context=".student.HomeFragment"
     tools:openDrawer="start">
 
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -207,7 +206,7 @@
                     android:layout_marginStart="10dp"
                     android:layout_marginTop="10dp"
                     android:drawableBottom="@color/black"
-                    android:text="Our Cources"
+                    android:text="Our Courses"
                     android:textAlignment="center"
                     android:textColor="#F4511E"
                     android:textSize="20sp"
@@ -234,7 +233,7 @@
                         android:weightSum="2">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/card_bscit"
+                            android:id="@+id/FH_card_bscit"
                             android:layout_width="0dp"
                             android:layout_height="70dp"
                             android:layout_marginStart="15dp"
@@ -259,7 +258,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/cardview_baf"
+                            android:id="@+id/FH_card_baf"
                             android:layout_width="0dp"
                             android:layout_height="70dp"
                             android:layout_marginStart="15dp"
@@ -291,7 +290,7 @@
                         android:weightSum="2">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/card_bmm"
+                            android:id="@+id/FH_card_bmm"
                             android:layout_width="0dp"
                             android:layout_height="70dp"
                             android:layout_marginStart="15dp"
@@ -316,7 +315,7 @@
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/materialCardView7"
+                            android:id="@+id/FH_card_bms"
                             android:layout_width="0dp"
                             android:layout_height="70dp"
                             android:layout_marginStart="15dp"
@@ -503,6 +502,7 @@
                         android:weightSum="2">
 
                         <LinearLayout
+                            android:id="@+id/FH_alumni_galerry"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -529,6 +529,7 @@
                         </LinearLayout>
 
                         <LinearLayout
+                            android:id="@+id/FH_alumni_registration"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_margin="10dp"
@@ -747,6 +748,7 @@
                     android:orientation="horizontal">
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/FH_youtube_icon"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
@@ -754,6 +756,7 @@
                         android:src="@drawable/img_youtube" />
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/FH_insta_icon"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
@@ -761,6 +764,7 @@
                         android:src="@drawable/img_instagram" />
 
                     <com.google.android.material.imageview.ShapeableImageView
+                       android:id="@+id/FH_email_icon"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
@@ -768,6 +772,7 @@
                         android:src="@drawable/img_email_ic" />
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/FH_facebook_icon"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
@@ -831,6 +836,7 @@
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -846,4 +852,5 @@
             app:itemIconPadding="40dp"
             app:menu="@menu/navigation_bar_menu"
             />
+-->
 </androidx.drawerlayout.widget.DrawerLayout>
