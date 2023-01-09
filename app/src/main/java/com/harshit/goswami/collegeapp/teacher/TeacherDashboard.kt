@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.LoginActivity
-import com.harshit.goswami.collegeapp.dataClasses.FacultyData
+import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherDashboardBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminEditProfileBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding

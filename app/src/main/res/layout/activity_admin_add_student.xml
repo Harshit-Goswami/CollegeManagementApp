@@ -9,49 +9,42 @@
         android:id="@+id/MS_years_btns"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
+        android:orientation="vertical"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/AS_FAB_fy"
-            android:layout_width="0dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_download_format"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="FY"
-            android:layout_margin="10dp"
-            android:textStyle="bold"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:backgroundTint="@color/shrine_pink_100"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/AS_FAB_sy"
-            android:layout_width="0dp"
+            android:textColor="@color/shrine_pink_900"
+            app:backgroundTint="@color/shrine_pink_100"
+            android:textAlignment="textStart"
+            android:drawableEnd="@drawable/ic_double_arrow_down"
+            android:drawableTint="@color/shrine_pink_900"
+            android:text="Download Format of excel file"
+            />
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_select_file"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="SY"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:backgroundTint="@color/shrine_pink_100"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-            android:id="@+id/AS_FAB_ty"
-            android:layout_width="0dp"
+            android:text="Select xls file"
+            android:layout_gravity="center_horizontal"/>
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_file_name"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_margin="10dp"
-            android:backgroundTint="@color/shrine_pink_100"
-            android:text="TY" />
-    </LinearLayout>
+            android:text="ExcelFile.xlsx"
+            android:layout_gravity="center_horizontal"/>
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_add_data"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            app:backgroundTint="@color/shrine"
+            android:text="ADD Data"
+            android:layout_gravity="center_horizontal"/>
+  </LinearLayout>
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/AS_txt_totalRegStudent"
@@ -59,12 +52,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="FY Resistered Students:-"
+        android:text="Total Students:-"
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MS_years_btns" />
 
-    <TextView
+<!--    <TextView
         android:id="@+id/AS_txt_showAll"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -73,7 +66,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/AS_txt_totalRegStudent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns" />
+        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns" />-->
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/AddStudProgbar"
@@ -92,7 +85,7 @@
         app:trackColor="@color/shrine_pink_100"
         app:trackThickness="20dp" />
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rsv_registeredStud"
+        android:id="@+id/rsv_student_data"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="8dp"

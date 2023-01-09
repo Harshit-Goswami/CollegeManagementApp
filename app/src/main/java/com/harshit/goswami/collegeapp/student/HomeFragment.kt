@@ -81,15 +81,12 @@ class HomeFragment : Fragment() {
         imageList.add(SlideModel(R.drawable.slide_college_iso_certificate))
 
         binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
-
-
         return binding.root
     }
 
     private fun getByUrl(s: String) {
         val uri = Uri.parse(s)
         startActivity(Intent(Intent.ACTION_VIEW, uri))
-
     }
 
 }

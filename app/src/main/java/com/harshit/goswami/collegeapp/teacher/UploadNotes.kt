@@ -5,13 +5,14 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.google.firebase.storage.StorageReference
-import com.harshit.goswami.collegeapp.dataClasses.NotesData
+import com.google.firebase.storage.UploadTask
+import com.harshit.goswami.collegeapp.data.NotesData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherUploadNotesBinding
 
 
@@ -53,9 +54,11 @@ class UploadNotes : AppCompatActivity() {
         }
     }
     private fun uploadFileAndData(){
-        storageRef.child("BScIT ").child("Notes").child(TeacherDashboard.loggedTeacherName).child(bindind.txtBookName.text.toString())
+        bindind.UNProgressBox.visibility = View.VISIBLE
+        storageRef.child("BScIT ").child("Notes").child("TY").child(bindind.txtBookName.text.toString())
             .putFile(fileUri!!)
             .addOnSuccessListener {
+                bindind.UNProgressBox.visibility = View.GONE
                 Toast.makeText(this@UploadNotes,"Pdf uploaded",Toast.LENGTH_SHORT).show()
                 it.storage.downloadUrl.addOnSuccessListener {it1->
                     downloadUri = it1.toString()
@@ -65,12 +68,16 @@ class UploadNotes : AppCompatActivity() {
                 }
             }
             .addOnFailureListener{
+                bindind.UNProgressBox.visibility = View.GONE
                 Toast.makeText(this@UploadNotes,"Firebase Error!-${it.message}",Toast.LENGTH_SHORT).show()
+            }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
+                val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
+                bindind.UNTxtProgress.text = "Uploaded "+ progress.toInt() + "%"
             }
     }
     private fun uploadData(){
         fireDb.child("BScIT").child("Faculty Data")
-            .child("Notes").child(bindind.edtBookTitle.text.toString())
+            .child("Notes").child("TY").child(bindind.edtBookTitle.text.toString())
             .setValue(NotesData(bindind.edtBookTitle.text.toString(),downloadUri,TeacherDashboard.loggedTeacherName))
             .addOnSuccessListener {
                 Toast.makeText(this@UploadNotes,"Data Uploaded",Toast.LENGTH_SHORT).show()

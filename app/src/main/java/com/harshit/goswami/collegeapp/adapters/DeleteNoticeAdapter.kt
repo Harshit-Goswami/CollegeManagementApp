@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.harshit.goswami.collegeapp.admin.DeleteNotice
-import com.harshit.goswami.collegeapp.dataClasses.NoticeData
+import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ItemDeleteNoticeBinding
 
 

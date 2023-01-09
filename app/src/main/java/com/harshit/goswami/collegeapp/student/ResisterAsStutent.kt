@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.dataClasses.RegisteredStudentData
+import com.harshit.goswami.collegeapp.data.RegisteredStudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityStudentResisterAsStutentBinding
 
 class ResisterAsStutent : AppCompatActivity() {

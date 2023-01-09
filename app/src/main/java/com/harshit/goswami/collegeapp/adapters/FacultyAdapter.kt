@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.dataClasses.FacultyData
+import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ItemFacultyinfoBinding
 
 class FacultyAdapter(

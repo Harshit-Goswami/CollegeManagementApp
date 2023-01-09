@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.harshit.goswami.collegeapp.dataClasses.ClassData
+import com.harshit.goswami.collegeapp.data.ClassData
 import com.harshit.goswami.collegeapp.databinding.ItemClassTimeTableBinding
 
 

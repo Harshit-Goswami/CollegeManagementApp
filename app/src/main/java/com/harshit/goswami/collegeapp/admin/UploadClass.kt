@@ -15,7 +15,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.dataClasses.ClassData
+import com.harshit.goswami.collegeapp.data.ClassData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddSubjectBinding

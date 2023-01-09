@@ -7,7 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import com.harshit.goswami.collegeapp.adapters.FacultyAdapter
-import com.harshit.goswami.collegeapp.dataClasses.FacultyData
+import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminFacultyinfoBinding
 
 class ManageFaculty : AppCompatActivity() {

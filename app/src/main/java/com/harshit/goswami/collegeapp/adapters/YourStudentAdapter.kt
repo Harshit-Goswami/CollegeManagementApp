@@ -8,7 +8,7 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.dataClasses.RegisteredStudentData
+import com.harshit.goswami.collegeapp.data.RegisteredStudentData
 import com.harshit.goswami.collegeapp.databinding.ItemYourStudentsBinding
 
 

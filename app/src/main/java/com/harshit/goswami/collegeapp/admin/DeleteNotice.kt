@@ -11,7 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
-import com.harshit.goswami.collegeapp.dataClasses.NoticeData
+import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDeleteNoticeBinding
 
 open class DeleteNotice : AppCompatActivity() {
