@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.admin
+package com.harshit.goswami.collegeapp.teacher
 
 import android.app.ProgressDialog
 import android.graphics.Bitmap

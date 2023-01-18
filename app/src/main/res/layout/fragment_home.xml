@@ -268,8 +268,8 @@
                             app:cardElevation="5dp"
                             app:cardCornerRadius="8dp"
                             app:cardUseCompatPadding="true"
-                            app:layout_constraintStart_toStartOf="@+id/materialCardView8"
-                            app:layout_constraintTop_toBottomOf="@+id/materialCardView8">
+                            app:layout_constraintStart_toStartOf="@+id/TD_upload_notes"
+                            app:layout_constraintTop_toBottomOf="@+id/TD_upload_notes">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/txt_baf"
@@ -325,8 +325,8 @@
                           app:cardElevation="5dp"
                             app:cardCornerRadius="8dp"
                             app:cardUseCompatPadding="true"
-                            app:layout_constraintStart_toStartOf="@+id/materialCardView8"
-                            app:layout_constraintTop_toBottomOf="@+id/materialCardView8">
+                            app:layout_constraintStart_toStartOf="@+id/TD_upload_notes"
+                            app:layout_constraintTop_toBottomOf="@+id/TD_upload_notes">
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/materialTextView2"
@@ -542,7 +542,7 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:layout_gravity="center"
-                                android:src="@drawable/connection" />
+                                android:src="@drawable/img_faculties" />
 
                             <com.google.android.material.textview.MaterialTextView
                                 android:id="@+id/materialTextView43"

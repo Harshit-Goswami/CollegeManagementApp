@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.admin
+package com.harshit.goswami.collegeapp.teacher
 
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
@@ -80,8 +80,8 @@ class UploadClass : AppCompatActivity() {
 
             if (subjectClassYear != "" && subjectName != "") {
                 FirebaseDatabase.getInstance().reference
-                    .child("BScIT")
                     .child("Subjects")
+                    .child(TeacherDashboard.loggedTeacherDep)
                     .child(subjectClassYear)
                     .child(subjectName)
                     .setValue(subjectName)
@@ -133,13 +133,11 @@ class UploadClass : AppCompatActivity() {
 
     }
 
-
-
     private fun addClass() {
         if (classDate != "" && classTime != "" && classSubject != "" && classRoom != "" && classYear != "") {
             FirebaseDatabase.getInstance().reference
-                .child("BScIT")
                 .child("Class TimeTable")
+                .child(TeacherDashboard.loggedTeacherDep)
                 .child(classYear).child(classSubject)
                 .setValue(ClassData(classDate, classTime, classSubject, classYear, classRoom))
                 .addOnSuccessListener {
@@ -190,8 +188,8 @@ class UploadClass : AppCompatActivity() {
             val subjects = ArrayList<String>()
             if (i == 0) {
                 FirebaseDatabase.getInstance().reference
-                    .child("BScIT")
                     .child("Subjects")
+                    .child(TeacherDashboard.loggedTeacherDep)
                     .child("FY").addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {
@@ -210,8 +208,8 @@ class UploadClass : AppCompatActivity() {
             }
             if (i == 1) {
                 FirebaseDatabase.getInstance().reference
-                    .child("BScIT")
                     .child("Subjects")
+                    .child(TeacherDashboard.loggedTeacherDep)
                     .child("SY").addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {
@@ -231,8 +229,8 @@ class UploadClass : AppCompatActivity() {
             }
             if (i == 2) {
                 FirebaseDatabase.getInstance().reference
-                    .child("BScIT")
                     .child("Subjects")
+                    .child(TeacherDashboard.loggedTeacherDep)
                     .child("TY").addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {

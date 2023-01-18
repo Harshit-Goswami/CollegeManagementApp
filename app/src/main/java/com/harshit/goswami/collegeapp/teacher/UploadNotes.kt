@@ -22,6 +22,7 @@ class UploadNotes : AppCompatActivity() {
     private var downloadUri = ""
     private val fireDb = FirebaseDatabase.getInstance().reference
     private var storageRef = FirebaseStorage.getInstance().reference
+    private var clickedButton = ""
     private val getResult = registerForActivityResult(
         GetContent()
     ) { uri: Uri? ->
@@ -46,43 +47,133 @@ class UploadNotes : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         bindind = ActivityTeacherUploadNotesBinding.inflate(layoutInflater)
         setContentView(bindind.root)
-        bindind.cardSelectpdf.setOnClickListener { getResult.launch("application/*") }
+        clickedButton = intent.getStringExtra("clickedButton").toString()
 
+        bindind.cardSelectpdf.setOnClickListener { getResult.launch("application/*") }
         bindind.btnUploadBook.setOnClickListener {
-            if (fileUri == null) Toast.makeText(this@UploadNotes,"Please select Pdf",Toast.LENGTH_SHORT).show()
+            if (fileUri == null) Toast.makeText(
+                this@UploadNotes,
+                "Please select Pdf",
+                Toast.LENGTH_SHORT
+            ).show()
             else uploadFileAndData()
         }
     }
-    private fun uploadFileAndData(){
+
+    private fun uploadFileAndData() {
         bindind.UNProgressBox.visibility = View.VISIBLE
-        storageRef.child("BScIT ").child("Notes").child("TY").child(bindind.txtBookName.text.toString())
-            .putFile(fileUri!!)
-            .addOnSuccessListener {
-                bindind.UNProgressBox.visibility = View.GONE
-                Toast.makeText(this@UploadNotes,"Pdf uploaded",Toast.LENGTH_SHORT).show()
-                it.storage.downloadUrl.addOnSuccessListener {it1->
-                    downloadUri = it1.toString()
-                    uploadData()
-                }.addOnFailureListener {e->
-                    Toast.makeText(this@UploadNotes,"downloadUriError!-${e.message}",Toast.LENGTH_SHORT).show()
+        if (clickedButton == "notes") {
+            storageRef.child("Notes").child(TeacherDashboard.loggedTeacherDep)
+                .child("TY")
+                .child(bindind.selectSubject.text.toString())
+                .child(bindind.edtBookTitle.text.toString())
+                .putFile(fileUri!!)
+                .addOnSuccessListener {
+                    bindind.UNProgressBox.visibility = View.GONE
+                    Toast.makeText(this@UploadNotes, "Pdf uploaded", Toast.LENGTH_SHORT).show()
+                    it.storage.downloadUrl.addOnSuccessListener { it1 ->
+                        downloadUri = it1.toString()
+                        uploadData()
+                    }.addOnFailureListener { e ->
+                        Toast.makeText(
+                            this@UploadNotes,
+                            "downloadUriError!-${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-            }
-            .addOnFailureListener{
-                bindind.UNProgressBox.visibility = View.GONE
-                Toast.makeText(this@UploadNotes,"Firebase Error!-${it.message}",Toast.LENGTH_SHORT).show()
-            }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
-                bindind.UNTxtProgress.text = "Uploaded "+ progress.toInt() + "%"
-            }
+                .addOnFailureListener {
+                    bindind.UNProgressBox.visibility = View.GONE
+                    Toast.makeText(
+                        this@UploadNotes,
+                        "Firebase Error!-${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
+                    val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
+                    bindind.UNTxtProgress.text = "Uploaded " + progress.toInt() + "%"
+                }
+        }
+        if (clickedButton == "assignment") {
+            storageRef.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep)
+                .child("TY")
+                .child(bindind.selectSubject.text.toString())
+                .child(bindind.edtBookTitle.text.toString())
+                .putFile(fileUri!!)
+                .addOnSuccessListener {
+                    bindind.UNProgressBox.visibility = View.GONE
+                    Toast.makeText(this@UploadNotes, "Pdf uploaded", Toast.LENGTH_SHORT).show()
+                    it.storage.downloadUrl.addOnSuccessListener { it1 ->
+                        downloadUri = it1.toString()
+                        uploadData()
+                    }.addOnFailureListener { e ->
+                        Toast.makeText(
+                            this@UploadNotes,
+                            "downloadUriError!-${e.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+                .addOnFailureListener {
+                    bindind.UNProgressBox.visibility = View.GONE
+                    Toast.makeText(
+                        this@UploadNotes,
+                        "Firebase Error!-${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
+                    val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
+                    bindind.UNTxtProgress.text = "Uploaded " + progress.toInt() + "%"
+                }
+        }
     }
-    private fun uploadData(){
-        fireDb.child("BScIT").child("Faculty Data")
-            .child("Notes").child("TY").child(bindind.edtBookTitle.text.toString())
-            .setValue(NotesData(bindind.edtBookTitle.text.toString(),downloadUri,TeacherDashboard.loggedTeacherName))
-            .addOnSuccessListener {
-                Toast.makeText(this@UploadNotes,"Data Uploaded",Toast.LENGTH_SHORT).show()
-            }.addOnFailureListener {
-                Toast.makeText(this@UploadNotes,"Firebase Error!-${it.message}",Toast.LENGTH_SHORT).show()
-            }
+
+    private fun uploadData() {
+        if (clickedButton == "notes") {
+            fireDb.child("Notes").child(TeacherDashboard.loggedTeacherDep)
+                .child("TY")
+                .child(bindind.selectSubject.text.toString())
+                .child(bindind.edtBookTitle.text.toString())
+                .setValue(
+                    NotesData(
+                        bindind.edtBookTitle.text.toString(),
+                        downloadUri,
+                        TeacherDashboard.loggedTeacherName,
+                        bindind.edtDescription.text.toString()
+                    )
+                )
+                .addOnSuccessListener {
+                    Toast.makeText(this@UploadNotes, "Data Uploaded", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Toast.makeText(
+                        this@UploadNotes,
+                        "Firebase Error!-${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
+        if (clickedButton == "assignment") {
+            fireDb.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep)
+                .child("TY")
+                .child(bindind.selectSubject.text.toString())
+                .child(bindind.edtBookTitle.text.toString())
+                .setValue(
+                    NotesData(
+                        bindind.edtBookTitle.text.toString(),
+                        downloadUri,
+                        TeacherDashboard.loggedTeacherName,
+                        bindind.edtDescription.text.toString()
+                    )
+                )
+                .addOnSuccessListener {
+                    Toast.makeText(this@UploadNotes, "Data Uploaded", Toast.LENGTH_SHORT).show()
+                }.addOnFailureListener {
+                    Toast.makeText(
+                        this@UploadNotes,
+                        "Firebase Error!-${it.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+        }
     }
 }

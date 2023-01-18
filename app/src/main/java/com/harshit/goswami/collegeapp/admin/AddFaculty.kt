@@ -17,7 +17,6 @@ import com.google.firebase.storage.StorageReference
 import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddFacultyBinding
 import java.io.IOException
-import java.util.*
 
 class AddFaculty : AppCompatActivity() {
     private lateinit var binding: ActivityAdminAddFacultyBinding
@@ -28,13 +27,13 @@ class AddFaculty : AppCompatActivity() {
     private var facultyPassword = ""
     private var imgUri: Uri? = null
     private var storageRef: StorageReference? = null
-    private var dbRef: DatabaseReference? = null
+    private var  dbRef = FirebaseDatabase.getInstance().reference.child("Faculty Data")
     private var downloadImgUrl: String? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminAddFacultyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         settingAutoCompleteTextView()
         onClickListeners()
 
@@ -71,6 +70,7 @@ class AddFaculty : AppCompatActivity() {
             }
         }
     }
+
     private fun settingAutoCompleteTextView() {
         val items = listOf("BScIT", "BMS", "BAF", "BMM")
         val adapter = ArrayAdapter(
@@ -81,6 +81,7 @@ class AddFaculty : AppCompatActivity() {
         binding.department.setAdapter(adapter)
 
     }
+
     private fun onClickListeners() {
         binding.imgFaculty.setOnClickListener {
             getResult.launch("image/*")
@@ -90,7 +91,8 @@ class AddFaculty : AppCompatActivity() {
             if (imgUri == null) uploadData() else uploadImageAndData()
         }
     }
-    private fun validation(){
+
+    private fun validation() {
         if (binding.facultyName.text.toString().isNotEmpty()) {
             facultyName = binding.facultyName.text.toString()
         } else {
@@ -98,7 +100,8 @@ class AddFaculty : AppCompatActivity() {
         }
         if (android.util.Patterns.PHONE.matcher(binding.ContactNo.text.toString())
                 .matches()
-            && binding.ContactNo.length() == 10 ) {
+            && binding.ContactNo.length() == 10
+        ) {
             facultyContactNo = binding.ContactNo.text.toString()
         } else {
             binding.ContactNo.error = "Please enter Valid Number"
@@ -109,98 +112,119 @@ class AddFaculty : AppCompatActivity() {
         } else {
             binding.department.error = "please select department"
         }
-
-        if (binding.Qualification.text.toString().isNotEmpty()) {
-            facultyQualifications = binding.Qualification.text.toString()
-        } else {
-            binding.Qualification.error = "please Enter Qualifications."
-        }
-
-        if (binding.loginPass.text.toString().isNotEmpty() && binding.loginPass.length() >5) {
-            facultyPassword = binding.loginPass.text.toString()
-        } else if(binding.loginPass.text.toString().isEmpty()) {
-            binding.loginPass.error = "please Enter Password."
-        }else{
-            binding.loginPass.error = "password length should be greater than 5."
-
-        }
+//
+//        if (binding.Qualification.text.toString().isNotEmpty()) {
+//            facultyQualifications = binding.Qualification.text.toString()
+//        } else {
+//            binding.Qualification.error = "please Enter Qualifications."
+//        }
+//
+//        if (binding.loginPass.text.toString().isNotEmpty() && binding.loginPass.length() >5) {
+//            facultyPassword = binding.loginPass.text.toString()
+//        } else if(binding.loginPass.text.toString().isEmpty()) {
+//            binding.loginPass.error = "please Enter Password."
+//        }else{
+//            binding.loginPass.error = "password length should be greater than 5."
+//        }
     }
+
     private fun uploadImageAndData() {
         if (imgUri != null) {
-            if (facultyName != "" && facultyDepartment != "" && facultyContactNo != "" && facultyQualifications != "") {
-            // Defining the child of storageReference
-            storageRef =
-                FirebaseStorage.getInstance().reference.child("Faculty Images").child("BScTI")
-                    .child(UUID.randomUUID().toString())
+            if (facultyName != "" && facultyDepartment != "" && facultyContactNo != "") {
+                // Defining the child of storageReference
+                storageRef =
+                    FirebaseStorage.getInstance().reference.child("Faculty Images")
+                        .child(facultyName+"(${ManageFaculty.teacherDep})")
+                storageRef!!.putFile(imgUri!!)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Image uploaded successfully
+                            Toast.makeText(
+                                this,
+                                "Image Uploaded!!",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
-            storageRef!!.putFile(imgUri!!)
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        // Image uploaded successfully
-                        Toast.makeText(
-                            this,
-                            "Image Uploaded!!",
-                            Toast.LENGTH_SHORT
-                        ).show()
-
-                        storageRef!!.downloadUrl.addOnSuccessListener {
-                            downloadImgUrl = it.toString()
-                            uploadData()
+                            storageRef!!.downloadUrl.addOnSuccessListener {
+                                downloadImgUrl = it.toString()
+                                uploadData()
+                            }
+                        } else {
+                            Toast.makeText(
+                                this,
+                                "Failed ${task.exception?.message}",
+                                Toast.LENGTH_SHORT
+                            )
+                                .show()
                         }
-                    } else {
-                        Toast.makeText(
-                            this,
-                            "Failed ${task.exception?.message}",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
                     }
-                }
-          /*              .addOnProgressListener { taskSnapshot ->
-                val progress = (100.0
-                        * taskSnapshot.bytesTransferred
-                        / taskSnapshot.totalByteCount)
-                progressDialog.setMessage(
-                    "Uploaded "
-                            + progress.toInt() + "%"
-                )*/
             }
         }
     }
-    private fun uploadData() {
 
-        if (facultyName != "" && facultyDepartment != "" && facultyContactNo != "" && facultyQualifications != "" && facultyPassword != "") {
-            dbRef = FirebaseDatabase.getInstance().reference.child("BScIT").child("Faculty Data")
-            dbRef!!.child(facultyName).setValue(
-                FacultyData(
-                    facultyName,
-                    facultyDepartment,
-                    downloadImgUrl.toString(),
-                    facultyContactNo,
-                    facultyPassword
+    private fun uploadData() {
+        if (facultyName != "" && facultyDepartment != "" && facultyContactNo != "") {
+            if (ManageFaculty.loggedUser == "HOD"){
+               dbRef.child(ManageFaculty.teacherDep)
+                   .child(facultyName)
+                   .setValue(
+                    FacultyData(
+                        facultyName,
+                        facultyDepartment,
+                        downloadImgUrl.toString(),
+                        facultyContactNo,
+                        facultyContactNo,
+                        "teacher"
+                    )
                 )
-            )
-                .addOnSuccessListener {
-                    Toast
-                        .makeText(
-                            this,
-                            "Successfully Uploaded",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }.addOnFailureListener {
-                    Toast
-                        .makeText(
-                            this,
-                            "dataFailed " + it.message,
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }
+                    .addOnSuccessListener {
+                        Toast
+                            .makeText(
+                                this,
+                                "Successfully Uploaded",
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    }.addOnFailureListener {
+                        Toast
+                            .makeText(
+                                this,
+                                "dataFailed " + it.message,
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    }
+            }
+          if (ManageFaculty.loggedUser == "admin"){
+                dbRef.child(binding.department.text.toString())
+                .child("HOD").setValue(
+                    FacultyData(
+                        facultyName,
+                        facultyDepartment,
+                        downloadImgUrl.toString(),
+                        facultyContactNo,
+                        facultyContactNo,
+                        "HOD"
+                    )
+                )
+                    .addOnSuccessListener {
+                        Toast
+                            .makeText(
+                                this,
+                                "Successfully Uploaded",
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    }.addOnFailureListener {
+                        Toast
+                            .makeText(
+                                this,
+                                "dataFailed " + it.message,
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    }
+            }
         }
     }
-
-
-
-
 }

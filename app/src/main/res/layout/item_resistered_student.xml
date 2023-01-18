@@ -72,7 +72,7 @@
             android:textColor="@color/black"
             android:textSize="25sp" />
 
-        <LinearLayout
+       <!-- <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/iRSstudDepartment"
@@ -80,7 +80,7 @@
             android:orientation="horizontal"
             android:weightSum="2">
 
-            <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+      &lt;!&ndash;      <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
                 android:id="@+id/iRS_FAB_decline"
                 android:layout_width="0dp"
                 android:layout_height="50dp"
@@ -99,7 +99,34 @@
                 android:text="Accept"
                 app:backgroundTint="#C827D82A"
                 app:shapeAppearanceOverlay="@style/ShapeAppearance.Material3.SmallComponent" />
-        </LinearLayout>
+   &ndash;&gt;     </LinearLayout>-->
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/iRS_txt_mobileMo"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/iRSstudDepartment"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="10dp"
+            android:text="ContactNo."
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/iYSstudContactNo"
+            style="@style/Widget.AppCompat.TextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/iRSstudDepartment"
+            android:layout_marginLeft="3dp"
+            android:layout_marginBottom="10dp"
+            android:layout_toRightOf="@+id/iRS_txt_mobileMo"
+            android:hint="1234567890"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            android:textSize="25sp" />
+
 
     </RelativeLayout>
 </RelativeLayout>

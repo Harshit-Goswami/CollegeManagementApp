@@ -8,12 +8,12 @@ import androidx.appcompat.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.data.RegisteredStudentData
+import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ItemYourStudentsBinding
 
 
 class YourStudentAdapter(
-    private var StudentList: ArrayList<RegisteredStudentData> = ArrayList(),
+    private var StudentList: ArrayList<StudentData> = ArrayList(),
     private val context: Context,
 ) : RecyclerView.Adapter<YourStudentAdapter.ViewHolder>() {
 

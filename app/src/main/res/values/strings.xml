@@ -9,7 +9,7 @@
     <string name="txt_add_student">Add Student</string>
     <string name="txt_add_faculty">Add Faculty</string>
     <string name="txt_delete_notice">Delete Notice</string>
-    <string name="txt_upload_pdf">Upload pdf</string>
+    <string name="txt_upload">Upload</string>
     <string name="txt_document_name">Title</string>
     <string name="txt_password">password</string>
     <string name="username">username</string>

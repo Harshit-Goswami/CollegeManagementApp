@@ -3,14 +3,12 @@ package com.harshit.goswami.collegeapp.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.data.RegisteredStudentData
+import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ItemResisteredStudentBinding
 
 class RegisterdStudentAdapter(
-    private var StudentList: ArrayList<RegisteredStudentData> = ArrayList(),
+    private var StudentList: ArrayList<StudentData> = ArrayList(),
     private val context: Context,
 ) : RecyclerView.Adapter<RegisterdStudentAdapter.ViewHolder>() {
 
@@ -32,31 +30,7 @@ class RegisterdStudentAdapter(
                 binding.iRSstudRollNo.text ="-(${this.rollNo})"
                 binding.iRSyear.text = this.year
                 binding.iRSstudDepartment.text = this.department
-                binding.iRSFABDecline.setOnClickListener {
-                    FirebaseDatabase.getInstance().reference.child("BScIT")
-                        .child("Registered Student")
-                        .child(this.fullName).removeValue()
-                        .addOnSuccessListener { Toast.makeText(context,"Successfully Removed .",Toast.LENGTH_SHORT).show() }
-                        .addOnFailureListener { Toast.makeText(context,"Error."+it.message,Toast.LENGTH_SHORT).show()  }
-                }
-                binding.iRSFABAccept.setOnClickListener {
-                    FirebaseDatabase.getInstance().reference.child("BScIT").child("Your Students")
-                        .child(this.fullName).setValue(
-                            RegisteredStudentData(
-                                this.fullName,
-                                this.rollNo,
-                                this.department,
-                                this.year,
-                                this.contactNo,
-                                this.password
-                            )
-                        )
-                    FirebaseDatabase.getInstance().reference.child("BScIT")
-                        .child("Registered Student")
-                        .child(this.fullName).removeValue()
-                        .addOnSuccessListener { Toast.makeText(context,"Successfully Added To your Student List",Toast.LENGTH_SHORT).show()}
-                        .addOnFailureListener {  Toast.makeText(context,"Error."+it.message,Toast.LENGTH_SHORT).show() }
-                }
+             binding.iYSstudContactNo.text = this.contactNo
 
             }
         }

@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -143,22 +144,19 @@ class AdminDashboard : AppCompatActivity() {
         builder.setView(viewProfileBinding.root)
         builder.setCanceledOnTouchOutside(true)
 
-        fireDb.child("BScIT").child("Admin")
+        fireDb.child("Admin")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        for (data in snapshot.children) {
                             Glide.with(this@AdminDashboard)
-                                .load(data.getValue(AdminLoginData::class.java)!!.profilePicUrl)
+                                .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
                                 .into(viewProfileBinding.DVPImgAdmin)
                             Glide.with(this@AdminDashboard)
-                                .load(data.getValue(AdminLoginData::class.java)!!.profilePicUrl)
+                                .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
                                 .into(binding.ADAdminImage)
                             viewProfileBinding.DVPAdminName.text =
-                                data.getValue(AdminLoginData::class.java)!!.fullName
-                            viewProfileBinding.DVPAdminDepartment.text =
-                                data.getValue(AdminLoginData::class.java)!!.department
-                        }
+                                snapshot.getValue(AdminLoginData::class.java)!!.fullName
+
                     } else Toast.makeText(
                         this@AdminDashboard,
                         "snapshot not exist!",
@@ -210,19 +208,17 @@ class AdminDashboard : AppCompatActivity() {
                 "image/*"
             )
         }
-        fireDb.child("BScIT").child("Admin")
+        fireDb.child("Admin")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        for (data in snapshot.children) {
                             Glide.with(this@AdminDashboard)
-                                .load(data.getValue(AdminLoginData::class.java)!!.profilePicUrl)
+                                .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
                                 .into(editProfileBinding.DEPImgAdmin)
-                            editProfileBinding.DEPEdtFullname.setText(data.getValue(AdminLoginData::class.java)!!.fullName)
-                            editProfileBinding.DEPEdtDepartment.setText(data.getValue(AdminLoginData::class.java)!!.department)
-                            editProfileBinding.DEPEdtPassword.setText(data.getValue(AdminLoginData::class.java)!!.password)
-                            editProfileBinding.DEPEdtUserId.setText(data.getValue(AdminLoginData::class.java)!!.userId)
-                        }
+                            editProfileBinding.DEPEdtFullname.setText(snapshot.getValue(AdminLoginData::class.java)!!.fullName)
+//                            editProfileBinding.DEPEdtDepartment.setText(data.getValue(AdminLoginData::class.java)!!.department)
+                            editProfileBinding.DEPEdtPassword.setText(snapshot.getValue(AdminLoginData::class.java)!!.password)
+                            editProfileBinding.DEPEdtUserId.setText(snapshot.getValue(AdminLoginData::class.java)!!.userId)
                     } else Toast.makeText(
                         this@AdminDashboard,
                         "snapshot not exist!",
@@ -255,9 +251,9 @@ class AdminDashboard : AppCompatActivity() {
             editProfileBinding.DEPEdtFullname.text.toString()
         else editProfileBinding.DEPEdtFullname.error = "this field Should not be Empty"
 
-        if (editProfileBinding.DEPEdtDepartment.text.toString().isNotEmpty()) adminDepartment =
-            editProfileBinding.DEPEdtDepartment.text.toString()
-        else editProfileBinding.DEPEdtDepartment.error = "this field Should not be Empty"
+//        if (editProfileBinding.DEPEdtDepartment.text.toString().isNotEmpty()) adminDepartment =
+//            editProfileBinding.DEPEdtDepartment.text.toString()
+//        else editProfileBinding.DEPEdtDepartment.error = "this field Should not be Empty"
 
         if (editProfileBinding.DEPEdtUserId.text.toString().isNotEmpty()) adminId =
             editProfileBinding.DEPEdtUserId.text.toString()
@@ -332,7 +328,7 @@ class AdminDashboard : AppCompatActivity() {
     }
 
     private fun uploadData() {
-        if (adminDepartment != "" && adminName != "" && adminId != "" && adminPassword != "") {
+        if (adminName != "" && adminId != "" && adminPassword != "") {
             fireDb.child("BScIT").child("Admin").child("AdminBScIT")
                 .setValue(
                     AdminLoginData(
@@ -340,7 +336,6 @@ class AdminDashboard : AppCompatActivity() {
                         adminName,
                         adminImgUrl,
                         adminDepartment,
-                        adminPassword
                     )
                 ).addOnSuccessListener {
                     Toast
@@ -362,16 +357,16 @@ class AdminDashboard : AppCompatActivity() {
                 }
         }
     }
+
     private fun getAdminPicture() {
-        fireDb.child("BScIT").child("Admin")
+        fireDb.child("Admin")
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        for (data in snapshot.children) {
                             Glide.with(this@AdminDashboard)
-                                .load(data.getValue(AdminLoginData::class.java)!!.profilePicUrl)
+                                .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
                                 .into(binding.ADAdminImage)
-                        }
+
                     } else Toast.makeText(
                         this@AdminDashboard,
                         "snapshot not exist!",
@@ -408,21 +403,21 @@ class AdminDashboard : AppCompatActivity() {
                 )
             )
         }
-        binding.uploadBook.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    ManageStudent::class.java
-                )
+        binding.addStudent.setOnClickListener {
+            val i =  Intent(
+                this,
+                ManageStudent::class.java
             )
+            i.putExtra("userType","admin")
+            startActivity(i)
         }
         binding.updateFaculty.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    ManageFaculty::class.java
-                )
+            val i =  Intent(
+                this,
+                ManageFaculty::class.java
             )
+            i.putExtra("userType","admin")
+            startActivity(i)
         }
         binding.deleteNotice.setOnClickListener {
             startActivity(
@@ -432,15 +427,5 @@ class AdminDashboard : AppCompatActivity() {
                 )
             )
         }
-        binding.AddEvent.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    UploadedEvents::class.java
-                )
-            )
-        }
-        binding.AddClass.setOnClickListener { startActivity(Intent(this, UploadClass::class.java)) }
-
     }
 }

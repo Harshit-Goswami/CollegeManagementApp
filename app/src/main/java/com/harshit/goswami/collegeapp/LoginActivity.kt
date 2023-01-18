@@ -11,9 +11,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.admin.AdminDashboard
+import com.harshit.goswami.collegeapp.admin.ManageFaculty.Companion.teacherDep
 import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.data.FacultyData
-import com.harshit.goswami.collegeapp.data.RegisteredStudentData
+import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityLoginBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
 import com.harshit.goswami.collegeapp.student.ResisterAsStutent
@@ -56,10 +57,14 @@ class LoginActivity : AppCompatActivity() {
                 val teacherPref: SharedPreferences =
                     getSharedPreferences("teacherPref", MODE_PRIVATE)
                 isTeacherLogin = teacherPref.getBoolean("teacherLogin", false)
-                val teacherName = teacherPref.getString("TeacherName", "No Faculty")
+//                val teacherName = teacherPref.getString("TeacherName", "No Faculty")
+//                val teacherType = teacherPref.getString("teacherType", "null")
+//                val teacherDep = teacherPref.getString("teacherDep", "null")
                 if (isTeacherLogin) {
                     val intent = Intent(this, TeacherDashboard::class.java)
-                    intent.putExtra("LoggedTeacher", teacherName)
+//                    intent.putExtra("LoggedTeacher", teacherName)
+//                    intent.putExtra("teacherType", teacherType)
+//                    intent.putExtra("teacherDep",teacherDep)
                     startActivity(intent)
                     finish()
                 }
@@ -88,16 +93,18 @@ class LoginActivity : AppCompatActivity() {
             "admin" -> {
                 userName = ""
                 password = ""
-                FirebaseDatabase.getInstance().reference.child("BScIT").child("Admin")
+                FirebaseDatabase.getInstance().reference.child("Admin")
                     .addValueEventListener(
                         object : ValueEventListener {
                             override fun onDataChange(snapshot: DataSnapshot) {
                                 if (snapshot.exists()) {
-                                    for (item in snapshot.children) {
-                                        if (binding.username.text.toString() == item.getValue(
+                                    snapshot.getValue(
+                                        AdminLoginData::class.java
+                                    )?.userId.toString()
+                                        if (binding.username.text.toString() ==  snapshot.getValue(
                                                 AdminLoginData::class.java
                                             )?.userId.toString()
-                                            && binding.password.text.toString() == item.getValue(
+                                            && binding.password.text.toString() == snapshot.getValue(
                                                 AdminLoginData::class.java
                                             )?.password.toString()
                                         ) {
@@ -112,19 +119,19 @@ class LoginActivity : AppCompatActivity() {
                                             startActivity(intent)
                                             finish()
                                         }
-                                        if (binding.username.text.toString() == item.getValue(
+                                        if (binding.username.text.toString() == snapshot.getValue(
                                                 AdminLoginData::class.java
                                             )?.userId.toString()
                                         ) {
-                                            userName = item.getValue(
+                                            userName = snapshot.getValue(
                                                 AdminLoginData::class.java
                                             )?.userId.toString()
                                         }
-                                        if (binding.password.text.toString() == item.getValue(
+                                        if (binding.password.text.toString() == snapshot.getValue(
                                                 AdminLoginData::class.java
                                             )?.password.toString()
                                         ) {
-                                            password = item.getValue(
+                                            password = snapshot.getValue(
                                                 AdminLoginData::class.java
                                             )?.password.toString()
                                         }
@@ -134,7 +141,6 @@ class LoginActivity : AppCompatActivity() {
                                     } else if (password == "") {
                                         binding.password.error = "Wrong password"
                                     }
-                                }
                             }
 
                             override fun onCancelled(error: DatabaseError) {
@@ -147,55 +153,74 @@ class LoginActivity : AppCompatActivity() {
             "teacher" -> {
                 userName = ""
                 password = ""
-                FirebaseDatabase.getInstance().reference.child("BScIT").child("Faculty Data")
+                FirebaseDatabase.getInstance().reference.child("Faculty Data")
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {
-                                for (item in snapshot.children) {
+                               snapshot.children.forEach{item1->
+                                   item1.children.forEach{item->
+                                       if (binding.username.text.toString() == item.getValue(
+                                               FacultyData::class.java
+                                           )?.name.toString()
+                                           && binding.password.text.toString() == item.getValue(
+                                               FacultyData::class.java
+                                           )?.password.toString()
+                                       ) {
+                                           val intent =
+                                               Intent(this@LoginActivity, TeacherDashboard::class.java)
+                                           intent.putExtra(
+                                               "LoggedTeacher", item.getValue(
+                                                   FacultyData::class.java
+                                               )?.name.toString()
+                                           )
+                                           intent.putExtra(
+                                               "teacherType", item.getValue(
+                                                   FacultyData::class.java
+                                               )?.teacherType.toString()
+                                           )
+                                           intent.putExtra(
+                                               "teacherDep", item.getValue(
+                                                   FacultyData::class.java
+                                               )?.department.toString()
+                                           )
 
-                                    if (binding.username.text.toString() == item.getValue(
-                                            FacultyData::class.java
-                                        )?.name.toString()
-                                        && binding.password.text.toString() == item.getValue(
-                                            FacultyData::class.java
-                                        )?.password.toString()
-                                    ) {
-                                        val intent =
-                                            Intent(this@LoginActivity, TeacherDashboard::class.java)
-                                        intent.putExtra(
-                                            "LoggedTeacher", item.getValue(
-                                                FacultyData::class.java
-                                            )?.name.toString()
-                                        )
-
-                                        val pref: SharedPreferences =
-                                            getSharedPreferences("teacherPref", MODE_PRIVATE)
-                                        val editor = pref.edit()
-                                        editor.putBoolean("teacherLogin", true).apply()
-                                        editor.putString(
-                                            "TeacherName",item.getValue(
-                                                FacultyData::class.java
-                                            )?.name.toString()
-                                        ).apply()
-                                        startActivity(intent)
-                                        finish()
-                                    }
-                                    if (binding.username.text.toString() == item.getValue(
-                                            FacultyData::class.java
-                                        )?.name.toString()
-                                    ) {
-                                        userName = item.getValue(
-                                            FacultyData::class.java
-                                        )?.name.toString()
-                                    }
-                                    if (binding.password.text.toString() == item.getValue(
-                                            FacultyData::class.java
-                                        )?.password.toString()
-                                    ) {
-                                        password = item.getValue(
-                                            FacultyData::class.java
-                                        )?.password.toString()
-                                    }
+                                           val pref: SharedPreferences =
+                                               getSharedPreferences("teacherPref", MODE_PRIVATE)
+                                           val editor = pref.edit()
+                                           editor.putBoolean("teacherLogin", true).apply()
+                                           editor.putString(
+                                               "TeacherName", item.getValue(
+                                                   FacultyData::class.java
+                                               )?.name.toString()
+                                           ).apply()
+                                           editor.putString(
+                                               "teacherType",
+                                               item.getValue(FacultyData::class.java)?.teacherType
+                                           ).apply()
+                                           editor.putString(
+                                               "teacherDep",
+                                               item.getValue(FacultyData::class.java)?.department
+                                           ).apply()
+                                           startActivity(intent)
+                                           finish()
+                                       }
+                                       if (binding.username.text.toString() == item.getValue(
+                                               FacultyData::class.java
+                                           )?.name.toString()
+                                       ) {
+                                           userName = item.getValue(
+                                               FacultyData::class.java
+                                           )?.name.toString()
+                                       }
+                                       if (binding.password.text.toString() == item.getValue(
+                                               FacultyData::class.java
+                                           )?.password.toString()
+                                       ) {
+                                           password = item.getValue(
+                                               FacultyData::class.java
+                                           )?.password.toString()
+                                       }
+                                   }
                                 }
                                 if (userName == "") {
                                     binding.username.error = "Wrong username"
@@ -220,10 +245,10 @@ class LoginActivity : AppCompatActivity() {
                             if (snapshot.exists()) {
                                 for (item in snapshot.children) {
                                     if (binding.username.text.toString() == item.getValue(
-                                            RegisteredStudentData::class.java
+                                            StudentData::class.java
                                         )?.contactNo.toString()
                                         && binding.password.text.toString() == item.getValue(
-                                            RegisteredStudentData::class.java
+                                            StudentData::class.java
                                         )?.password.toString()
                                     ) {
                                         val intent =
@@ -236,19 +261,19 @@ class LoginActivity : AppCompatActivity() {
                                         finish()
                                     }
                                     if (binding.username.text.toString() == item.getValue(
-                                            RegisteredStudentData::class.java
+                                            StudentData::class.java
                                         )?.contactNo.toString()
                                     ) {
                                         userName = item.getValue(
-                                            RegisteredStudentData::class.java
+                                            StudentData::class.java
                                         )?.contactNo.toString()
                                     }
                                     if (binding.password.text.toString() == item.getValue(
-                                            RegisteredStudentData::class.java
+                                            StudentData::class.java
                                         )?.password.toString()
                                     ) {
                                         password = item.getValue(
-                                            RegisteredStudentData::class.java
+                                            StudentData::class.java
                                         )?.password.toString()
                                     }
                                 }

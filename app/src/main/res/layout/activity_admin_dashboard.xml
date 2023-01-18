@@ -108,7 +108,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView3"
+                android:id="@+id/TD_manage_faculty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignStart="@+id/card_upload_notice"
@@ -158,7 +158,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView2"
+                android:id="@+id/TD_add_event"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -173,7 +173,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/card_upload_notice">
 
                 <LinearLayout
-                    android:id="@+id/uploadBook"
+                    android:id="@+id/add_student"
                     android:layout_width="130dp"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -208,7 +208,7 @@
             </com.google.android.material.card.MaterialCardView>
 
             <com.google.android.material.card.MaterialCardView
-                android:id="@+id/materialCardView4"
+                android:id="@+id/TD_your_students"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentStart="true"
@@ -219,8 +219,8 @@
                 app:cardCornerRadius="8dp"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true"
-                app:layout_constraintStart_toEndOf="@+id/materialCardView2"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView3">
+                app:layout_constraintStart_toEndOf="@+id/TD_add_event"
+                app:layout_constraintTop_toBottomOf="@+id/TD_manage_faculty">
 
                 <LinearLayout
                     android:id="@+id/updateFaculty"
@@ -235,7 +235,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="8dp"
                         android:contentDescription="@string/image_description"
-                        android:src="@drawable/connection" />
+                        android:src="@drawable/img_faculties" />
 
                     <View
                         android:layout_width="match_parent"
@@ -256,6 +256,7 @@
                 </LinearLayout>
             </com.google.android.material.card.MaterialCardView>
 
+<!--
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -302,6 +303,7 @@
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+-->
 
             <com.google.android.material.card.MaterialCardView
                 android:layout_width="wrap_content"
@@ -311,9 +313,10 @@
                 app:cardCornerRadius="8dp"
                 app:cardElevation="5dp"
                 app:cardUseCompatPadding="true"
+                app:layout_constraintTop_toBottomOf="@+id/TD_your_students"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/materialCardView">
+                tools:layout_editor_absoluteY="10dp">
 
                 <LinearLayout
                     android:id="@+id/deleteNotice"
@@ -350,6 +353,7 @@
 
             </com.google.android.material.card.MaterialCardView>
 
+<!--
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/materialCardView"
                 android:layout_width="wrap_content"
@@ -397,6 +401,7 @@
                 </LinearLayout>
 
             </com.google.android.material.card.MaterialCardView>
+-->
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

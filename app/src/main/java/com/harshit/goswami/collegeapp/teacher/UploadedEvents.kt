@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.admin
+package com.harshit.goswami.collegeapp.teacher
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,7 +22,6 @@ class UploadedEvents : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminUploadedEventsBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
         binding.FABaddEvent.setOnClickListener {
             startActivity(Intent(this, AddNewEvent::class.java))
         }

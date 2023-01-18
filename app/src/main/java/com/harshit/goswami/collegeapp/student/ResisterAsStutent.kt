@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.R
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.data.RegisteredStudentData
+import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityStudentResisterAsStutentBinding
 
 class ResisterAsStutent : AppCompatActivity() {
@@ -94,7 +94,7 @@ class ResisterAsStutent : AppCompatActivity() {
         if (Sfullname != "" && Srollno != "" && Sdepartment != "" && Spassword != "" && Scontact != "" && Syear != "") {
 
             FireRef.reference.child("BScIT").child("Registered Student").child(Sfullname).setValue(
-                RegisteredStudentData(
+                StudentData(
                     Sfullname, Srollno, Sdepartment, Syear, Scontact, Spassword
                 )
             ).addOnCompleteListener {

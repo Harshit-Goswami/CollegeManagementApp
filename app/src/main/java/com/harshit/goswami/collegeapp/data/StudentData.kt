@@ -1,6 +1,6 @@
 package com.harshit.goswami.collegeapp.data
 
-data class RegisteredStudentData(
+data class StudentData(
     val rollNo: String = "",
     val fullName: String = "",
     val contactNo: String = "",

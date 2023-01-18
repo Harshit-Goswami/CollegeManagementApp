@@ -92,9 +92,11 @@ class UploadNotice : AppCompatActivity() {
             val sdfTime = SimpleDateFormat("hh:mm a ", Locale.getDefault())
             time = sdfTime.format(Calendar.getInstance().time)
         }
+
         val noticeData = NoticeData(title, date, time, uniqueKey, downloadUrl.toString())
         dbRef = firebaseDatabase.reference
-        dbRef!!.child("Notices").child(uniqueKey!!).setValue(noticeData)
+        dbRef!!.child("Notices").child(uniqueKey!!)
+            .setValue(noticeData)
             .addOnSuccessListener {
 
             }
@@ -107,6 +109,7 @@ class UploadNotice : AppCompatActivity() {
                     )
                     .show()
             }
+        dbRef!!.child("Notices").child(uniqueKey).orderByChild("date")
     }
 
     private fun uploadImgAndData() {
