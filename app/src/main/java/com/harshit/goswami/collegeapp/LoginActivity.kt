@@ -5,19 +5,19 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.R
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.admin.AdminDashboard
-import com.harshit.goswami.collegeapp.admin.ManageFaculty.Companion.teacherDep
 import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityLoginBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
-import com.harshit.goswami.collegeapp.student.ResisterAsStutent
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard
 
 class LoginActivity : AppCompatActivity() {
@@ -35,13 +35,7 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (intent.getStringExtra("SelectedUser") == "student") binding.txtRegToLogIn.visibility =
-            View.VISIBLE
-        binding.txtRegToLogIn.setOnClickListener {
-            val intent = Intent(this, ResisterAsStutent::class.java)
-            startActivity(intent)
-        }
-
+        settingAutoCompleteTextView()
         val user = intent.getStringExtra("SelectedUser")
         when (user) {
             "admin" -> {
@@ -62,9 +56,6 @@ class LoginActivity : AppCompatActivity() {
 //                val teacherDep = teacherPref.getString("teacherDep", "null")
                 if (isTeacherLogin) {
                     val intent = Intent(this, TeacherDashboard::class.java)
-//                    intent.putExtra("LoggedTeacher", teacherName)
-//                    intent.putExtra("teacherType", teacherType)
-//                    intent.putExtra("teacherDep",teacherDep)
                     startActivity(intent)
                     finish()
                 }
@@ -73,14 +64,15 @@ class LoginActivity : AppCompatActivity() {
                 val studentPref: SharedPreferences =
                     getSharedPreferences("studentPref", MODE_PRIVATE)
                 isStudentLogin = studentPref.getBoolean("studentLogin", false)
+
                 if (isStudentLogin) {
                     val intent = Intent(this, MainActivity::class.java)
+                    intent.putExtra("user","student")
                     startActivity(intent)
                     finish()
                 }
             }
         }
-
 
         binding.loginBtn.setOnClickListener { updateUI() }//loginUser()
 
@@ -154,11 +146,11 @@ class LoginActivity : AppCompatActivity() {
                 userName = ""
                 password = ""
                 FirebaseDatabase.getInstance().reference.child("Faculty Data")
+                    .child(binding.department.text.toString())
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {
-                               snapshot.children.forEach{item1->
-                                   item1.children.forEach{item->
+                               snapshot.children.forEach{item->
                                        if (binding.username.text.toString() == item.getValue(
                                                FacultyData::class.java
                                            )?.name.toString()
@@ -228,7 +220,6 @@ class LoginActivity : AppCompatActivity() {
                                     binding.password.error = "Wrong password"
                                 }
                             }
-                        }
 
                         override fun onCancelled(error: DatabaseError) {
                             TODO("Not yet implemented")
@@ -239,42 +230,56 @@ class LoginActivity : AppCompatActivity() {
             "student" -> {
                 userName = ""
                 password = ""
-                FirebaseDatabase.getInstance().reference.child("BScIT").child("Your Students")
+                FirebaseDatabase.getInstance().reference.child("Students")
+                    .child(binding.department.text.toString())
                     .addValueEventListener(object : ValueEventListener {
                         override fun onDataChange(snapshot: DataSnapshot) {
                             if (snapshot.exists()) {
-                                for (item in snapshot.children) {
-                                    if (binding.username.text.toString() == item.getValue(
-                                            StudentData::class.java
-                                        )?.contactNo.toString()
-                                        && binding.password.text.toString() == item.getValue(
-                                            StudentData::class.java
-                                        )?.password.toString()
-                                    ) {
-                                        val intent =
-                                            Intent(this@LoginActivity, MainActivity::class.java)
-                                        val pref: SharedPreferences =
-                                            getSharedPreferences("studentPref", MODE_PRIVATE)
-                                        val editor = pref.edit()
-                                        editor.putBoolean("studentLogin", true).apply()
-                                        startActivity(intent)
-                                        finish()
-                                    }
-                                    if (binding.username.text.toString() == item.getValue(
-                                            StudentData::class.java
-                                        )?.contactNo.toString()
-                                    ) {
-                                        userName = item.getValue(
-                                            StudentData::class.java
-                                        )?.contactNo.toString()
-                                    }
-                                    if (binding.password.text.toString() == item.getValue(
-                                            StudentData::class.java
-                                        )?.password.toString()
-                                    ) {
-                                        password = item.getValue(
-                                            StudentData::class.java
-                                        )?.password.toString()
+                                snapshot.children.forEach{year->
+                                    year.children.forEach{item->
+                                        if (binding.username.text.toString() == item.getValue(
+                                                StudentData::class.java
+                                            )?.fullName.toString()
+                                            && binding.password.text.toString() == item.getValue(
+                                                StudentData::class.java
+                                            )?.password.toString()
+                                        ) {
+                                            val intent =
+                                                Intent(this@LoginActivity, MainActivity::class.java)
+                                            val pref: SharedPreferences =
+                                                getSharedPreferences("studentPref", MODE_PRIVATE)
+                                            val editor = pref.edit()
+                                            editor.putBoolean("studentLogin", true).apply()
+                                            editor.putString("studentRollNo",item.getValue(
+                                                StudentData::class.java
+                                            )?.rollNo.toString()).apply()
+                                            editor.putString("studentDep",item.getValue(
+                                                StudentData::class.java
+                                            )?.department.toString()).apply()
+                                            editor.putString("studentYear",item.getValue(
+                                                StudentData::class.java
+                                            )?.year.toString()).apply()
+
+                                            intent.putExtra("user","student")
+                                            startActivity(intent)
+                                            finish()
+                                        }
+                                        if (binding.username.text.toString() == item.getValue(
+                                                StudentData::class.java
+                                            )?.contactNo.toString()
+                                        ) {
+                                            userName = item.getValue(
+                                                StudentData::class.java
+                                            )?.contactNo.toString()
+                                        }
+                                        if (binding.password.text.toString() == item.getValue(
+                                                StudentData::class.java
+                                            )?.password.toString()
+                                        ) {
+                                            password = item.getValue(
+                                                StudentData::class.java
+                                            )?.password.toString()
+                                        }
                                     }
                                 }
                                 if (userName == "") {
@@ -284,16 +289,22 @@ class LoginActivity : AppCompatActivity() {
                                 }
                             }
                         }
-
                         override fun onCancelled(error: DatabaseError) {
                             TODO("Not yet implemented")
                         }
                     })
             }
-            "other" -> {
-                val intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
         }
     }
+    private fun settingAutoCompleteTextView() {
+        val items = listOf("BScIT", "BMS", "BAF", "BMM")
+        val adapter = ArrayAdapter(
+            this,
+            R.layout.support_simple_spinner_dropdown_item,
+            items
+        )
+        binding.department.setAdapter(adapter)
+
+    }
+
 }

@@ -45,10 +45,7 @@ class UploadClass : AppCompatActivity() {
         binding.seeClasses.setOnClickListener {
 
         }
-
-
     }
-
     private fun addSubjectDialog() {
 //        try {
         addSubjectBindind = DialogAdminAddSubjectBinding.inflate(layoutInflater)
@@ -68,15 +65,15 @@ class UploadClass : AppCompatActivity() {
         )
         addSubjectBindind.ASClassYear.setAdapter(adapterYear)
 
-        addSubjectBindind.ASBtnAdd.setOnClickListener {
+        addSubjectBindind.dialogASBtnAdd.setOnClickListener {
             var subjectClassYear = ""
             var subjectName = ""
             if (addSubjectBindind.ASClassYear.text.toString() != "") subjectClassYear =
                 addSubjectBindind.ASClassYear.text.toString()
             else addSubjectBindind.ASClassYear.error = "Please select year!"
-            if (addSubjectBindind.ASEdtSubject.text.toString() != "") subjectName =
-                addSubjectBindind.ASEdtSubject.text.toString()
-            else addSubjectBindind.ASEdtSubject.error = "Please add subject!"
+            if (addSubjectBindind.dialogASEdtSubject.text.toString() != "") subjectName =
+                addSubjectBindind.dialogASEdtSubject.text.toString()
+            else addSubjectBindind.dialogASEdtSubject.error = "Please add subject!"
 
             if (subjectClassYear != "" && subjectName != "") {
                 FirebaseDatabase.getInstance().reference

@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
-        android:id="@+id/deleteFaculty"
+        android:id="@+id/menu_deleteFaculty"
         android:title="Delete Faculty"
         />
     <item
-        android:id="@+id/assignFaculty"
+        android:id="@+id/menu_assign_subject"
         android:title="Assign Subject"
         />
+    <item
+        android:id="@+id/menu_edit_faculty"
+        android:title="Edit Faculty"
+        />
 <item
-        android:id="@+id/view_profile"
+        android:id="@+id/menu_send_massage"
         android:title="Send a massage"
         />
 

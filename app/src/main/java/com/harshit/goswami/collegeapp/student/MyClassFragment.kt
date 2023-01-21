@@ -23,10 +23,16 @@ class MyClassFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentMyClassBinding.inflate(inflater, container, false)
+        if (MainActivity.user == "other"){
+            binding.myClass.visibility = View.GONE
+        }
+        if (MainActivity.user == "student"){
+            binding.MCTxtLogin.visibility =View.GONE
+        }
+
         binding.FMCBtnBack.setOnClickListener {
             activity?.onBackPressed()
         }
-
         binding.FMCCardAssignment.setOnClickListener {
             val intent = Intent(context,AssignmentActivity::class.java)
             intent.putExtra("cardClick","assignment")
@@ -37,9 +43,9 @@ class MyClassFragment : Fragment() {
             startActivity(intent)
         }
         binding.FMCCardPreviousPapers.setOnClickListener {
-            val intent = Intent(context,AssignmentActivity::class.java)
-            intent.putExtra("cardClick","previousPaper")
-            startActivity(intent)
+//            val intent = Intent(context,AssignmentActivity::class.java)
+//            intent.putExtra("cardClick","previousPaper")
+//            startActivity(intent)
         }
 
         fetchClasses()
@@ -54,15 +60,13 @@ class MyClassFragment : Fragment() {
         binding.rsvStudentClassTime.setHasFixedSize(true)
         binding.rsvStudentClassTime.adapter?.notifyDataSetChanged()
 
-
-
         return binding.root
     }
     private fun fetchClasses() {
+        Log.d("studentInfo",MainActivity.studentDep+MainActivity.studentYear)
         FirebaseDatabase.getInstance().reference
-            .child("BScIT")
             .child("Class TimeTable")
-            .child("TY").addValueEventListener(object :ValueEventListener{
+            .child(MainActivity.studentDep).child(MainActivity.studentYear).addListenerForSingleValueEvent(object :ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         classesList.clear()

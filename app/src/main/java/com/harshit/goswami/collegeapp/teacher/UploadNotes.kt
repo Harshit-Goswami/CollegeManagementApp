@@ -6,10 +6,15 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
+import androidx.appcompat.R
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.data.NotesData
@@ -42,7 +47,6 @@ class UploadNotes : AppCompatActivity() {
         }
     }
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         bindind = ActivityTeacherUploadNotesBinding.inflate(layoutInflater)
@@ -58,6 +62,24 @@ class UploadNotes : AppCompatActivity() {
             ).show()
             else uploadFileAndData()
         }
+        val itemsSubj = ArrayList<String>()
+        fireDb.child("Faculty Data")
+            .child(TeacherDashboard.loggedTeacherDep)
+            .child(TeacherDashboard.loggedTeacherName)
+            .child("Assigned Subject").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    snapshot.children.forEach { sub ->
+                        itemsSubj.add(sub.value.toString())
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+        val adapterYear = ArrayAdapter (
+            this,R.layout.support_simple_spinner_dropdown_item,itemsSubj)
+        bindind.selectSubject.setAdapter(adapterYear)
+
     }
 
     private fun uploadFileAndData() {
@@ -90,7 +112,8 @@ class UploadNotes : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                    val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
+                    val progress =
+                        (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
                     bindind.UNTxtProgress.text = "Uploaded " + progress.toInt() + "%"
                 }
         }
@@ -122,7 +145,8 @@ class UploadNotes : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                    val progress = (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
+                    val progress =
+                        (100.0 * taskSnapshot.bytesTransferred / taskSnapshot.totalByteCount)
                     bindind.UNTxtProgress.text = "Uploaded " + progress.toInt() + "%"
                 }
         }
@@ -138,7 +162,7 @@ class UploadNotes : AppCompatActivity() {
                     NotesData(
                         bindind.edtBookTitle.text.toString(),
                         downloadUri,
-                        TeacherDashboard.loggedTeacherName,
+                        bindind.selectSubject.text.toString(),
                         bindind.edtDescription.text.toString()
                     )
                 )

@@ -43,8 +43,8 @@ class NoticeFragment : Fragment() {
         binding.FNScrollView.viewTreeObserver.addOnScrollChangedListener {
             val y = binding.FNScrollView.scrollY
             if (y>200) {
-                MainActivity.binding.cordinatorNavBar.visibility = View.GONE
-            } else MainActivity.binding.cordinatorNavBar.visibility = View.VISIBLE
+                MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
+            } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
         }
 
         return binding.root

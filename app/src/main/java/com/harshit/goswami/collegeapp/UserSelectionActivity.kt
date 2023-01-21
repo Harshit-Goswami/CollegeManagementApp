@@ -29,7 +29,7 @@ class UserSelectionActivity : AppCompatActivity() {
         }
         binding.cardUSOther.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
-           // intent.putExtra("SelectedUser", "other")
+            intent.putExtra("user", "other")
             startActivity(intent)
         }
     }

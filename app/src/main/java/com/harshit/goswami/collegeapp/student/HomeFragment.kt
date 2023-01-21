@@ -49,8 +49,8 @@ class HomeFragment : Fragment() {
             val x = binding.scrollView3.scrollX
             val y = binding.scrollView3.scrollY
             if (y > 500) {
-                MainActivity.binding.cordinatorNavBar.visibility = View.GONE
-            } else MainActivity.binding.cordinatorNavBar.visibility = View.VISIBLE
+                MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
+            } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
         }
         binding.FHYoutubeIcon.setOnClickListener {
             getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")
