@@ -159,6 +159,7 @@ class FacultyAdapter(
                                         .child(TeacherDashboard.loggedTeacherDep)
                                         .child(this.name)
                                         .child("Assigned Subject")
+                                        .child(subjectBinding.ASClassYear.text.toString())
                                         .child(subjectBinding.ASClassSubject.text.toString())
                                         .setValue(subjectBinding.ASClassSubject.text.toString())
                                 }
@@ -210,6 +211,7 @@ class FacultyAdapter(
 
             }
         }
+
 
     }
 

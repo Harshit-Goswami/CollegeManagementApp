@@ -38,6 +38,7 @@ class ManageFaculty : AppCompatActivity() {
                 )
             )
         }
+
         binding.rsvFaculty.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rsvFaculty.adapter = FacultyAdapter(facultyList, this)
@@ -54,6 +55,7 @@ class ManageFaculty : AppCompatActivity() {
                         if (snapshot.exists()) {
                             facultyList.clear()
                             for (list in snapshot.children) {
+                                facultyList.add(0,list.getValue(FacultyData::class.java)!!)
                                 facultyList.add(list.getValue(FacultyData::class.java)!!)
                             }
                             binding.rsvFaculty.adapter?.notifyDataSetChanged()
@@ -85,6 +87,7 @@ class ManageFaculty : AppCompatActivity() {
                   }
               })
       }
+
 
     }
 }

@@ -7,7 +7,10 @@ import android.content.Context
 import android.database.Cursor
 import android.graphics.Color
 import android.net.Uri
-import android.os.*
+import android.os.Bundle
+import android.os.Environment
+import android.os.Handler
+import android.os.Looper
 import android.provider.OpenableColumns
 import android.util.Log
 import android.view.View
@@ -18,13 +21,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.adapters.RegisterdStudentAdapter
+import com.harshit.goswami.collegeapp.adapters.YourStudentAdapter
 import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddStudentBinding
 import org.apache.poi.ss.usermodel.Cell
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
-import java.io.*
+import java.io.FileInputStream
+import java.io.IOException
 
 
 class AddStudent : AppCompatActivity() {
@@ -33,9 +37,11 @@ class AddStudent : AppCompatActivity() {
     val TAG = "ExcelUtil"
     var studentRowDataList = ArrayList<String>()
     private var studentsList = ArrayList<StudentData>()
+
     //    private val cell: XSSFCell? = null
     private var sheet: XSSFSheet? = null
     private var workbook: XSSFWorkbook? = null
+
     //    private val headerCellStyle: CellStyle? = null
     private val getResult = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -70,25 +76,33 @@ class AddStudent : AppCompatActivity() {
             getResult.launch("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
         }
         binding.btnDownloadFormat.setOnClickListener {
-                downloadFileFormat()
+            downloadFileFormat()
         }
         binding.ASTxtUploadData.setOnClickListener {
-            if (studentsList.isNotEmpty()){
+            if (studentsList.isNotEmpty()) {
                 binding.cardProgressBar.visibility = View.VISIBLE
                 try {
                     binding.cardProgressBar.visibility = View.VISIBLE
-                    for (i in studentsList)
-                   {
-                      val  rollNo = i.rollNo.removeRange(3,5)
+                    for (i in studentsList) {
+                        val rollNo = i.rollNo.removeRange(3, 5)
                         FirebaseDatabase.getInstance().reference.child("Students")
                             .child(i.department)
                             .child(i.year)
                             .child(rollNo)
-                            .setValue(StudentData(i.rollNo,i.fullName,i.contactNo,i.password,i.department,i.year))
+                            .setValue(
+                                StudentData(
+                                    i.rollNo,
+                                    i.fullName,
+                                    i.contactNo,
+                                    i.password,
+                                    i.department,
+                                    i.year
+                                )
+                            )
                     }
 
                 } catch (e: Exception) {
-                    Log.d("Storing Data","Errr-:${e.message}",e)
+                    Log.d("Storing Data", "Errr-:${e.message}", e)
                 }
                 Handler(Looper.getMainLooper()).postDelayed({
                     val snackBar = Snackbar.make(
@@ -104,14 +118,14 @@ class AddStudent : AppCompatActivity() {
                     snackBar.show()
                     binding.cardProgressBar.visibility = View.GONE
                 }, 3000)
-            }else Toast.makeText(this,"Something Went Wrong!",Toast.LENGTH_SHORT).show()
+            } else Toast.makeText(this, "Something Went Wrong!", Toast.LENGTH_SHORT).show()
         }
     }
 
     private fun initializeRecyclerView() {
         binding.rsvStudentData.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rsvStudentData.adapter = RegisterdStudentAdapter(studentsList, this)
+        binding.rsvStudentData.adapter = YourStudentAdapter(studentsList, this)
         binding.rsvStudentData.setHasFixedSize(true)
     }
 
@@ -167,9 +181,11 @@ class AddStudent : AppCompatActivity() {
             }
         } else Toast.makeText(this, "File is Empty!", Toast.LENGTH_SHORT).show()
     }
+
     private fun downloadFileFormat() {
         val url: Uri = Uri.parse(
-            "https://firebasestorage.googleapis.com/v0/b/collage-app-8b9e5.appspot.com/o/StudentExcelDataFormatFile%2FstudentsDataFormat.xlsx?alt=media&token=2ec54714-63c3-4436-9699-d69c70ef299a")
+            "https://firebasestorage.googleapis.com/v0/b/collage-app-8b9e5.appspot.com/o/StudentExcelDataFormatFile%2FstudentsDataFormat.xlsx?alt=media&token=2ec54714-63c3-4436-9699-d69c70ef299a"
+        )
         val request = DownloadManager.Request(Uri.parse(url.toString()))
         request.setDescription("Student Data excel Format Downloaded! ")
         request.setTitle("StudentsExcelFormat.xlsx")

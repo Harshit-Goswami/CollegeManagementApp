@@ -180,10 +180,28 @@ class UploadClass : AppCompatActivity() {
             itemsYear
         )
         addClassBinding.ACClassYear.setAdapter(adapterYear)
-
-        addClassBinding.ACClassYear.setOnItemClickListener { _, _, i, _ ->
+        addClassBinding.ACClassYear.setOnItemClickListener { _, _, i, _->
             val subjects = ArrayList<String>()
-            if (i == 0) {
+            FirebaseDatabase.getInstance().reference
+                .child("Subjects")
+                .child(TeacherDashboard.loggedTeacherDep)
+                .child(itemsYear[i]).addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            subjects.clear()
+                            for (subject in snapshot.children) {
+                                subjects.add(subject.value.toString())
+                            }
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                })
+
+          /*  if (i == 0) {
                 FirebaseDatabase.getInstance().reference
                     .child("Subjects")
                     .child(TeacherDashboard.loggedTeacherDep)
@@ -243,7 +261,7 @@ class UploadClass : AppCompatActivity() {
                                 .show()
                         }
                     })
-            }
+            }*/
             val adapterSubject = ArrayAdapter(
                 this,
                 com.google.android.material.R.layout.support_simple_spinner_dropdown_item,

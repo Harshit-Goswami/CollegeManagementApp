@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
 import android.view.View
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
@@ -52,7 +53,6 @@ class UploadNotes : AppCompatActivity() {
         bindind = ActivityTeacherUploadNotesBinding.inflate(layoutInflater)
         setContentView(bindind.root)
         clickedButton = intent.getStringExtra("clickedButton").toString()
-
         bindind.cardSelectpdf.setOnClickListener { getResult.launch("application/*") }
         bindind.btnUploadBook.setOnClickListener {
             if (fileUri == null) Toast.makeText(
@@ -62,26 +62,38 @@ class UploadNotes : AppCompatActivity() {
             ).show()
             else uploadFileAndData()
         }
+setUpAutoCompleteTextView()
+    }
+private fun setUpAutoCompleteTextView(){
+    val itemsYear = listOf("FY", "SY", "TY")
+    val adapterYear = ArrayAdapter(
+        this,
+        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+        itemsYear
+    )
+    bindind.selectClass.setAdapter(adapterYear)
+    bindind.selectClass.setOnItemClickListener { _, _, p2, _ ->
         val itemsSubj = ArrayList<String>()
         fireDb.child("Faculty Data")
             .child(TeacherDashboard.loggedTeacherDep)
             .child(TeacherDashboard.loggedTeacherName)
-            .child("Assigned Subject").addListenerForSingleValueEvent(object : ValueEventListener {
+            .child("Assigned Subject")
+            .child(itemsYear[p2]).addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     snapshot.children.forEach { sub ->
                         itemsSubj.add(sub.value.toString())
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
                 }
             })
-        val adapterYear = ArrayAdapter (
+        val adapterSub = ArrayAdapter (
             this,R.layout.support_simple_spinner_dropdown_item,itemsSubj)
-        bindind.selectSubject.setAdapter(adapterYear)
+        bindind.selectSubject.setAdapter(adapterSub)
 
     }
 
+}
     private fun uploadFileAndData() {
         bindind.UNProgressBox.visibility = View.VISIBLE
         if (clickedButton == "notes") {

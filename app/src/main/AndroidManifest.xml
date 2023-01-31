@@ -18,10 +18,13 @@
         android:theme="@style/Theme.CollageApp"
         tools:targetApi="31">
         <activity
+            android:name=".ViewPdfActivity"
+            android:exported="false" />
+        <activity
             android:name=".teacher.UploadClass"
             android:exported="false" />
         <activity
-            android:name=".student.AssignmentActivity"
+            android:name=".student.AssignmentNotesActivity"
             android:exported="false" />
         <activity
             android:name=".teacher.AddNewEvent"
@@ -32,18 +35,18 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-        <activity
+    <!--    <activity
             android:name=".student.ResisterAsStutent"
-            android:exported="false" />
+            android:exported="false" />-->
         <activity
             android:name=".admin.AddStudent"
             android:exported="false" />
         <activity
             android:name=".admin.AddFaculty"
             android:exported="false" />
-        <activity
-            android:name=".teacher.NewEvent"
-            android:exported="false" />
+    <!--    <activity
+            android:name=".teacher.AddNewEvent"
+            android:exported="false" />-->
         <activity
             android:name=".teacher.UploadNotes"
             android:exported="false" />
@@ -81,6 +84,13 @@
             </intent-filter>
         </activity>
 
+        <service
+            android:name=".FirebaseMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
