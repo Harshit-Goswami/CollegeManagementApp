@@ -98,7 +98,7 @@ class AddNewEvent : AppCompatActivity() {
             val sdfTime = SimpleDateFormat("hh:mm a ", Locale.getDefault())
             time = sdfTime.format(Calendar.getInstance().time)
         }
-        val noticeData = NoticeData(title, date, time, uniqueKey, downloadUrl.toString(),desription)
+        val noticeData = NoticeData(title, date+time, downloadUrl.toString(),desription)
         dbRef = firebaseDatabase.reference
         dbRef!!.child("Events").child(uniqueKey!!).setValue(noticeData)
             .addOnSuccessListener {

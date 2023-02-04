@@ -60,6 +60,7 @@ class NoticeFragment : Fragment() {
                             noticeList.add(i.getValue(NoticeData::class.java)!!)
                         }
                         binding.FNRsvNotices.adapter?.notifyDataSetChanged()
+                        noticeList.sortWith(compareByDescending {nd->nd.dateTime})
                     }
                 }
 

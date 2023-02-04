@@ -16,6 +16,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
+import com.harshit.goswami.collegeapp.FCMnotificationSender
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadNoticeBinding
 import java.io.IOException
@@ -30,6 +31,7 @@ class UploadNotice : AppCompatActivity() {
     private var dbRef: DatabaseReference? = null
     private val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
     private var storageRef: StorageReference? = null
+    var dateTime = ""
     private val getResult = registerForActivityResult(
         GetContent()
     ) { result: Uri? ->
@@ -40,6 +42,7 @@ class UploadNotice : AppCompatActivity() {
                     fileUri = result
                     val source: ImageDecoder.Source =
                         ImageDecoder.createSource(contentResolver, fileUri!!)
+
                     bitmap = ImageDecoder.decodeBitmap(source)
                     binding.previewImg.setImageBitmap(bitmap)
                 } catch (e: IOException) {
@@ -71,6 +74,10 @@ class UploadNotice : AppCompatActivity() {
             )
         }
         binding.btnUploadNotice.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val sdfDate = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+                dateTime = sdfDate.format(Calendar.getInstance().time)
+            }
             val title = binding.edtNotice.text.toString()
             if (title == "") {
                 binding.edtNotice.error = "title is empty"
@@ -81,24 +88,33 @@ class UploadNotice : AppCompatActivity() {
 
     private fun uploadData() {
         val title: String = Objects.requireNonNull(binding.edtNotice.text).toString()
-        var date = "Date"
-        var time = "Time"
         dbRef = firebaseDatabase.reference
-        val uniqueKey = dbRef!!.child("Notices").push().key
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            val calforDate: Calendar = Calendar.getInstance()
-            val sdfDate = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            date = sdfDate.format(Calendar.getInstance().time)
-            val sdfTime = SimpleDateFormat("hh:mm a ", Locale.getDefault())
-            time = sdfTime.format(Calendar.getInstance().time)
-        }
 
-        val noticeData = NoticeData(title, date, time, uniqueKey, downloadUrl.toString())
+
+        val noticeData = NoticeData(title,dateTime , downloadUrl.toString())
         dbRef = firebaseDatabase.reference
-        dbRef!!.child("Notices").child(uniqueKey!!)
+        dbRef!!.child("Notices").child(dateTime)
             .setValue(noticeData)
             .addOnSuccessListener {
-
+                if (fileUri != null){
+                    Toast.makeText(this@UploadNotice,"uploaded Successfully!",Toast.LENGTH_SHORT).show()
+                    FCMnotificationSender(
+                        "/topics/all", title, "this is notice notification",
+                        "BIGPIC",
+                        downloadUrl.toString(),//applicationContext,
+                        this@UploadNotice
+                    )
+                        .sendNotifications()
+                }
+                else{
+                    FCMnotificationSender(
+                        "/topics/all", title, "this is notice notification",
+                        "BIGTEXT",
+                      "" , //applicationContext,
+                        this@UploadNotice
+                    )
+                        .sendNotifications()
+                }
             }
             .addOnFailureListener { e: Exception ->
                 Toast
@@ -109,7 +125,7 @@ class UploadNotice : AppCompatActivity() {
                     )
                     .show()
             }
-        dbRef!!.child("Notices").child(uniqueKey).orderByChild("date")
+//        dbRef!!.child("Notices").orderByChild(date+time)
     }
 
     private fun uploadImgAndData() {
@@ -120,7 +136,7 @@ class UploadNotice : AppCompatActivity() {
             progressDialog.show()
             // Defining the child of storageReference
             storageRef =
-                firebaseStorage.reference.child("NoticeImages").child(UUID.randomUUID().toString())
+                firebaseStorage.reference.child("NoticeImages").child(dateTime)
             // adding listeners on upload
             // or failure of image
             val uploadTask = storageRef!!.putFile(fileUri!!)

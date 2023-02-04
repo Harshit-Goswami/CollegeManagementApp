@@ -309,7 +309,7 @@
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center"
                                 android:padding="2dp"
-                                android:text="BMM"
+                                android:text="BAMMC"
                                 android:textColor="#000"
                                 android:textStyle="bold" />
                         </com.google.android.material.card.MaterialCardView>
@@ -836,7 +836,6 @@
         </ScrollView>
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-<!--
         <com.google.android.material.navigation.NavigationView
             android:id="@+id/nav_view"
             android:layout_width="wrap_content"
@@ -852,5 +851,4 @@
             app:itemIconPadding="40dp"
             app:menu="@menu/navigation_bar_menu"
             />
--->
 </androidx.drawerlayout.widget.DrawerLayout>

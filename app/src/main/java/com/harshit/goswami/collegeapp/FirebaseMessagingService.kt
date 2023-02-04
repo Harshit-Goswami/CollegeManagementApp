@@ -11,6 +11,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import android.os.Build
 import androidx.core.app.NotificationCompat
+import com.bumptech.glide.Glide
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.harshit.goswami.collegeapp.student.MainActivity
@@ -18,7 +19,7 @@ import android.app.NotificationManager as NotificationManager1
 
 
 class FirebaseMessagingService : FirebaseMessagingService() {
-    val FCM_PARAM = "picture"
+    private lateinit var notiStyle:NotificationCompat.Style
     private val CHANNEL_NAME = "FCM"
     private val CHANNEL_DESC = "Firebase Cloud Messaging"
     private var numMessages = 0
@@ -42,13 +43,10 @@ class FirebaseMessagingService : FirebaseMessagingService() {
 //            packageName
 //        )
         if (message.data.isNotEmpty()) {
-            val title = message.data["title"]
-            val desc = message.data["message"]
-            sendNotification(title.toString(), desc.toString())
-        }
+                    sendNotification(message.data)
+            }
 //        val notification: RemoteMessage.Notification = message.notification!!
 //        val data: Map<String, String> = message.data
-
 //        Log.d("FROM", message.from.toString())
 
     }
@@ -57,32 +55,55 @@ class FirebaseMessagingService : FirebaseMessagingService() {
         super.onNewToken(token)
     }
 
-    fun sendNotification(title: String, desc: String) {
+    private fun sendNotification(data: Map<String, String>) {
 //        val bundle = Bundle()
 //        bundle.putString(FCM_PARAM, data[FCM_PARAM])
-
+        val title = data["title"]
+        val body = data["message"]
+        val imgUrl = data["imageUrl"]
         val intent = Intent(this, MainActivity::class.java)
 //        intent.putExtras(bundle)
         val pendingIntent =
-            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT)
+            PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE)
+
+        when(data["type"]){
+            "BIGPIC"->{
+                notiStyle = NotificationCompat.BigPictureStyle()
+                    .setBigContentTitle(title)
+                    .setSummaryText(body)
+                    .bigPicture(Glide.with(this@FirebaseMessagingService).asBitmap().load(imgUrl).submit().get())
+            }
+            "BIGTEXT"->{
+                notiStyle = NotificationCompat.BigTextStyle()
+                    .bigText(body)
+                    .setSummaryText(title)
+            }
+            "BC"->{
+                notiStyle = NotificationCompat.BigTextStyle()
+                    .bigText(body)
+                    .setSummaryText(title)
+            }
+        }
+
         val notificationBuilder =
             NotificationCompat.Builder(this, this.getString(R.string.app_name))
                 .setContentTitle(title)
-                .setContentText(desc)
+
+                .setContentText(body)
                 .setAutoCancel(true)
                 .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
                 .setSound(Uri.parse("android.resource://" + packageName + "/" + com.google.firebase.R.raw.firebase_common_keep))
                 .setContentIntent(pendingIntent)
                 .setContentInfo("Hello")
                 .setLargeIcon(BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher))
-//                    .setColor(getColor(R.color.shrine_pink_100))
+                    .setColor(Color.YELLOW)
                 .setLights(Color.RED, 1000, 300)
                 .setDefaults(Notification.DEFAULT_VIBRATE)
                 .setNumber(++numMessages)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setSmallIcon(R.drawable.ic_notifications)
                 .setStyle(
-                    NotificationCompat.BigTextStyle().bigText(desc)
+                    notiStyle
                 )
 
         val notificationManager =

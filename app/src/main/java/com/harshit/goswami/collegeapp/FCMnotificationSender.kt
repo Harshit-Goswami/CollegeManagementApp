@@ -10,11 +10,13 @@ import org.json.JSONObject
 
 
 class FCMnotificationSender(
-    val userFcmToken: String,
-    val title: String,
-    val body: String,
-    val mContext: Context,
-    val mActivity: Activity
+    private val userFcmToken: String,
+    private val title: String,
+    private val body: String,
+    private  val type: String,
+    private val imageUrl: String,
+//    private val mContext: Context,
+    private  val mActivity: Activity
 ) {
     private var requestQueue: RequestQueue? = null
     private val postUrl = "https://fcm.googleapis.com/fcm/send"
@@ -28,9 +30,11 @@ class FCMnotificationSender(
             mainObj.put("to", userFcmToken)
             val notiObject = JSONObject()
             notiObject.put("title", title)
-            notiObject.put("body", body)
-            notiObject.put("icon", "ic_notifications") // enter icon that exists in drawable only
-            mainObj.put("notification", notiObject)
+            notiObject.put("message", body)
+            notiObject.put("type", type)
+            if (type == "BIGPIC") notiObject.put("imageUrl", imageUrl)
+                // enter icon that exists in drawable only
+            mainObj.put("data", notiObject)
             val request: JsonObjectRequest = object : JsonObjectRequest(
                 Request.Method.POST,
                 postUrl,

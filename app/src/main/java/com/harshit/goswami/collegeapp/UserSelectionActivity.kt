@@ -19,8 +19,7 @@ class UserSelectionActivity : AppCompatActivity() {
 
         FirebaseMessaging.getInstance().subscribeToTopic("all")//all subscribed
 //        FirebaseMessaging.getInstance().unsubscribeFromTopic("notice")
-        FCMnotificationSender("/topics/all","Test","body of the notification for testing",applicationContext,this@UserSelectionActivity)
-            .sendNotifications()
+//
 
         binding.cardUSAdmin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
