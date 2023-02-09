@@ -12,6 +12,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.harshit.goswami.collegeapp.adapters.ClassTimetableAdapter
 import com.harshit.goswami.collegeapp.data.ClassData
 import com.harshit.goswami.collegeapp.databinding.FragmentMyClassBinding
 
@@ -39,7 +40,7 @@ class MyClassFragment : Fragment() {
             container?.context?.let {
                 ClassTimetableAdapter(
                     classesList,
-                    it,
+                    it,"MyClass"
                 )
             }
         binding.rsvStudentClassTime.setHasFixedSize(true)
@@ -71,29 +72,26 @@ class MyClassFragment : Fragment() {
     }
 
     private fun fetchClasses() {
-        Log.d("studentInfo", MainActivity.studentDep + MainActivity.studentYear)
-        FirebaseDatabase.getInstance().reference
-            .child("Class TimeTable")
-            .child(MainActivity.studentDep).child(MainActivity.studentYear)
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        classesList.clear()
-                        try {
-                            for (i in snapshot.children) {
-                                classesList.add(i.getValue(ClassData::class.java)!!)
-                            }
-                        } catch (e: Exception) {
-                            Log.d("Error_Massage", "${e.message}")
-                        }
-                        binding.rsvStudentClassTime.adapter?.notifyDataSetChanged()
-                    }
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
+           FirebaseDatabase.getInstance().reference
+               .child("Class TimeTable")
+               .child(MainActivity.studentDep).child(MainActivity.studentYear)
+               .addListenerForSingleValueEvent(object : ValueEventListener {
+                   override fun onDataChange(snapshot: DataSnapshot) {
+                       if (snapshot.exists()) {
+                           classesList.clear()
+                           try {
+                               for (i in snapshot.children) {
+                                   classesList.add(i.getValue(ClassData::class.java)!!)
+                               }
+                           } catch (e: Exception) {
+                               Log.d("Error_Massage", "${e.message}")
+                           }
+                           binding.rsvStudentClassTime.adapter?.notifyDataSetChanged()
+                       }
+                   }
+                   override fun onCancelled(error: DatabaseError) {
+                       TODO("Not yet implemented")
+                   }
+               })
     }
 }

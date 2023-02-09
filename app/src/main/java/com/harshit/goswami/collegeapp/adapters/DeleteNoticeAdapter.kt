@@ -2,6 +2,7 @@ package com.harshit.goswami.collegeapp.adapters
 
 import android.content.Context
 import android.content.DialogInterface
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,6 +16,7 @@ import com.harshit.goswami.collegeapp.admin.DeleteNotice
 import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.noticeList
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ItemDeleteNoticeBinding
+import java.nio.file.Files.delete
 
 
 class DeleteNoticeAdapter(
@@ -97,7 +99,7 @@ class DeleteNoticeAdapter(
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
-                            FirebaseStorage.getInstance().getReferenceFromUrl(this.dateTime)
+                            FirebaseStorage.getInstance().reference.child("NoticeImages").child(dateTime)
                                 .delete().addOnSuccessListener {
                                     Toast.makeText(
                                         context,
@@ -108,6 +110,7 @@ class DeleteNoticeAdapter(
                                     DeleteNotice.binding.rsvNotices.adapter?.notifyDataSetChanged()
 
                                 }.addOnFailureListener {
+                                    Log.d("image delete error",it.message.toString(),it)
                                     Toast.makeText(
                                         context,
                                         "ImageDeletion Failed.",

@@ -1,30 +1,35 @@
 package com.harshit.goswami.collegeapp.teacher
 
 import android.app.DatePickerDialog
+import android.app.Dialog
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.adapters.ClassTimetableAdapter
 import com.harshit.goswami.collegeapp.data.ClassData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddSubjectBinding
-
+import com.harshit.goswami.collegeapp.databinding.DialogDeleteClassTimetableBinding
 
 class UploadClass : AppCompatActivity() {
     private lateinit var binding: ActivityAdminUploadClassBinding
     private lateinit var addClassBinding: DialogAdminAddClassBinding
     private lateinit var addSubjectBindind: DialogAdminAddSubjectBinding
+    private val firedb = FirebaseDatabase.getInstance().reference
+
     private var classDate = ""
     private var classTime = ""
     private var classSubject = ""
@@ -42,10 +47,15 @@ class UploadClass : AppCompatActivity() {
         binding.AddSubject.setOnClickListener {
             addSubjectDialog()
         }
-        binding.seeClasses.setOnClickListener {
+        binding.deleteClasses.setOnClickListener {
+            deleteClassDialog()
+        }
+        binding.deleteSubject.setOnClickListener {
 
         }
     }
+
+    //#################################  Dialogs   ########################################
     private fun addSubjectDialog() {
 //        try {
         addSubjectBindind = DialogAdminAddSubjectBinding.inflate(layoutInflater)
@@ -102,7 +112,7 @@ class UploadClass : AppCompatActivity() {
 
         }
     }
-    @RequiresApi(Build.VERSION_CODES.N)
+
     private fun addClassDialog() {
 //        try {
 
@@ -130,6 +140,90 @@ class UploadClass : AppCompatActivity() {
 
     }
 
+    private fun deleteClassDialog() {
+        val classesListFY = ArrayList<ClassData>()
+        val classesListSY = ArrayList<ClassData>()
+        val classesListTY = ArrayList<ClassData>()
+        val deleteClassBinding = DialogDeleteClassTimetableBinding.inflate(layoutInflater)
+        val bottomDialog = Dialog(this, R.style.BottomSheetStyle)
+        bottomDialog.setContentView(deleteClassBinding.root)
+        bottomDialog
+            .setCanceledOnTouchOutside(false)
+
+        ////////    init  Recycler TY   //////////
+        deleteClassBinding.rsvDialogDeleteClassTY.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        deleteClassBinding.rsvDialogDeleteClassTY.setHasFixedSize(true)
+        deleteClassBinding.rsvDialogDeleteClassTY.adapter =
+            ClassTimetableAdapter(
+                classesListTY,
+                this, ""
+            )
+        deleteClassBinding.rsvDialogDeleteClassTY.adapter?.notifyDataSetChanged()
+
+        ////////     Recycler SY   //////////
+        deleteClassBinding.rsvDialogDeleteClassSY.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        deleteClassBinding.rsvDialogDeleteClassSY.setHasFixedSize(true)
+        deleteClassBinding.rsvDialogDeleteClassSY.adapter =
+            ClassTimetableAdapter(
+                classesListSY,
+                this, ""
+            )
+        deleteClassBinding.rsvDialogDeleteClassSY.adapter?.notifyDataSetChanged()
+        ////////     Recycler FY   //////////
+        deleteClassBinding.rsvDialogDeleteClassFY.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        deleteClassBinding.rsvDialogDeleteClassFY.setHasFixedSize(true)
+        deleteClassBinding.rsvDialogDeleteClassFY.adapter =
+            ClassTimetableAdapter(
+                classesListFY,
+                this, ""
+            )
+        deleteClassBinding.rsvDialogDeleteClassFY.adapter?.notifyDataSetChanged()
+        // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   GETTING CLASS DATA FROM FIREBASE  @@@@@@@@@@@@@@@@@@@@@@@@@@
+        firedb.child("Class TimeTable")
+            .child(TeacherDashboard.loggedTeacherDep)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        classesListTY.clear()
+                        classesListSY.clear()
+                        classesListFY.clear()
+                        try {
+                            snapshot.children.forEach { year ->
+                                year.children.forEach {
+                                    if (it.getValue(ClassData::class.java)?.year == "TY") {
+                                        classesListTY.add(it.getValue(ClassData::class.java)!!)
+                                    }
+                                    if (it.getValue(ClassData::class.java)?.year == "SY") {
+                                        classesListSY.add(it.getValue(ClassData::class.java)!!)
+                                    }
+                                    if (it.getValue(ClassData::class.java)?.year == "FY") {
+                                        classesListFY.add(it.getValue(ClassData::class.java)!!)
+                                    }
+                                }
+                            }
+                            deleteClassBinding.rsvDialogDeleteClassFY.adapter?.notifyDataSetChanged()
+                            deleteClassBinding.rsvDialogDeleteClassSY.adapter?.notifyDataSetChanged()
+                            deleteClassBinding.rsvDialogDeleteClassTY.adapter?.notifyDataSetChanged()
+
+
+                        } catch (e: Exception) {
+                            Log.d("Error_Massage", "${e.message}", e)
+                        }
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
+        bottomDialog.show()
+    }
+    //#################################  DELETE CLASS FUNCTIONS   ########################################
+
+
+    //#################################  ADD CLASS FUNCTIONS   ########################################
     private fun addClass() {
         if (classDate != "" && classTime != "" && classSubject != "" && classRoom != "" && classYear != "") {
             FirebaseDatabase.getInstance().reference
@@ -151,6 +245,7 @@ class UploadClass : AppCompatActivity() {
                 }
         }
     }
+
     private fun validation() {
         if (addClassBinding.ACClassDate.text != "") classDate =
             addClassBinding.ACClassDate.text.toString()
@@ -172,6 +267,7 @@ class UploadClass : AppCompatActivity() {
             addClassBinding.ACClassYear.text.toString()
         else addClassBinding.ACClassYear.error = "Please select class!"
     }
+
     private fun autoCompleteTextViewSetUp() {
         val itemsYear = listOf("FY", "SY", "TY")
         val adapterYear = ArrayAdapter(
@@ -180,7 +276,7 @@ class UploadClass : AppCompatActivity() {
             itemsYear
         )
         addClassBinding.ACClassYear.setAdapter(adapterYear)
-        addClassBinding.ACClassYear.setOnItemClickListener { _, _, i, _->
+        addClassBinding.ACClassYear.setOnItemClickListener { _, _, i, _ ->
             val subjects = ArrayList<String>()
             FirebaseDatabase.getInstance().reference
                 .child("Subjects")
@@ -201,67 +297,6 @@ class UploadClass : AppCompatActivity() {
                     }
                 })
 
-          /*  if (i == 0) {
-                FirebaseDatabase.getInstance().reference
-                    .child("Subjects")
-                    .child(TeacherDashboard.loggedTeacherDep)
-                    .child("FY").addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if (snapshot.exists()) {
-                                subjects.clear()
-                                for (subject in snapshot.children) {
-                                    subjects.add(subject.value.toString())
-                                }
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    })
-            }
-            if (i == 1) {
-                FirebaseDatabase.getInstance().reference
-                    .child("Subjects")
-                    .child(TeacherDashboard.loggedTeacherDep)
-                    .child("SY").addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if (snapshot.exists()) {
-                                subjects.clear()
-                                for (subject in snapshot.children) {
-                                    subjects.add(subject.value.toString())
-                                }
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    })
-
-            }
-            if (i == 2) {
-                FirebaseDatabase.getInstance().reference
-                    .child("Subjects")
-                    .child(TeacherDashboard.loggedTeacherDep)
-                    .child("TY").addValueEventListener(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            if (snapshot.exists()) {
-                                subjects.clear()
-                                for (subject in snapshot.children) {
-                                    subjects.add(subject.value.toString())
-                                }
-                            }
-                        }
-
-                        override fun onCancelled(error: DatabaseError) {
-                            Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
-                                .show()
-                        }
-                    })
-            }*/
             val adapterSubject = ArrayAdapter(
                 this,
                 com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
@@ -271,15 +306,18 @@ class UploadClass : AppCompatActivity() {
         }
 
     }
-    @RequiresApi(Build.VERSION_CODES.N)
+
     private fun classDatePickerDialog() {
-        val c = Calendar.getInstance()
+        val c = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Calendar.getInstance()
+        } else {
+            TODO("VERSION.SDK_INT < N")
+        }
         val year = c.get(Calendar.YEAR)
         val month = c.get(Calendar.MONTH)
         val day = c.get(Calendar.DAY_OF_MONTH)
 
         val datePickerDialog = DatePickerDialog(
-
             this,
             { _, year, monthOfYear, dayOfMonth ->
                 // on below line we are setting
@@ -295,6 +333,3 @@ class UploadClass : AppCompatActivity() {
     }
 
 }
-
-
-//data class SubjectData(val year: String = "", val subject: String = "")
