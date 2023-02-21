@@ -24,7 +24,7 @@
             android:popupTheme="@style/ThemeOverlay.Material3.Light"
             app:layout_scrollFlags="scroll|enterAlways">
 
-            <ImageButton
+            <ImageView
                 android:id="@+id/FN_btn_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -45,11 +45,11 @@
         </com.google.android.material.appbar.MaterialToolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <ScrollView
+  <!--  <ScrollView
         android:id="@+id/FN_scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:scrollbars="none">
+        android:scrollbars="none">-->
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -58,7 +58,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/FN_rsv_notices"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="wrap_content" />
         </LinearLayout>
-    </ScrollView>
+<!--    </ScrollView>-->
 </LinearLayout>

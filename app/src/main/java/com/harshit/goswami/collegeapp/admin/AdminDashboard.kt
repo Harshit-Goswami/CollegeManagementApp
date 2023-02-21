@@ -11,12 +11,12 @@ import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
+import android.view.View
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.content.ContextCompat.startActivity
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -25,26 +25,27 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.LoginActivity
+import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDashboardBinding
-import com.harshit.goswami.collegeapp.databinding.DialogAdminEditProfileBinding
+import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding
 import java.io.IOException
 
 
 class AdminDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityAdminDashboardBinding
-    private lateinit var editProfileBinding: DialogAdminEditProfileBinding
+    private lateinit var changePasswordBinding: DialogAdminChangePasswordBinding
     private val fireDb = FirebaseDatabase.getInstance().reference
     private lateinit var editProfileDialog: AlertDialog
     var adminName = ""
-    var adminId = ""
-    var adminDepartment = ""
     var adminImgUrl = ""
-    var adminPassword = ""
+    var adminOldPassword = ""
+    var adminNewPassword = ""
+    var adminReNewPassword = ""
     private var fileUri: Uri? = null
 
-    val imagePicker = registerForActivityResult(
+    private val imagePicker = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { result: Uri? ->
         val bitmap: Bitmap
@@ -55,7 +56,7 @@ class AdminDashboard : AppCompatActivity() {
                     val source: ImageDecoder.Source =
                         ImageDecoder.createSource(contentResolver, fileUri!!)
                     bitmap = ImageDecoder.decodeBitmap(source)
-                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
+//                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -66,7 +67,7 @@ class AdminDashboard : AppCompatActivity() {
                             contentResolver,
                             fileUri
                         )
-                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
+//                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
                 } catch (e: IOException) {
                     // Log the exception
                     e.printStackTrace()
@@ -81,7 +82,7 @@ class AdminDashboard : AppCompatActivity() {
 //    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        editProfileBinding = DialogAdminEditProfileBinding.inflate(layoutInflater)
+        changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
         binding = ActivityAdminDashboardBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -96,14 +97,14 @@ class AdminDashboard : AppCompatActivity() {
                     popupMenu.menu
                 )
                 popupMenu.setOnMenuItemClickListener {
-                    when (it.title) {
-                        "View Profile" -> {
+                    when (it.itemId) {
+                        R.id.view_profile -> {
                             dialogViewProfile()
                         }
-                        "Edit Profile" -> {
+                        R.id.change_password -> {
                             dialogEditProfile()
                         }
-                        "Log Out" -> {
+                        R.id.log_out -> {
                             val pref: SharedPreferences =
                                 getSharedPreferences("adminPref", MODE_PRIVATE)
                             val editor = pref.edit()
@@ -143,20 +144,16 @@ class AdminDashboard : AppCompatActivity() {
         builder.setCancelable(true)
         builder.setView(viewProfileBinding.root)
         builder.setCanceledOnTouchOutside(true)
-
+        viewProfileBinding.DVPAdminDepartment.visibility = View.GONE
         fireDb.child("Admin")
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                            Glide.with(this@AdminDashboard)
-                                .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
-                                .into(viewProfileBinding.DVPImgAdmin)
-                            Glide.with(this@AdminDashboard)
-                                .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
-                                .into(binding.ADAdminImage)
-                            viewProfileBinding.DVPAdminName.text =
-                                snapshot.getValue(AdminLoginData::class.java)!!.fullName
-
+                        Glide.with(this@AdminDashboard)
+                            .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
+                            .into(viewProfileBinding.DVPImgAdmin)
+                        viewProfileBinding.DVPAdminName.text =
+                            snapshot.getValue(AdminLoginData::class.java)!!.fullName
                     } else Toast.makeText(
                         this@AdminDashboard,
                         "snapshot not exist!",
@@ -182,7 +179,7 @@ class AdminDashboard : AppCompatActivity() {
 
     private fun dialogEditProfile() {
         try {
-            editProfileBinding = DialogAdminEditProfileBinding.inflate(layoutInflater)
+            changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
             editProfileDialog = AlertDialog.Builder(
                 this,
                 com.harshit.goswami.collegeapp.R.style.CustomAlertDialogEditProfile
@@ -195,7 +192,7 @@ class AdminDashboard : AppCompatActivity() {
 //            ViewGroup.LayoutParams.MATCH_PARENT
 //        )
             editProfileDialog.setCancelable(true)
-            editProfileDialog.setView(editProfileBinding.root)
+            editProfileDialog.setView(changePasswordBinding.root)
             editProfileDialog.setCanceledOnTouchOutside(false)
             editProfileDialog.show()
         } catch (e: Exception) {
@@ -203,65 +200,28 @@ class AdminDashboard : AppCompatActivity() {
         }
 
 
-        editProfileBinding.DEPImgAdmin.setOnClickListener {
-            imagePicker.launch(
-                "image/*"
-            )
+        changePasswordBinding.DEPBtnSubmit.setOnClickListener {
+            validation()
+            uploadData()
         }
-        fireDb.child("Admin")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                            Glide.with(this@AdminDashboard)
-                                .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
-                                .into(editProfileBinding.DEPImgAdmin)
-                            editProfileBinding.DEPEdtFullname.setText(snapshot.getValue(AdminLoginData::class.java)!!.fullName)
-//                            editProfileBinding.DEPEdtDepartment.setText(data.getValue(AdminLoginData::class.java)!!.department)
-                            editProfileBinding.DEPEdtPassword.setText(snapshot.getValue(AdminLoginData::class.java)!!.password)
-                            editProfileBinding.DEPEdtUserId.setText(snapshot.getValue(AdminLoginData::class.java)!!.userId)
-                    } else Toast.makeText(
-                        this@AdminDashboard,
-                        "snapshot not exist!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(
-                        this@AdminDashboard,
-                        "Error!-${error.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-            })
-        editProfileBinding.DEPBtnSubmit.setOnClickListener {
-            UpdateProfile()
-        }
-    }
-
-    private fun UpdateProfile() {
-        validation()
-        if (fileUri == null) uploadData()
-        else uploadImgAndData()
     }
 
     private fun validation() {
-        if (editProfileBinding.DEPEdtFullname.text.toString().isNotEmpty()) adminName =
-            editProfileBinding.DEPEdtFullname.text.toString()
-        else editProfileBinding.DEPEdtFullname.error = "this field Should not be Empty"
+        if (changePasswordBinding.DEPEdtOldPassword.text.toString().isNotEmpty()) adminOldPassword =
+            changePasswordBinding.DEPEdtOldPassword.text.toString()
+        else changePasswordBinding.DEPEdtOldPassword.error = "Please Enter your Old Password"
 
-//        if (editProfileBinding.DEPEdtDepartment.text.toString().isNotEmpty()) adminDepartment =
-//            editProfileBinding.DEPEdtDepartment.text.toString()
-//        else editProfileBinding.DEPEdtDepartment.error = "this field Should not be Empty"
+        if (changePasswordBinding.DEPEdtNewPassword.text.toString().isNotEmpty()) adminNewPassword =
+            changePasswordBinding.DEPEdtNewPassword.text.toString()
+        else changePasswordBinding.DEPEdtNewPassword.error = "Please Enter your New Password"
 
-        if (editProfileBinding.DEPEdtUserId.text.toString().isNotEmpty()) adminId =
-            editProfileBinding.DEPEdtUserId.text.toString()
-        else editProfileBinding.DEPEdtUserId.error = "this field Should not be Empty"
+        if (changePasswordBinding.DEPEdtReNewPassword.text.toString().isEmpty())
+            changePasswordBinding.DEPEdtReNewPassword.error = "Please Re-Enter your New Password"
 
-        if (editProfileBinding.DEPEdtPassword.text.toString().isNotEmpty()) adminPassword =
-            editProfileBinding.DEPEdtPassword.text.toString()
-        else editProfileBinding.DEPEdtPassword.error = "Please Enter your Password"
+        if (changePasswordBinding.DEPEdtReNewPassword.text.toString() == adminNewPassword) adminReNewPassword =
+            changePasswordBinding.DEPEdtReNewPassword.text.toString()
+        else changePasswordBinding.DEPEdtReNewPassword.error = "Password Does not match!!"
+
 
     }
 
@@ -273,7 +233,7 @@ class AdminDashboard : AppCompatActivity() {
             progressDialog.show()
             // Defining the child of storageReference
             val storageRef =
-                FirebaseStorage.getInstance().reference.child("Admin").child("BScIT")
+                FirebaseStorage.getInstance().reference.child("Admin")
             // adding listeners on upload
             // or failure of image
             val uploadTask = storageRef.putFile(fileUri!!)
@@ -328,33 +288,37 @@ class AdminDashboard : AppCompatActivity() {
     }
 
     private fun uploadData() {
-        if (adminName != "" && adminId != "" && adminPassword != "") {
-            fireDb.child("BScIT").child("Admin").child("AdminBScIT")
-                .setValue(
-                    AdminLoginData(
-                        adminId,
-                        adminName,
-                        adminImgUrl,
-                        adminDepartment,
-                    )
-                ).addOnSuccessListener {
-                    Toast
-                        .makeText(
-                            this,
-                            "Updated Successfully!",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
+        if (adminOldPassword != "") {
+            fireDb.child("Admin").addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        if (adminOldPassword == snapshot.getValue(AdminLoginData::class.java)?.password) {
+                            fireDb.child("Admin")
+                                .setValue(
+                                    AdminLoginData(
+                                        snapshot.getValue(AdminLoginData::class.java)?.userId.toString(),
+                                        snapshot.getValue(AdminLoginData::class.java)?.fullName.toString(),
+                                        snapshot.getValue(AdminLoginData::class.java)?.profilePicUrl.toString(),
+                                        adminReNewPassword,
+                                    )
+                                ).addOnSuccessListener {
+                                    Toast
+                                        .makeText(
+                                            this@AdminDashboard,
+                                            "Updated Successfully!",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
+                                }
+                        }
+                        else changePasswordBinding.DEPEdtOldPassword.error = "Incorrect Old Password!!"
+                    }
                 }
-                .addOnFailureListener {
-                    Toast
-                        .makeText(
-                            this,
-                            "Failed: " + it.message,
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
                 }
+            })
         }
     }
 
@@ -363,9 +327,13 @@ class AdminDashboard : AppCompatActivity() {
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
+                        try {
                             Glide.with(this@AdminDashboard)
                                 .load(snapshot.getValue(AdminLoginData::class.java)!!.profilePicUrl)
                                 .into(binding.ADAdminImage)
+                        } catch (e: Exception) {
+                            Log.d("Errrrr",e.message,e)
+                        }
 
                     } else Toast.makeText(
                         this@AdminDashboard,
@@ -381,7 +349,6 @@ class AdminDashboard : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-
             })
     }
 
@@ -404,19 +371,19 @@ class AdminDashboard : AppCompatActivity() {
             )
         }
         binding.addStudent.setOnClickListener {
-            val i =  Intent(
+            val i = Intent(
                 this,
                 ManageStudent::class.java
             )
-            i.putExtra("userType","admin")
+            i.putExtra("userType", "admin")
             startActivity(i)
         }
         binding.updateFaculty.setOnClickListener {
-            val i =  Intent(
+            val i = Intent(
                 this,
                 ManageFaculty::class.java
             )
-            i.putExtra("userType","admin")
+            i.putExtra("userType", "admin")
             startActivity(i)
         }
         binding.deleteNotice.setOnClickListener {

@@ -58,8 +58,8 @@ class EventFragment : Fragment() {
                         binding.rsvEvent.adapter?.notifyDataSetChanged()
 
                     }
+                    eventList.sortByDescending { it.dateTime }
                 }
-
                 override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
                 }
 
@@ -73,7 +73,6 @@ class EventFragment : Fragment() {
                 override fun onCancelled(error: DatabaseError) {
 
                 }
-
             })
 
     }

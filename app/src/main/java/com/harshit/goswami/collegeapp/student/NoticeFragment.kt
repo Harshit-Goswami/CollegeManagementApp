@@ -4,13 +4,17 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AbsListView.OnScrollListener
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
+import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
+import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.noticeList
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.FragmentNoticeBinding
 
@@ -39,13 +43,20 @@ class NoticeFragment : Fragment() {
             }
         binding.FNRsvNotices.setHasFixedSize(true)
         binding.FNRsvNotices.adapter?.notifyDataSetChanged()
-
-        binding.FNScrollView.viewTreeObserver.addOnScrollChangedListener {
-            val y = binding.FNScrollView.scrollY
-            if (y>200) {
-                MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
-            } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
-        }
+binding.FNRsvNotices.addOnScrollListener(object:RecyclerView.OnScrollListener() {
+    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+        super.onScrolled(recyclerView, dx, dy)
+        if (dx>0){
+            MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
+        } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
+    }
+})
+//        binding.FNScrollView.viewTreeObserver.addOnScrollChangedListener {
+//            val y = binding.FNScrollView.scrollY
+//            if (y>200) {
+//                MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
+//            } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
+//        }
 
         return binding.root
     }

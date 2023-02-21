@@ -25,18 +25,15 @@ class AssignmentNotesActivity : AppCompatActivity() {
         binding.rsvNotesAssignment.layoutManager =
             LinearLayoutManager(this@AssignmentNotesActivity, LinearLayoutManager.VERTICAL, false)
 
-
         if (cardClick == "notes") {
             binding.rsvNotesAssignment.adapter = NotesAdapter(list_NA, this)
             binding.rsvNotesAssignment.setHasFixedSize(true)
             fetchNotes()
-            (binding.rsvNotesAssignment.adapter as NotesAdapter).notifyDataSetChanged()
         }
         if (cardClick == "assignment") {
             binding.rsvNotesAssignment.adapter = NotesAdapter(list_NA, this)
             binding.rsvNotesAssignment.setHasFixedSize(true)
             fetchAssignments()
-            (binding.rsvNotesAssignment.adapter as NotesAdapter).notifyDataSetChanged()
         }
     }
 
@@ -50,6 +47,7 @@ class AssignmentNotesActivity : AppCompatActivity() {
                                 list_NA.add(it.getValue(NotesData::class.java)!!)
                             }
                         }
+                        binding.rsvNotesAssignment.adapter?.notifyDataSetChanged()
                     }
                 }
 
@@ -73,6 +71,7 @@ class AssignmentNotesActivity : AppCompatActivity() {
                                 list_NA.add(it.getValue(NotesData::class.java)!!)
                             }
                         }
+                        binding.rsvNotesAssignment.adapter?.notifyDataSetChanged()
                     }
                 }
 

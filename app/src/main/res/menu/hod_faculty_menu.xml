@@ -5,8 +5,8 @@
         android:title="Delete Faculty"
         />
     <item
-        android:id="@+id/menu_assign_subject"
-        android:title="Assign Subject"
+        android:id="@+id/assign_subject"
+        android:title="Manage Assign Subject"
         />
     <item
         android:id="@+id/menu_edit_faculty"

@@ -7,5 +7,4 @@ class FacultyData(
     val contactNo: String = "",
     val password: String = "",
     val teacherType: String = ""
-) {
-}
+)

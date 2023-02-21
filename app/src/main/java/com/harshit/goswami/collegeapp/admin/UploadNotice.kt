@@ -17,6 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.FCMnotificationSender
+import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadNoticeBinding
 import java.io.IOException
@@ -75,8 +76,9 @@ class UploadNotice : AppCompatActivity() {
         }
         binding.btnUploadNotice.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val sdfDate = SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
-                dateTime = sdfDate.format(Calendar.getInstance().time)
+                val sdfDateTime =
+                    SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
+                dateTime = sdfDateTime.format(Calendar.getInstance().time)
             }
             val title = binding.edtNotice.text.toString()
             if (title == "") {
@@ -110,7 +112,7 @@ class UploadNotice : AppCompatActivity() {
                     FCMnotificationSender(
                         "/topics/all", title, "this is notice notification",
                         "BIGTEXT",
-                      "" , //applicationContext,
+                        "" , //applicationContext,
                         this@UploadNotice
                     )
                         .sendNotifications()

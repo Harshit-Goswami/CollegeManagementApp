@@ -1,6 +1,7 @@
 package com.harshit.goswami.collegeapp.teacher
 
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -33,11 +34,11 @@ class UploadedEvents : AppCompatActivity() {
         binding.UERsvEvents.setHasFixedSize(true)
 
 
-        binding.UERsvEvents.addOnScrollListener(object : RecyclerView.OnScrollListener(){
+        binding.UERsvEvents.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-                if (dy>0){
+                if (dy > 0) {
                     binding.FABaddEvent.shrink()
-                }else{
+                } else {
                     binding.FABaddEvent.extend()
                 }
             }
@@ -60,7 +61,12 @@ class UploadedEvents : AppCompatActivity() {
                 }
 
                 override fun onChildRemoved(snapshot: DataSnapshot) {
-
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                        eventList.removeIf {
+                          it.dateTime ==  snapshot.getValue((NoticeData::class.java))!!.dateTime
+                        }
+                        binding.UERsvEvents.adapter?.notifyDataSetChanged()
+                    }
                 }
 
                 override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -71,6 +77,6 @@ class UploadedEvents : AppCompatActivity() {
                 }
 
             })
-
+        eventList.sortByDescending { it.dateTime }
     }
 }

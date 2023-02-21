@@ -6,18 +6,20 @@ import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.adapters.ClassTimetableAdapter
+import com.harshit.goswami.collegeapp.adapters.DeleteSubjectAdapter
 import com.harshit.goswami.collegeapp.data.ClassData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddClassBinding
@@ -28,7 +30,15 @@ class UploadClass : AppCompatActivity() {
     private lateinit var binding: ActivityAdminUploadClassBinding
     private lateinit var addClassBinding: DialogAdminAddClassBinding
     private lateinit var addSubjectBindind: DialogAdminAddSubjectBinding
-    private val firedb = FirebaseDatabase.getInstance().reference
+
+    companion object {
+        lateinit var deleteClassBinding: DialogDeleteClassTimetableBinding
+        val subjectListFY = ArrayList<Map<String, String>>()
+        val subjectListSY = ArrayList<Map<String, String>>()
+        val subjectListTY = ArrayList<Map<String, String>>()
+    }
+
+    private val fireDb = FirebaseDatabase.getInstance().reference
 
     private var classDate = ""
     private var classTime = ""
@@ -51,15 +61,16 @@ class UploadClass : AppCompatActivity() {
             deleteClassDialog()
         }
         binding.deleteSubject.setOnClickListener {
-
+            deleteSubjectDialog()
         }
+
     }
 
     //#################################  Dialogs   ########################################
     private fun addSubjectDialog() {
 //        try {
         addSubjectBindind = DialogAdminAddSubjectBinding.inflate(layoutInflater)
-        val bottomDialog = BottomSheetDialog(this, R.style.BottomSheetStyle)
+        val bottomDialog = Dialog(this, R.style.BottomSheetStyle)
         bottomDialog.setContentView(addSubjectBindind.root)
         bottomDialog
             .setCanceledOnTouchOutside(false)
@@ -67,6 +78,8 @@ class UploadClass : AppCompatActivity() {
 //        } catch (e: Exception) {
 //            Log.d("dialogError","${e.message}")
 //        }
+        addSubjectBindind.txtAssignedSubject.visibility = View.GONE
+        addSubjectBindind.dialogTILSelectSubject.visibility = View.GONE
         val itemsYear = listOf("FY", "SY", "TY")
         val adapterYear = ArrayAdapter(
             this,
@@ -86,12 +99,16 @@ class UploadClass : AppCompatActivity() {
             else addSubjectBindind.dialogASEdtSubject.error = "Please add subject!"
 
             if (subjectClassYear != "" && subjectName != "") {
-                FirebaseDatabase.getInstance().reference
-                    .child("Subjects")
-                    .child(TeacherDashboard.loggedTeacherDep)
-                    .child(subjectClassYear)
-                    .child(subjectName)
-                    .setValue(subjectName)
+                FirebaseFirestore.getInstance()
+                    .collection("$subjectClassYear${TeacherDashboard.loggedTeacherDep}-Subjects")
+                    .document(subjectName)
+                    .set(
+                        mapOf(
+                            "department" to TeacherDashboard.loggedTeacherDep,
+                            "classYear" to subjectClassYear,
+                            "subjectName" to subjectName,
+                        )
+                    )
                     .addOnSuccessListener {
                         Toast.makeText(
                             this@UploadClass,
@@ -115,9 +132,8 @@ class UploadClass : AppCompatActivity() {
 
     private fun addClassDialog() {
 //        try {
-
         addClassBinding = DialogAdminAddClassBinding.inflate(layoutInflater)
-        val bottomDialog = BottomSheetDialog(this, R.style.BottomSheetStyle)
+        val bottomDialog = Dialog(this, R.style.BottomSheetStyle)
         bottomDialog.setContentView(addClassBinding.root)
         bottomDialog
             .setCanceledOnTouchOutside(false)
@@ -137,7 +153,6 @@ class UploadClass : AppCompatActivity() {
             validation()
             addClass()
         }
-
     }
 
     private fun deleteClassDialog() {
@@ -182,7 +197,7 @@ class UploadClass : AppCompatActivity() {
             )
         deleteClassBinding.rsvDialogDeleteClassFY.adapter?.notifyDataSetChanged()
         // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   GETTING CLASS DATA FROM FIREBASE  @@@@@@@@@@@@@@@@@@@@@@@@@@
-        firedb.child("Class TimeTable")
+        fireDb.child("Class TimeTable")
             .child(TeacherDashboard.loggedTeacherDep)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
@@ -214,35 +229,187 @@ class UploadClass : AppCompatActivity() {
                         }
                     }
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                 }
 
             })
         bottomDialog.show()
     }
-    //#################################  DELETE CLASS FUNCTIONS   ########################################
+
+    private fun deleteSubjectDialog() {
+        deleteClassBinding = DialogDeleteClassTimetableBinding.inflate(layoutInflater)
+        val bottomDialog = Dialog(this, R.style.BottomSheetStyle)
+        bottomDialog.setContentView(deleteClassBinding.root)
+        bottomDialog
+            .setCanceledOnTouchOutside(false)
+
+        ////////    init  Recycler TY   //////////
+        deleteClassBinding.rsvDialogDeleteClassTY.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        deleteClassBinding.rsvDialogDeleteClassTY.setHasFixedSize(true)
+        deleteClassBinding.rsvDialogDeleteClassTY.adapter =
+            DeleteSubjectAdapter(
+                subjectListTY,
+                this
+            )
+//        deleteClassBinding.rsvDialogDeleteClassTY.adapter?.notifyDataSetChanged()
+
+        ////////     Recycler SY   //////////
+        deleteClassBinding.rsvDialogDeleteClassSY.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        deleteClassBinding.rsvDialogDeleteClassSY.setHasFixedSize(true)
+        deleteClassBinding.rsvDialogDeleteClassSY.adapter =
+            DeleteSubjectAdapter(
+                subjectListSY,
+                this
+            )
+//        deleteClassBinding.rsvDialogDeleteClassSY.adapter?.notifyDataSetChanged()
+        ////////     Recycler FY   //////////
+        deleteClassBinding.rsvDialogDeleteClassFY.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        deleteClassBinding.rsvDialogDeleteClassFY.setHasFixedSize(true)
+        deleteClassBinding.rsvDialogDeleteClassFY.adapter =
+            DeleteSubjectAdapter(
+                subjectListFY,
+                this
+            )
+//        deleteClassBinding.rsvDialogDeleteClassFY.adapter?.notifyDataSetChanged()
+        // @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@   GETTING Subject DATA FROM FIREBASE  @@@H.G.@@@@@@@@@@@@@@@@@@@@@@@
+        FirebaseFirestore.getInstance()
+            .collection("TY${TeacherDashboard.loggedTeacherDep}-Subjects")
+            .addSnapshotListener { value, error ->
+                subjectListTY.clear()
+                if (error != null) {
+                    Toast.makeText(this@UploadClass, "Error found is $error", Toast.LENGTH_SHORT)
+                        .show()
+                }
+/*                for (dc in value!!.documentChanges) {
+                    when (dc.type) {
+                        DocumentChange.Type.ADDED -> Log.d(TAG, "New city: ${dc.document.data}")
+                        DocumentChange.Type.MODIFIED -> Log.d(TAG, "Modified city: ${dc.document.data}")
+                        DocumentChange.Type.REMOVED -> subjectListTY.remove()
+                    }
+                }*/
+                value?.forEach { ds ->
+                    subjectListTY.add(
+                        mapOf(
+                            "department" to ds["department"].toString(),
+                            "subjectName" to ds["subjectName"].toString(),
+                            "classYear" to ds["classYear"].toString(),
+                            "activity" to "deleteSubject"
+                        )
+                    )
+                }
+                deleteClassBinding.rsvDialogDeleteClassTY.adapter?.notifyDataSetChanged()
+            }
+        FirebaseFirestore.getInstance()
+            .collection("SY${TeacherDashboard.loggedTeacherDep}-Subjects")
+            .addSnapshotListener { value, error ->
+                subjectListSY.clear()
+                if (error != null) {
+                    Toast.makeText(this@UploadClass, "Error found is $error", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                value?.forEach { ds ->
+                    subjectListSY.add(
+                        mapOf(
+                            "department" to ds["department"].toString(),
+                            "subjectName" to ds["subjectName"].toString(),
+                            "classYear" to ds["classYear"].toString(),
+                            "activity" to "deleteSubject"
+                        )
+                    )
+                }
+                deleteClassBinding.rsvDialogDeleteClassSY.adapter?.notifyDataSetChanged()
+
+            }
+        FirebaseFirestore.getInstance()
+            .collection("FY${TeacherDashboard.loggedTeacherDep}-Subjects")
+            .addSnapshotListener { value, error ->
+                subjectListFY.clear()
+                if (error != null) {
+                    Toast.makeText(this@UploadClass, "Error found is $error", Toast.LENGTH_SHORT)
+                        .show()
+                }
+                value?.forEach { ds ->
+                    subjectListFY.add(
+                        mapOf(
+                            "department" to ds["department"].toString(),
+                            "subjectName" to ds["subjectName"].toString(),
+                            "classYear" to ds["classYear"].toString(),
+                            "activity" to "deleteSubject"
+                        )
+                    )
+                }
+                deleteClassBinding.rsvDialogDeleteClassFY.adapter?.notifyDataSetChanged()
+            }
+        bottomDialog.show()
+        deleteClassBinding.rsvDialogDeleteClassTY.adapter?.notifyDataSetChanged()
+
+    }
 
 
     //#################################  ADD CLASS FUNCTIONS   ########################################
     private fun addClass() {
         if (classDate != "" && classTime != "" && classSubject != "" && classRoom != "" && classYear != "") {
-            FirebaseDatabase.getInstance().reference
-                .child("Class TimeTable")
-                .child(TeacherDashboard.loggedTeacherDep)
-                .child(classYear).child(classSubject)
-                .setValue(ClassData(classDate, classTime, classSubject, classYear, classRoom))
-                .addOnSuccessListener {
-                    Toast.makeText(
-                        this@UploadClass,
-                        "Successfully Added",
-                        Toast.LENGTH_SHORT
-                    )
-                        .show()
-                }
-                .addOnFailureListener {
-                    Toast.makeText(this@UploadClass, "Error :${it.message}", Toast.LENGTH_SHORT)
-                        .show()
-                }
+            fireDb.child("Faculty Data").child(TeacherDashboard.loggedTeacherDep)
+                .addValueEventListener(object : ValueEventListener {
+                    lateinit var teacherName: String
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        try {
+                            if (snapshot.exists()) {
+                                snapshot.children.forEach { t ->
+                                    t.child("Assigned Subject").child(classYear).children.forEach {
+                                        if (it.value == classSubject) {
+                                            teacherName = t.key.toString()
+                                        }
+                                    }
+                                }
+                            }
+                            fireDb.child("Class TimeTable")
+                                .child(TeacherDashboard.loggedTeacherDep)
+                                .child(classYear).child(classSubject)
+                                .setValue(
+                                    ClassData(
+                                        classDate,
+                                        classTime,
+                                        classSubject,
+                                        teacherName,
+                                        classYear,
+                                        classRoom
+                                    )
+                                )
+                                .addOnSuccessListener {
+                                    Toast.makeText(
+                                        this@UploadClass,
+                                        "Successfully Added",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+                                .addOnFailureListener {
+                                    Toast.makeText(
+                                        this@UploadClass,
+                                        "Error :${it.message}",
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                }
+                        } catch (e: Exception) {
+                            Toast.makeText(
+                                this@UploadClass,
+                                "Err-Teacher not Assigned!!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Log.e("firebase err", error.message, error.toException())
+                    }
+                })
+
         }
     }
 
@@ -277,25 +444,24 @@ class UploadClass : AppCompatActivity() {
         )
         addClassBinding.ACClassYear.setAdapter(adapterYear)
         addClassBinding.ACClassYear.setOnItemClickListener { _, _, i, _ ->
+            addClassBinding.ACSubject.text.clear()
             val subjects = ArrayList<String>()
-            FirebaseDatabase.getInstance().reference
-                .child("Subjects")
-                .child(TeacherDashboard.loggedTeacherDep)
-                .child(itemsYear[i]).addValueEventListener(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            subjects.clear()
-                            for (subject in snapshot.children) {
-                                subjects.add(subject.value.toString())
-                            }
-                        }
-                    }
-
-                    override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(this@UploadClass, "No Subjects!", Toast.LENGTH_SHORT)
+            FirebaseFirestore.getInstance()
+                .collection("${itemsYear[i]}${TeacherDashboard.loggedTeacherDep}-Subjects")
+                .addSnapshotListener { value, error ->
+                    subjects.clear()
+                    if (error != null) {
+                        Toast.makeText(
+                            this@UploadClass,
+                            "Error found is $error",
+                            Toast.LENGTH_SHORT
+                        )
                             .show()
                     }
-                })
+                    value?.forEach { ds ->
+                        subjects.add(ds["subjectName"].toString())
+                    }
+                }
 
             val adapterSubject = ArrayAdapter(
                 this,
@@ -319,10 +485,10 @@ class UploadClass : AppCompatActivity() {
 
         val datePickerDialog = DatePickerDialog(
             this,
-            { _, year, monthOfYear, dayOfMonth ->
+            { _, y, monthOfYear, dayOfMonth ->
                 // on below line we are setting
                 // date to our edit text.
-                val dat = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + year)
+                val dat = (dayOfMonth.toString() + "-" + (monthOfYear + 1) + "-" + y)
                 addClassBinding.ACClassDate.text = dat
             },
             year,

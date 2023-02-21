@@ -36,7 +36,7 @@ class ManageStudent : AppCompatActivity() {
         initializeRecylerView()
         fetchStudData()
 
-        val items = listOf("BScIT", "BMS", "BAF", "BMM")
+        val items = listOf("BScIT", "BMS", "BAF", "BAMMC")
         val adapter = ArrayAdapter(
             this,
             R.layout.support_simple_spinner_dropdown_item,
@@ -55,7 +55,7 @@ class ManageStudent : AppCompatActivity() {
         })
         if (userType == "HOD") {
             binding.FABaddStud.visibility = View.GONE
-            binding.studDepartment.visibility = View.GONE
+            binding.TILStudDepartment.visibility = View.GONE
             binding.btnFilter.visibility = View.GONE
         }
         binding.FABaddStud.setOnClickListener {
@@ -70,6 +70,7 @@ class ManageStudent : AppCompatActivity() {
             studentList.clear()
             studentList.addAll(storeStudList)
             binding.MSRsvYourStudents.adapter?.notifyDataSetChanged()
+            binding.MSTxtTotalStudent.text = "Total FY Students:-${studentList.size}"
             binding.MSTxtShowAll.visibility = View.GONE
         }
 

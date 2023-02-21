@@ -3,13 +3,11 @@ package com.harshit.goswami.collegeapp
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import com.google.android.gms.tasks.OnCompleteListener
 import com.google.firebase.messaging.FirebaseMessaging
 import com.harshit.goswami.collegeapp.databinding.ActivityUserSelectionBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
@@ -22,17 +20,7 @@ class UserSelectionActivity : AppCompatActivity() {
     ) { isGranted: Boolean ->
         if (isGranted) {
             // Permission is granted. Continue the action or workflow in your
-            // app.
-//                Toast.makeText(this,"uploaded Successfully!",Toast.LENGTH_SHORT).show()
-//                FCMnotificationSender(
-//                    "/topics/all", "Notification title", "this is notice notification",
-//                    "BIGPIC",
-//                    downloadUrl.toString(),//applicationContext,
-//                    this@UserSelectionActivity
-//                )
-//                    .sendNotifications()
-//            }
-//            else{
+
             FCMnotificationSender(
                 "/topics/all", "Notification title", "this is notice notification body",
                 "BIGTEXT",
@@ -57,22 +45,10 @@ class UserSelectionActivity : AppCompatActivity() {
 
         FirebaseMessaging.getInstance().subscribeToTopic("all")//all subscribed
 //        FirebaseMessaging.getInstance().unsubscribeFromTopic("notice")
-        when (PackageManager.PERMISSION_GRANTED) {
-            ContextCompat.checkSelfPermission(
-                this, Manifest.permission.POST_NOTIFICATIONS
-            ) -> {
-                // You can use the API that requires the permission.
-                Log.e("permission Granted", "onCreate: PERMISSION GRANTED")
-                FCMnotificationSender(
-                    "/topics/all", "Notification title", "this is notice notification body",
-                    "BIGTEXT",
-                    "", //applicationContext,
-                    this@UserSelectionActivity
-                )
-                    .sendNotifications()
-            }
-            else -> {
-                // The registered ActivityResultCallback gets the result of this request
+        if (PackageManager.PERMISSION_GRANTED != ContextCompat
+                .checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS)
+        ) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 requestPermissionLauncher.launch(
                     Manifest.permission.POST_NOTIFICATIONS
                 )
@@ -99,6 +75,7 @@ class UserSelectionActivity : AppCompatActivity() {
             intent.putExtra("user", "other")
             startActivity(intent)
         }
+/*
         FirebaseMessaging.getInstance().token.addOnCompleteListener(OnCompleteListener { task ->
             if (!task.isSuccessful) {
                 Log.d("token", "Fetching FCM registration token failed", task.exception)
@@ -111,5 +88,6 @@ class UserSelectionActivity : AppCompatActivity() {
             Log.d("token", token.toString())
             Toast.makeText(baseContext, token.toString(), Toast.LENGTH_SHORT).show()
         })
+*/
     }
 }

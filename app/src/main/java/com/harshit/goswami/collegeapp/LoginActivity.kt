@@ -160,22 +160,6 @@ class LoginActivity : AppCompatActivity() {
                                        ) {
                                            val intent =
                                                Intent(this@LoginActivity, TeacherDashboard::class.java)
-                                           intent.putExtra(
-                                               "LoggedTeacher", item.getValue(
-                                                   FacultyData::class.java
-                                               )?.name.toString()
-                                           )
-                                           intent.putExtra(
-                                               "teacherType", item.getValue(
-                                                   FacultyData::class.java
-                                               )?.teacherType.toString()
-                                           )
-                                           intent.putExtra(
-                                               "teacherDep", item.getValue(
-                                                   FacultyData::class.java
-                                               )?.department.toString()
-                                           )
-
                                            val pref: SharedPreferences =
                                                getSharedPreferences("teacherPref", MODE_PRIVATE)
                                            val editor = pref.edit()

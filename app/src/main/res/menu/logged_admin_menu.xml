@@ -5,8 +5,9 @@
         android:title="View Profile"
         />
     <item
-        android:id="@+id/edit_profile"
-        android:title="Edit Profile"
+        android:id="@+id/change_password"
+        android:title="Change Password"
+        android:icon="@drawable/ic_lock"
         />
 <item
         android:id="@+id/log_out"

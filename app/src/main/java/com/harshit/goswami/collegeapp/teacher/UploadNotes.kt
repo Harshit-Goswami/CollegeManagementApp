@@ -5,8 +5,8 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
+import android.util.Log
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
@@ -16,6 +16,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.data.NotesData
@@ -36,9 +37,7 @@ class UploadNotes : AppCompatActivity() {
             fileUri = uri
             val bookName = bindind.txtBookName
             if (fileUri.toString().startsWith("content://")) {
-                var cursor: Cursor? = null
-                cursor =
-                    this.contentResolver.query(fileUri!!, null, null, null, null)
+                val cursor: Cursor? = this.contentResolver.query(fileUri!!, null, null, null, null)
                 if (cursor != null && cursor.moveToFirst()) {
                     @SuppressLint("Range") val fileTitle: String =
                         cursor.getString(cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME))
@@ -62,38 +61,41 @@ class UploadNotes : AppCompatActivity() {
             ).show()
             else uploadFileAndData()
         }
-setUpAutoCompleteTextView()
+        setUpAutoCompleteTextView()
     }
-private fun setUpAutoCompleteTextView(){
-    val itemsYear = listOf("FY", "SY", "TY")
-    val adapterYear = ArrayAdapter(
-        this,
-        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-        itemsYear
-    )
-    bindind.selectClass.setAdapter(adapterYear)
-    bindind.selectClass.setOnItemClickListener { _, _, p2, _ ->
-        val itemsSubj = ArrayList<String>()
-        fireDb.child("Faculty Data")
-            .child(TeacherDashboard.loggedTeacherDep)
-            .child(TeacherDashboard.loggedTeacherName)
-            .child("Assigned Subject")
-            .child(itemsYear[p2]).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    snapshot.children.forEach { sub ->
-                        itemsSubj.add(sub.value.toString())
-                    }
-                }
-                override fun onCancelled(error: DatabaseError) {
-                }
-            })
-        val adapterSub = ArrayAdapter (
-            this,R.layout.support_simple_spinner_dropdown_item,itemsSubj)
-        bindind.selectSubject.setAdapter(adapterSub)
+
+    private fun setUpAutoCompleteTextView() {
+        val itemsYear = listOf("FY", "SY", "TY")
+        val adapterYear = ArrayAdapter(
+            this,
+            R.layout.support_simple_spinner_dropdown_item,
+            itemsYear
+        )
+        bindind.selectClass.setAdapter(adapterYear)
+        bindind.selectClass.setOnItemClickListener { _, _, p2, _ ->
+
+            val itemsSubj = ArrayList<String>()
+             fireDb.child("Faculty Data")
+                 .child(TeacherDashboard.loggedTeacherDep)
+                 .child(TeacherDashboard.loggedTeacherName)
+                 .child("Assigned Subject")
+                 .child(itemsYear[p2]).addListenerForSingleValueEvent(object : ValueEventListener {
+                     override fun onDataChange(snapshot: DataSnapshot) {
+                         snapshot.children.forEach { sub ->
+                             itemsSubj.add(sub.value.toString())
+                         }
+                     }
+                     override fun onCancelled(error: DatabaseError) {
+                     }
+                 })
+                val adapterSub = ArrayAdapter(
+                    this, R.layout.support_simple_spinner_dropdown_item, itemsSubj
+                )
+                bindind.selectSubject.setAdapter(adapterSub)
+        }
 
     }
 
-}
     private fun uploadFileAndData() {
         bindind.UNProgressBox.visibility = View.VISIBLE
         if (clickedButton == "notes") {

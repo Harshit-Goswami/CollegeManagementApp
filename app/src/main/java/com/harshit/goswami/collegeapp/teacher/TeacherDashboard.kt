@@ -27,27 +27,34 @@ import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.admin.ManageStudent
+import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherDashboardBinding
-import com.harshit.goswami.collegeapp.databinding.DialogAdminEditProfileBinding
+import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding
 import java.io.IOException
 
 class TeacherDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityTeacherDashboardBinding
-    private lateinit var editProfileBinding: DialogAdminEditProfileBinding
+    private lateinit var changePasswordBinding: DialogAdminChangePasswordBinding
     private val fireDb = FirebaseDatabase.getInstance().reference
     private var fileUri: Uri? = null
     var teacherName = ""
     var teacherId = ""
-    var teacherDepartment = ""
+
+    //    var teacherDepartment = ""
     var teacherImgUrl = ""
-    var teacherPassword = ""
-    companion object{
+    var teacherOldPassword = ""
+    var teacherNewPassword = ""
+    var teacherReNewPassword = ""
+
+
+    companion object {
         var loggedTeacherName = ""
         var loggedTeacherType = ""
         var loggedTeacherDep = ""
     }
+
     private val imagePicker = registerForActivityResult(
         ActivityResultContracts.GetContent()
     ) { result: Uri? ->
@@ -59,7 +66,7 @@ class TeacherDashboard : AppCompatActivity() {
                     val source: ImageDecoder.Source =
                         ImageDecoder.createSource(contentResolver, fileUri!!)
                     bitmap = ImageDecoder.decodeBitmap(source)
-                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
+//                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -70,7 +77,7 @@ class TeacherDashboard : AppCompatActivity() {
                             contentResolver,
                             fileUri
                         )
-                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
+//                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
                 } catch (e: IOException) {
                     // Log the exception
                     e.printStackTrace()
@@ -78,42 +85,44 @@ class TeacherDashboard : AppCompatActivity() {
             }
         }
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
         binding = ActivityTeacherDashboardBinding.inflate(layoutInflater)
-        editProfileBinding = DialogAdminEditProfileBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         val teacherPref: SharedPreferences =
             getSharedPreferences("teacherPref", MODE_PRIVATE)
         loggedTeacherName = teacherPref.getString("TeacherName", "No Faculty").toString()
         loggedTeacherType = teacherPref.getString("teacherType", "No type").toString()
-        loggedTeacherDep  = teacherPref.getString("teacherDep", "No dep").toString()
+        loggedTeacherDep = teacherPref.getString("teacherDep", "No dep").toString()
         getTeacherPicture()
         onClicklisteners()
-        if (loggedTeacherType == "teacher"){
+        if (loggedTeacherType == "teacher") {
             binding.TDHodContainer.visibility = View.GONE
         }
     }
+
     private fun onClicklisteners() {
         binding.TDUploadNotes.setOnClickListener {
-            val i =  Intent(
+            val i = Intent(
                 this,
                 UploadNotes::class.java
             )
-            i.putExtra("clickedButton","notes")
+            i.putExtra("clickedButton", "notes")
             startActivity(i)
         }
         binding.TDUploadAssignment.setOnClickListener {
-            val i =  Intent(
+            val i = Intent(
                 this,
                 UploadNotes::class.java
             )
-            i.putExtra("clickedButton","assignment")
+            i.putExtra("clickedButton", "assignment")
             startActivity(i)
         }
         binding.TDTeacherImage.setOnClickListener {
             if (LoginActivity.isTeacherLogin) {
-                loggedTeacherName = intent.getStringExtra("LoggedTeacher").toString()
                 val popupMenu = PopupMenu(this, binding.TDTeacherImage)
                 popupMenu.menuInflater.inflate(
                     com.harshit.goswami.collegeapp.R.menu.logged_admin_menu,
@@ -128,17 +137,7 @@ class TeacherDashboard : AppCompatActivity() {
                             dialogEditProfile()
                         }
                         "Log Out" -> {
-                            val pref: SharedPreferences =
-                                getSharedPreferences("teacherPref", MODE_PRIVATE)
-                            val editor = pref.edit()
-                            editor.putBoolean("teacherLogin", false).apply()
-                            startActivity(
-                                Intent(
-                                    this,
-                                    LoginActivity::class.java
-                                )
-                            )
-                            finish()
+                            setupLogout()
                         }
 
                     }
@@ -165,21 +164,38 @@ class TeacherDashboard : AppCompatActivity() {
             )
         }
         binding.TDManageFaculty.setOnClickListener {
-            val i =  Intent(
+            val i = Intent(
                 this,
                 ManageFaculty::class.java
             )
-            i.putExtra("userType","HOD")
+            i.putExtra("userType", "HOD")
             startActivity(i)
         }
         binding.TDYourStudents.setOnClickListener {
-            val i =  Intent(
+            val i = Intent(
                 this,
                 ManageStudent::class.java
             )
-            i.putExtra("userType","HOD")
+            i.putExtra("userType", "HOD")
             startActivity(i)
         }
+    }
+
+    private fun setupLogout() {
+        val pref: SharedPreferences =
+            getSharedPreferences("teacherPref", MODE_PRIVATE)
+        val editor = pref.edit()
+        editor.putBoolean("teacherLogin", false).apply()
+        editor.putString("TeacherName", "").apply()
+        editor.putString("teacherType", "").apply()
+        editor.putString("teacherDep", "").apply()
+        startActivity(
+            Intent(
+                this,
+                LoginActivity::class.java
+            )
+        )
+        finish()
     }
 
     private fun dialogViewProfile() {
@@ -194,7 +210,6 @@ class TeacherDashboard : AppCompatActivity() {
         builder.setCancelable(true)
         builder.setView(viewProfileBinding.root)
         builder.setCanceledOnTouchOutside(true)
-        loggedTeacherName = intent.getStringExtra("LoggedTeacher").toString()
 
         Toast.makeText(
             this@TeacherDashboard,
@@ -202,22 +217,22 @@ class TeacherDashboard : AppCompatActivity() {
             Toast.LENGTH_SHORT
         ).show()
 
-        FirebaseDatabase.getInstance().reference.child("BScIT").child("Faculty Data")
+        FirebaseDatabase.getInstance().reference.child("Faculty Data").child(loggedTeacherDep)
+            .child(
+                loggedTeacherName
+            )
             .addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        for (data in snapshot.children) {
-                            if (data.key.toString() == loggedTeacherName) {
-                                Glide.with(this@TeacherDashboard)
-                                    .load(data.getValue(FacultyData::class.java)!!.downloadUrl)
-                                    .into(viewProfileBinding.DVPImgAdmin)
+                        Glide.with(this@TeacherDashboard)
+                            .load(snapshot.getValue(FacultyData::class.java)!!.downloadUrl)
+                            .into(viewProfileBinding.DVPImgAdmin)
 
-                                viewProfileBinding.DVPAdminName.text =
-                                    data.getValue(FacultyData::class.java)!!.name
-                                viewProfileBinding.DVPAdminDepartment.text =
-                                    data.getValue(FacultyData::class.java)!!.department
-                            }
-                        }
+                        viewProfileBinding.DVPAdminName.text =
+                            snapshot.getValue(FacultyData::class.java)!!.name
+                        viewProfileBinding.DVPAdminDepartment.text =
+                            snapshot.getValue(FacultyData::class.java)!!.department
+
                     } else Toast.makeText(
                         this@TeacherDashboard,
                         "snapshot not exist!",
@@ -242,7 +257,6 @@ class TeacherDashboard : AppCompatActivity() {
     }
 
     private fun dialogEditProfile() {
-        val editProfileBinding = DialogAdminEditProfileBinding.inflate(layoutInflater)
         try {
             val editProfileDialog = AlertDialog.Builder(
                 this,
@@ -250,7 +264,7 @@ class TeacherDashboard : AppCompatActivity() {
             ).create()
             editProfileDialog.window?.setGravity(Gravity.TOP)
             editProfileDialog.setCancelable(true)
-            editProfileDialog.setView(editProfileBinding.root)
+            editProfileDialog.setView(changePasswordBinding.root)
             editProfileDialog.setCanceledOnTouchOutside(false)
             editProfileDialog.show()
         } catch (e: Exception) {
@@ -258,78 +272,33 @@ class TeacherDashboard : AppCompatActivity() {
         }
 
 
-        editProfileBinding.DEPImgAdmin.setOnClickListener {
-            imagePicker.launch(
-                "image/*"
-            )
+        changePasswordBinding.DEPBtnSubmit.setOnClickListener {
+            validation()
+            uploadData()
         }
-        fireDb.child("BScIT").child("Faculty Data")
-            .addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        for (data in snapshot.children) {
-                            if (data.key.toString() == loggedTeacherName) {
-                                Glide.with(this@TeacherDashboard)
-                                    .load(data.getValue(FacultyData::class.java)!!.downloadUrl)
-                                    .into(editProfileBinding.DEPImgAdmin)
-                                editProfileBinding.DEPEdtFullname.setText(data.getValue(FacultyData::class.java)!!.name)
-//                                editProfileBinding.DEPEdtDepartment.setText(
-//                                    data.getValue(
-//                                        FacultyData::class.java
-//                                    )!!.department
-//                                )
-                                editProfileBinding.DEPEdtPassword.setText(data.getValue(FacultyData::class.java)!!.password)
-                                editProfileBinding.DEPEdtUserId.setText(data.getValue(FacultyData::class.java)!!.contactNo)
-                            }
-                        }
 
-                    } else Toast.makeText(
-                        this@TeacherDashboard,
-                        "snapshot not exist!",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(
-                        this@TeacherDashboard,
-                        "Error!-${error.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
-
-            })
-        editProfileBinding.DEPBtnSubmit.setOnClickListener {
-            UpdateProfile()
-        }
-    }
-
-    private fun UpdateProfile() {
-        validation()
-        if (fileUri == null) uploadData()
-        else uploadImgAndData()
     }
 
     private fun validation() {
-        if (editProfileBinding.DEPEdtFullname.text.toString() != "") {
-            teacherName =
-                editProfileBinding.DEPEdtFullname.text.toString()
-        } else editProfileBinding.DEPEdtFullname.error = "this field Should not be Empty"
+        if (changePasswordBinding.DEPEdtOldPassword.text.toString()
+                .isNotEmpty()
+        ) teacherOldPassword =
+            changePasswordBinding.DEPEdtOldPassword.text.toString()
+        else changePasswordBinding.DEPEdtOldPassword.error = "Please Enter your Old Password"
 
-//        if (editProfileBinding.DEPEdtDepartment.text.toString() != "") {
-//            teacherDepartment =
-//                editProfileBinding.DEPEdtDepartment.text.toString()
-//        } else editProfileBinding.DEPEdtDepartment.error = "this field Should not be Empty"
+        if (changePasswordBinding.DEPEdtNewPassword.text.toString()
+                .isNotEmpty()
+        ) teacherNewPassword =
+            changePasswordBinding.DEPEdtNewPassword.text.toString()
+        else changePasswordBinding.DEPEdtNewPassword.error = "Please Enter your New Password"
 
-        if (editProfileBinding.DEPEdtUserId.text.toString() != "") {
-            teacherId =
-                editProfileBinding.DEPEdtUserId.text.toString()
-        } else editProfileBinding.DEPEdtUserId.error = "this field Should not be Empty"
+        if (changePasswordBinding.DEPEdtReNewPassword.text.toString().isEmpty())
+            changePasswordBinding.DEPEdtReNewPassword.error = "Please Re-Enter your New Password"
 
-        if (editProfileBinding.DEPEdtPassword.text.toString() != "") {
-            teacherPassword =
-                editProfileBinding.DEPEdtPassword.text.toString()
-        } else editProfileBinding.DEPEdtPassword.error = "Please Enter your Password"
+        if (changePasswordBinding.DEPEdtReNewPassword.text.toString() == teacherNewPassword) teacherReNewPassword =
+            changePasswordBinding.DEPEdtReNewPassword.text.toString()
+        else changePasswordBinding.DEPEdtReNewPassword.error = "Password Does not match!!"
+
 
     }
 
@@ -342,7 +311,7 @@ class TeacherDashboard : AppCompatActivity() {
             // Defining the child of storageReference
             val storageRef =
                 FirebaseStorage.getInstance().reference.child("Faculty Images")
-                    .child(loggedTeacherName)
+                    .child("$loggedTeacherName(${TeacherDashboard.loggedTeacherDep})")
             // adding listeners on upload
             // or failure of image
             val uploadTask = storageRef.putFile(fileUri!!)
@@ -394,80 +363,77 @@ class TeacherDashboard : AppCompatActivity() {
             }
         }
     }
-    private fun uploadData() {
-            fireDb.child("BScIT").child("Faculty Data").child(loggedTeacherName)
-                .setValue(
-                    FacultyData(
-                        teacherName,
-                        teacherDepartment,
-                        teacherImgUrl,
-                        teacherId,
-                        teacherPassword,
-                        loggedTeacherType
-                    )
-                ).addOnSuccessListener {
-                    Toast
-                        .makeText(
-                            this,
-                            "Updated Successfully!",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }
-                .addOnFailureListener {
-                    Toast
-                        .makeText(
-                            this,
-                            "Failed: " + it.message,
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }
-//        } else Toast
-//            .makeText(
-//                this,
-//                "Field is empty!",
-//                Toast.LENGTH_SHORT
-//            )
-//            .show()
-    }
 
-    private fun getTeacherPicture() {
-        fireDb.child("Faculty Data").child(loggedTeacherDep)
-            .addValueEventListener(object : ValueEventListener {
+    private fun uploadData() {
+        if (teacherOldPassword != "") {
+            fireDb.child("Faculty Data").child(loggedTeacherDep)
+                .child(loggedTeacherName).addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
-                        if(loggedTeacherType == "HOD"){
-                        if (snapshot.child("HOD").key.toString() == "HOD"){
-                            Glide.with(this@TeacherDashboard)
-                                .load(snapshot.child("HOD").getValue(FacultyData::class.java)!!.downloadUrl)
-                                .into(binding.TDTeacherImage)
+                        if (teacherOldPassword == snapshot.getValue(FacultyData::class.java)?.password) {
+                            fireDb.child("Faculty Data").child(loggedTeacherDep)
+                                .child(loggedTeacherName)
+                                .setValue(
+                                    FacultyData(
+                                        loggedTeacherName,
+                                      loggedTeacherName,
+                                        snapshot.getValue(FacultyData::class.java)?.downloadUrl.toString(),
+                                        snapshot.getValue(FacultyData::class.java)?.downloadUrl.toString(),
+                                        teacherReNewPassword,
+                                        snapshot.getValue(FacultyData::class.java)?.downloadUrl.toString()
+                                    )
+                                ).addOnSuccessListener {
+                                    Toast
+                                        .makeText(
+                                            this@TeacherDashboard,
+                                            "Updated Successfully!",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
+                                }
                         }
+                        else changePasswordBinding.DEPEdtOldPassword.error = "Incorrect Old Password!!"
                     }
-                        if (loggedTeacherType == "teacher"){
-                            for (data in snapshot.children) {
-                                if(data.key.toString() == loggedTeacherName)
-                                    Glide.with(this@TeacherDashboard)
-                                        .load(data.getValue(FacultyData::class.java)!!.downloadUrl)
-                                        .into(binding.TDTeacherImage)
-                            }
-                        }
-                    } else Toast.makeText(
-                        this@TeacherDashboard,
-                        "snapshot not exist!",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
-                    Toast.makeText(
-                        this@TeacherDashboard,
-                        "Error!-${error.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    TODO("Not yet implemented")
                 }
-
             })
+        }
+    }
+
+    private fun getTeacherPicture() {
+        try {
+            fireDb.child("Faculty Data").child(loggedTeacherDep).child(loggedTeacherName)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            Glide.with(this@TeacherDashboard)
+                                .load(snapshot.getValue(FacultyData::class.java)!!.downloadUrl)
+                                .into(binding.TDTeacherImage)
+                        } else {
+                            setupLogout()
+                            Toast.makeText(
+                                this@TeacherDashboard,
+                                "snapshot not exist!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(
+                            this@TeacherDashboard,
+                            "Error!-${error.message}",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+
+                })
+        } catch (e: Exception) {
+            Log.e("profile image error", e.message.toString())
+        }
     }
 
 }

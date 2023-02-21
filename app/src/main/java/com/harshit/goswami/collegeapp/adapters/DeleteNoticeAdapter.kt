@@ -13,10 +13,8 @@ import com.bumptech.glide.Glide
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.harshit.goswami.collegeapp.admin.DeleteNotice
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.noticeList
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ItemDeleteNoticeBinding
-import java.nio.file.Files.delete
 
 
 class DeleteNoticeAdapter(
@@ -49,10 +47,10 @@ class DeleteNoticeAdapter(
                     builder.setTitle("Delete Notice !")
                     builder.setCancelable(false)
                     builder.setPositiveButton("Yes"
-                    ) { dialog: DialogInterface?, which: Int ->
+                    ) { _: DialogInterface?, _: Int ->
                         if (activity == "EventActivity") {
                             FirebaseDatabase.getInstance().reference.child("Events")
-                                .child(this.dateTime.toString()).removeValue()
+                                .child(this.dateTime).removeValue()
                                 .addOnSuccessListener {
                                     Toast.makeText(
                                         context,
@@ -73,9 +71,6 @@ class DeleteNoticeAdapter(
                                         "Image deleted Successfully",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    DeleteNotice.noticeList.removeAt(position)
-                                    DeleteNotice.binding.rsvNotices.adapter?.notifyDataSetChanged()
-
                                 }.addOnFailureListener {
                                     Toast.makeText(
                                         context,
@@ -107,8 +102,6 @@ class DeleteNoticeAdapter(
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     DeleteNotice.noticeList.removeAt(position)
-                                    DeleteNotice.binding.rsvNotices.adapter?.notifyDataSetChanged()
-
                                 }.addOnFailureListener {
                                     Log.d("image delete error",it.message.toString(),it)
                                     Toast.makeText(
@@ -119,11 +112,10 @@ class DeleteNoticeAdapter(
                                 }
                         }
                     }
-                        builder.setNegativeButton("No",
-                            DialogInterface.OnClickListener { dialog: DialogInterface, which: Int ->
-                                dialog.cancel()
-                            } as DialogInterface.OnClickListener)
-//showing the alert dialog by @Harshit Goshwami
+                        builder.setNegativeButton("No") { dialog: DialogInterface, _: Int ->
+                            dialog.cancel()
+                        }
+//showing the alert dialog by Harshit Goshwami
                     builder.create().show()
 
                 }

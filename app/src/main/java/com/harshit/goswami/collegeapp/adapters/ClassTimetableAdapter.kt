@@ -36,6 +36,7 @@ class ClassTimetableAdapter(
                 binding.itemClassTime.text = this.time
                 binding.itemSubjectName.text = this.subject
                 binding.itemClassroom.text = this.roomNo
+                binding.itemFacultyName.text = "-${this.teacher}"
                 binding.ICTBtnDelete.setOnClickListener {
                   FirebaseDatabase.getInstance().reference.child("Class TimeTable")
                       .child(TeacherDashboard.loggedTeacherDep)
