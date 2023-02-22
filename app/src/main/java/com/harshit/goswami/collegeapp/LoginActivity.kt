@@ -75,7 +75,6 @@ class LoginActivity : AppCompatActivity() {
         }
 
         binding.loginBtn.setOnClickListener { updateUI() }//loginUser()
-
     }
 
     private fun updateUI() {
@@ -281,7 +280,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     private fun settingAutoCompleteTextView() {
-        val items = listOf("BScIT", "BMS", "BAF", "BMM")
+        val items = listOf("BScIT", "BMS", "BAF", "BAMMC")
         val adapter = ArrayAdapter(
             this,
             R.layout.support_simple_spinner_dropdown_item,

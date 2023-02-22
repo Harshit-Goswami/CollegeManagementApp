@@ -25,9 +25,9 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.LoginActivity
+import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.admin.ManageStudent
-import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherDashboardBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
@@ -36,11 +36,14 @@ import java.io.IOException
 
 class TeacherDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityTeacherDashboardBinding
+    private lateinit var viewProfileBinding :
+        DialogAdminViewProfileBinding
     private lateinit var changePasswordBinding: DialogAdminChangePasswordBinding
     private val fireDb = FirebaseDatabase.getInstance().reference
     private var fileUri: Uri? = null
-    var teacherName = ""
-    var teacherId = ""
+    private lateinit var builder: AlertDialog
+//    var teacherName = ""
+//    var teacherId = ""
 
     //    var teacherDepartment = ""
     var teacherImgUrl = ""
@@ -66,7 +69,9 @@ class TeacherDashboard : AppCompatActivity() {
                     val source: ImageDecoder.Source =
                         ImageDecoder.createSource(contentResolver, fileUri!!)
                     bitmap = ImageDecoder.decodeBitmap(source)
-//                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
+//                   viewProfileBinding.DVPImgAdmin.setImageBitmap(bitmap)
+                    uploadProfileImage()
+
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
@@ -77,7 +82,8 @@ class TeacherDashboard : AppCompatActivity() {
                             contentResolver,
                             fileUri
                         )
-//                    editProfileBinding.DEPImgAdmin.setImageBitmap(bitmap)
+//                    viewProfileBinding.DVPImgAdmin.setImageBitmap(bitmap)
+                    uploadProfileImage()
                 } catch (e: IOException) {
                     // Log the exception
                     e.printStackTrace()
@@ -88,6 +94,7 @@ class TeacherDashboard : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewProfileBinding = DialogAdminViewProfileBinding.inflate(layoutInflater)
         changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
         binding = ActivityTeacherDashboardBinding.inflate(layoutInflater)
 
@@ -122,30 +129,28 @@ class TeacherDashboard : AppCompatActivity() {
             startActivity(i)
         }
         binding.TDTeacherImage.setOnClickListener {
-            if (LoginActivity.isTeacherLogin) {
-                val popupMenu = PopupMenu(this, binding.TDTeacherImage)
-                popupMenu.menuInflater.inflate(
-                    com.harshit.goswami.collegeapp.R.menu.logged_admin_menu,
-                    popupMenu.menu
-                )
-                popupMenu.setOnMenuItemClickListener {
-                    when (it.title) {
-                        "View Profile" -> {
-                            dialogViewProfile()
-                        }
-                        "Edit Profile" -> {
-                            dialogEditProfile()
-                        }
-                        "Log Out" -> {
-                            setupLogout()
-                        }
-
+            val popupMenu = PopupMenu(this, binding.TDTeacherImage)
+            popupMenu.menuInflater.inflate(
+                com.harshit.goswami.collegeapp.R.menu.logged_admin_menu,
+                popupMenu.menu
+            )
+            popupMenu.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.view_profile -> {
+                        dialogViewProfile()
                     }
-                    true
-                }
+                    R.id.change_password -> {
+                        dialogChangePassword()
+                    }
+                    R.id.log_out -> {
+                        setupLogout()
+                    }
 
-                popupMenu.show()
+                }
+                true
             }
+
+            popupMenu.show()
         }
         binding.TDManageClass.setOnClickListener {
             startActivity(
@@ -189,21 +194,21 @@ class TeacherDashboard : AppCompatActivity() {
         editor.putString("TeacherName", "").apply()
         editor.putString("teacherType", "").apply()
         editor.putString("teacherDep", "").apply()
-        startActivity(
-            Intent(
-                this,
-                LoginActivity::class.java
-            )
+        val i = Intent(
+            this,
+            LoginActivity::class.java
         )
+        i.putExtra("SelectedUser", "teacher")
+        startActivity(i)
         finish()
     }
 
     private fun dialogViewProfile() {
         val viewProfileBinding =
             DialogAdminViewProfileBinding.inflate(layoutInflater)
-        val builder = AlertDialog.Builder(
+        builder = AlertDialog.Builder(
             this,
-            com.harshit.goswami.collegeapp.R.style.CustomAlertDialogViewProfile
+            R.style.CustomAlertDialogViewProfile
         ).create()
         builder.window?.setGravity(Gravity.TOP)
 
@@ -247,20 +252,83 @@ class TeacherDashboard : AppCompatActivity() {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
-
             })
-        viewProfileBinding.VPBtnEditProfile.setOnClickListener {
-            builder.dismiss()
-            dialogEditProfile()
+        viewProfileBinding.DVPImgAdmin.setOnClickListener {
+            imagePicker.launch("image/*")
+
         }
         builder.show()
     }
-
-    private fun dialogEditProfile() {
+private fun uploadProfileImage(){
+    if (fileUri!= null){
+        // Code for showing progressDialog while uploading
+        val progressDialog = ProgressDialog(this)
+        progressDialog.setTitle("Uploading...")
+        progressDialog.show()
+        // Defining the child of storageReference
+        val storageRef =
+            FirebaseStorage.getInstance().reference.child("Faculty Images")
+                .child("$loggedTeacherName(${loggedTeacherDep})")
+        // adding listeners on upload
+        // or failure of image
+        val uploadTask = storageRef.putFile(fileUri!!)
+        uploadTask.addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                task.addOnSuccessListener {
+                    progressDialog.dismiss()
+                    Toast.makeText(
+                        this,
+                        "Image Uploaded!!",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                    storageRef.downloadUrl
+                        .addOnSuccessListener { uri: Uri ->
+                            teacherImgUrl = uri.toString()
+                            try {
+                                fireDb.child("Faculty Data").child(loggedTeacherDep).child(
+                                    loggedTeacherName).child("downloadUrl").setValue(teacherImgUrl)
+                                    .addOnSuccessListener {
+                                        builder.dismiss()
+                                    }
+                            } catch (e: Exception) {
+                                Toast
+                                    .makeText(
+                                        this,
+                                        "Data Failed:- " + e.message,
+                                        Toast.LENGTH_SHORT
+                                    )
+                                    .show()
+                            }
+                        }
+                }
+            }
+        }.addOnFailureListener { e ->
+            progressDialog.dismiss()
+            Toast
+                .makeText(
+                    this,
+                    "Failed: " + e.message,
+                    Toast.LENGTH_SHORT
+                )
+                .show()
+        }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
+            val progress = (100.0
+                    * taskSnapshot.bytesTransferred
+                    / taskSnapshot.totalByteCount)
+            progressDialog.setMessage(
+                "Uploaded "
+                        + progress.toInt() + "%"
+            )
+        }
+    }
+}
+    private fun dialogChangePassword() {
         try {
+            changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
             val editProfileDialog = AlertDialog.Builder(
                 this,
-                com.harshit.goswami.collegeapp.R.style.CustomAlertDialogEditProfile
+                R.style.CustomAlertDialogEditProfile
             ).create()
             editProfileDialog.window?.setGravity(Gravity.TOP)
             editProfileDialog.setCancelable(true)
@@ -299,9 +367,9 @@ class TeacherDashboard : AppCompatActivity() {
             changePasswordBinding.DEPEdtReNewPassword.text.toString()
         else changePasswordBinding.DEPEdtReNewPassword.error = "Password Does not match!!"
 
-
     }
 
+/*
     private fun uploadImgAndData() {
         if (fileUri != null) {
             // Code for showing progressDialog while uploading
@@ -311,7 +379,7 @@ class TeacherDashboard : AppCompatActivity() {
             // Defining the child of storageReference
             val storageRef =
                 FirebaseStorage.getInstance().reference.child("Faculty Images")
-                    .child("$loggedTeacherName(${TeacherDashboard.loggedTeacherDep})")
+                    .child("$loggedTeacherName(${loggedTeacherDep})")
             // adding listeners on upload
             // or failure of image
             val uploadTask = storageRef.putFile(fileUri!!)
@@ -363,43 +431,46 @@ class TeacherDashboard : AppCompatActivity() {
             }
         }
     }
+*/
 
     private fun uploadData() {
-        if (teacherOldPassword != "") {
+        if (teacherOldPassword != "" && teacherReNewPassword != "") {
             fireDb.child("Faculty Data").child(loggedTeacherDep)
-                .child(loggedTeacherName).addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        if (teacherOldPassword == snapshot.getValue(FacultyData::class.java)?.password) {
-                            fireDb.child("Faculty Data").child(loggedTeacherDep)
-                                .child(loggedTeacherName)
-                                .setValue(
-                                    FacultyData(
-                                        loggedTeacherName,
-                                      loggedTeacherName,
-                                        snapshot.getValue(FacultyData::class.java)?.downloadUrl.toString(),
-                                        snapshot.getValue(FacultyData::class.java)?.downloadUrl.toString(),
-                                        teacherReNewPassword,
-                                        snapshot.getValue(FacultyData::class.java)?.downloadUrl.toString()
-                                    )
-                                ).addOnSuccessListener {
-                                    Toast
-                                        .makeText(
-                                            this@TeacherDashboard,
-                                            "Updated Successfully!",
-                                            Toast.LENGTH_SHORT
+                .child(loggedTeacherName)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            if (teacherOldPassword == snapshot.getValue(FacultyData::class.java)?.password) {
+                                fireDb.child("Faculty Data").child(loggedTeacherDep)
+                                    .child(loggedTeacherName)
+                                    .setValue(
+                                        FacultyData(
+                                            loggedTeacherName,
+                                            loggedTeacherDep,
+                                            snapshot.getValue(FacultyData::class.java)?.downloadUrl.toString(),
+                                            snapshot.getValue(FacultyData::class.java)?.contactNo.toString(),
+                                            teacherReNewPassword,
+                                            snapshot.getValue(FacultyData::class.java)?.teacherType.toString()
                                         )
-                                        .show()
-                                }
+                                    ).addOnSuccessListener {
+                                        Toast
+                                            .makeText(
+                                                this@TeacherDashboard,
+                                                "Updated Successfully!",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
+//                                        setupLogout()
+                                    }
+                            } else changePasswordBinding.DEPEdtOldPassword.error =
+                                "Incorrect Old Password!!"
                         }
-                        else changePasswordBinding.DEPEdtOldPassword.error = "Incorrect Old Password!!"
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        TODO("Not yet implemented")
+                    }
+                })
         }
     }
 
@@ -409,9 +480,12 @@ class TeacherDashboard : AppCompatActivity() {
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {
-                            Glide.with(this@TeacherDashboard)
-                                .load(snapshot.getValue(FacultyData::class.java)!!.downloadUrl)
-                                .into(binding.TDTeacherImage)
+                            try {
+                                Glide.with(this@TeacherDashboard)
+                                    .load(snapshot.getValue(FacultyData::class.java)!!.downloadUrl)
+                                    .into(binding.TDTeacherImage)
+                            } catch (_: Exception) {
+                            }
                         } else {
                             setupLogout()
                             Toast.makeText(

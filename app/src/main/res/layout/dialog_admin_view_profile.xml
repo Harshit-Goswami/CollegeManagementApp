@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:tools="http://schemas.android.com/tools"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -16,7 +15,17 @@
     android:scaleType="centerCrop"
     android:layout_gravity="center_horizontal"
     app:shapeAppearanceOverlay="@style/circular"
+    android:src="@drawable/ic_person"
+    android:backgroundTint="@color/black"
     />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/DVP_txt_change_pic"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="change image"
+        android:textColor="#bbbbbb"
+        />
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/DVP_admin_name"
         android:layout_width="wrap_content"
@@ -38,15 +47,17 @@
         android:textSize="16sp"
         android:textColor="@color/white"
         />
+<!--
 <Button
     android:id="@+id/VP_btn_editProfile"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="end"
     android:backgroundTint="#FF6F00"
-    android:text="Edit"
+    android:text=""
     android:textAllCaps="false"
     android:textColor="@color/black"
     />
+-->
 
 </LinearLayout>
