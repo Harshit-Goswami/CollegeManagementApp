@@ -22,6 +22,11 @@ class HomeFragment : Fragment() {
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var toolbar: MaterialToolbar
     private lateinit var drawerLayout: DrawerLayout
+    // ********************** admission guidelines variables ***************
+    private var isAdmissionNotice = false
+    private var isAdmissionGuidelines = false
+    private var isMeritList = false
+    private var isAdmissionForm = false
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -44,9 +49,10 @@ class HomeFragment : Fragment() {
         )
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
-
+//########################################################################################################
+        imageSlider()
+        admissionGuidelinesSetUp()
         binding.scrollView3.viewTreeObserver.addOnScrollChangedListener {
-            val x = binding.scrollView3.scrollX
             val y = binding.scrollView3.scrollY
             if (y > 500) {
                 MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
@@ -55,13 +61,13 @@ class HomeFragment : Fragment() {
         binding.FHYoutubeIcon.setOnClickListener {
             getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")
         }
+
+// ################################### ON CLICK LISTENERS  ##################################*/
         binding.FHInstaIcon.setOnClickListener { getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en") }
         binding.FHFacebookIcon.setOnClickListener { getByUrl("https://www.facebook.com/profile.php?id=100064103347725") }
-        binding.FHEmailIcon.setOnClickListener {
-            val email = Intent(Intent.ACTION_SEND)
-            email.putExtra(Intent.EXTRA_EMAIL, "harshitgoswami103@gmail.com")
-            email.type = "message/rfc822"
-            startActivity(Intent.createChooser(email, "Choose an Email client :")); }
+        binding.FHEmailIcon.setOnClickListener {}
+
+
 
 //        binding.navView.setNavigationItemSelectedListener {
 //            when (it.itemId) {
@@ -71,22 +77,117 @@ class HomeFragment : Fragment() {
 //            }
 //            true
 //        }
-        val imageList = ArrayList<SlideModel>() // Create image list
 
-        imageList.add(SlideModel(R.drawable.slide1))
-        imageList.add(SlideModel(R.drawable.slide5))
-        imageList.add(SlideModel(R.drawable.slide6))
-        imageList.add(SlideModel(R.drawable.slide_gps_map_camera))
-        imageList.add(SlideModel(R.drawable.slide_best_college_certificate))
-        imageList.add(SlideModel(R.drawable.slide_college_iso_certificate))
-
-        binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
         return binding.root
+    }
+
+    private fun admissionGuidelinesSetUp() {
+        binding.txtAdmissionNotice.setOnClickListener {
+            if (!isAdmissionNotice) {
+                isAdmissionNotice = true
+                binding.admissionNoticeLink.visibility = View.VISIBLE
+                binding.txtAdmissionNotice.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_keyboard_arrow_up,
+                    0
+                )
+            } else {
+                isAdmissionNotice = false
+                binding.admissionNoticeLink.visibility = View.GONE
+                binding.txtAdmissionNotice.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_double_arrow_down,
+                    0
+                )
+            }
+        }
+        binding.txtAdmissionGuidelines.setOnClickListener {
+            if (!isAdmissionGuidelines) {
+                isAdmissionGuidelines = true
+                binding.admissionGuidelinesLink.visibility = View.VISIBLE
+                binding.txtAdmissionGuidelines.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_keyboard_arrow_up,
+                    0
+                )
+            } else {
+                isAdmissionGuidelines = false
+                binding.admissionGuidelinesLink.visibility = View.GONE
+                binding.txtAdmissionGuidelines.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_double_arrow_down,
+                    0
+                )
+            }
+        }
+        binding.txtMeritList.setOnClickListener {
+            if (!isMeritList) {
+                isMeritList = true
+                binding.meritListLink.visibility = View.VISIBLE
+                binding.txtMeritList.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_keyboard_arrow_up,
+                    0
+                )
+            } else {
+                isMeritList = false
+                binding.meritListLink.visibility = View.GONE
+                binding.txtMeritList.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_double_arrow_down,
+                    0
+                )
+            }
+        }
+        binding.txtAddmissionForm.setOnClickListener {
+            if (!isAdmissionForm) {
+                isAdmissionForm = true
+                binding.addmissionFormLink.visibility = View.VISIBLE
+                binding.txtAddmissionForm.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_keyboard_arrow_up,
+                    0
+                )
+            } else {
+                isAdmissionForm = false
+                binding.addmissionFormLink.visibility = View.GONE
+                binding.txtAddmissionForm.setCompoundDrawablesWithIntrinsicBounds(
+                    0,
+                    0,
+                    R.drawable.ic_double_arrow_down,
+                    0
+                )
+            }
+        }
+
+        binding.admissionNoticeLink.setOnClickListener { getByUrl("https://drive.google.com/file/d/1SgWhy7fWKmmZ7FRlm7ZEZo6viiXawNqV/view?usp=sharing") }
+        binding.admissionGuidelinesLink.setOnClickListener { getByUrl("https://drive.google.com/file/d/1W-R1Ynpc4MdXlVB73wwJRP_dwti64a93/view?usp=sharing") }
+        binding.addmissionFormLink.setOnClickListener { getByUrl("https://admission.onfees.com/admissionLogin?instituteId=447&formPolicyId=253") }
+        binding.meritListLink.setOnClickListener { getByUrl("https://drive.google.com/drive/folders/1OW4u5zqMhI680rDBbj9lhEHDumKDpWlq?usp=sharing") }
+
     }
 
     private fun getByUrl(s: String) {
         val uri = Uri.parse(s)
         startActivity(Intent(Intent.ACTION_VIEW, uri))
     }
+private fun imageSlider(){
+    val imageList = ArrayList<SlideModel>() // Create image list
 
+    imageList.add(SlideModel(R.drawable.slide1))
+    imageList.add(SlideModel(R.drawable.slide5))
+    imageList.add(SlideModel(R.drawable.slide6))
+    imageList.add(SlideModel(R.drawable.slide_gps_map_camera))
+    imageList.add(SlideModel(R.drawable.slide_best_college_certificate))
+    imageList.add(SlideModel(R.drawable.slide_college_iso_certificate))
+
+    binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
+}
 }

@@ -292,13 +292,6 @@ private fun uploadProfileImage(){
                                         builder.dismiss()
                                     }
                             } catch (e: Exception) {
-                                Toast
-                                    .makeText(
-                                        this,
-                                        "Data Failed:- " + e.message,
-                                        Toast.LENGTH_SHORT
-                                    )
-                                    .show()
                             }
                         }
                 }
