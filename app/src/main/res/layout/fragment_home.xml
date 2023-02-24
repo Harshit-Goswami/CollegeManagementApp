@@ -335,7 +335,7 @@
                         android:weightSum="2">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/FH_card_bmm"
+                            android:id="@+id/FH_card_bammc"
                             android:layout_width="0dp"
                             android:layout_height="70dp"
                             android:layout_marginStart="15dp"

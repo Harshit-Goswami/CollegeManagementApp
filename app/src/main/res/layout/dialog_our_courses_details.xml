@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@android:color/transparent"
+   >
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/MCV_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_centerVertical="true"
+        android:layout_marginTop="-30dp"
+        android:elevation="10dp"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="5dp"
+        app:cardUseCompatPadding="true">
+
+        <RelativeLayout
+            android:id="@+id/lv2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/shrine_pink_100">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_course_description"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="25dp"
+                android:justificationMode="inter_word"
+                android:text="The Bachelor of Science in Information Technology (B.Sc.IT) programme of the University of Mumbai is designed to provide basic inputs for abroad understanding of information technology and IT Management."
+                android:textColor="@color/black"
+                android:textSize="16sp"
+
+                />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/heading_eligibility_criteria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_course_description"
+                android:layout_marginTop="10dp"
+                android:text="Eligibility Criteria:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_eligibility_criteria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/heading_eligibility_criteria"
+                android:justificationMode="inter_word"
+                android:text="⁕ Passed XII with Mathematic and Statistics.\n⁕	Not have secured less than 35% marks.\n⁕	Diploma (Three years after S.S.C.- Xth Std.) OR Post HSC-Diploma in Information Technology / Computer Technology/ Computer Engineering/ Computer Science and allied branches will be eligible for direct admission to the Second year of B.Sc.(I.T)"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/heading_duration_and_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_eligibility_criteria"
+                android:layout_marginTop="10dp"
+                android:text="Duration &amp; Related information:"
+                android:textColor="@color/black"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/txt_duration_and_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/heading_duration_and_info"
+                android:layout_marginBottom="20dp"
+                android:justificationMode="inter_word"
+                android:padding="2dp"
+                android:text="⁕Six semester spread over three years.\n⁕30 modules comprising 30 theory papers and 01 project."
+                android:textColor="@color/black"
+                android:textSize="16sp" />
+        </RelativeLayout>
+
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/tableTxt"
+        android:layout_width="250dp"
+        android:layout_height="45dp"
+        android:layout_above="@+id/MCV_content"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:paddingStart="30dp"
+        android:paddingEnd="5dp"
+        app:cardBackgroundColor="#123"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="10dp">
+
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/txt_department"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="BScIT"
+            android:textColor="@color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+    </com.google.android.material.card.MaterialCardView>
+    </RelativeLayout>
