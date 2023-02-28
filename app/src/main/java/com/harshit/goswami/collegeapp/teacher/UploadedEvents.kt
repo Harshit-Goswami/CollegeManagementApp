@@ -63,7 +63,7 @@ class UploadedEvents : AppCompatActivity() {
                 override fun onChildRemoved(snapshot: DataSnapshot) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                         eventList.removeIf {
-                          it.dateTime ==  snapshot.getValue((NoticeData::class.java))!!.dateTime
+                          it.date==  snapshot.getValue((NoticeData::class.java))!!.date
                         }
                         binding.UERsvEvents.adapter?.notifyDataSetChanged()
                     }
@@ -77,6 +77,6 @@ class UploadedEvents : AppCompatActivity() {
                 }
 
             })
-        eventList.sortByDescending { it.dateTime }
+        eventList.sortByDescending { it.date }
     }
 }

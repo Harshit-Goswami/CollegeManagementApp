@@ -4,17 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AbsListView.OnScrollListener
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.noticeList
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.FragmentNoticeBinding
 
@@ -43,14 +38,14 @@ class NoticeFragment : Fragment() {
             }
         binding.FNRsvNotices.setHasFixedSize(true)
         binding.FNRsvNotices.adapter?.notifyDataSetChanged()
-binding.FNRsvNotices.addOnScrollListener(object:RecyclerView.OnScrollListener() {
-    override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
-        super.onScrolled(recyclerView, dx, dy)
-        if (dx>0){
-            MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
-        } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
-    }
-})
+        binding.FNRsvNotices.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                if (dx > 0) {
+                    MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
+                } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
+            }
+        })
 //        binding.FNScrollView.viewTreeObserver.addOnScrollChangedListener {
 //            val y = binding.FNScrollView.scrollY
 //            if (y>200) {
@@ -62,24 +57,23 @@ binding.FNRsvNotices.addOnScrollListener(object:RecyclerView.OnScrollListener() 
     }
 
     fun retrieveNotices() {
-        FirebaseDatabase.getInstance().reference.child("Notices")
-            .addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    noticeList.clear()
-                    if (snapshot.exists()) {
-                        for (i in snapshot.children) {
-                            noticeList.add(i.getValue(NoticeData::class.java)!!)
-                        }
-                        binding.FNRsvNotices.adapter?.notifyDataSetChanged()
-                        noticeList.sortWith(compareByDescending {nd->nd.dateTime})
-                    }
+        FirebaseFirestore.getInstance().collection("Notices")
+            .addSnapshotListener { value, error ->
+                noticeList.clear()
+
+                if (error != null) {
+                    Toast.makeText(
+                        requireContext(), "Error found is $error", Toast.LENGTH_SHORT
+                    )
+                        .show()
                 }
-
-                override fun onCancelled(error: DatabaseError) {
-
+                value?.documents?.forEach {
+                    noticeList.add(it.toObject(NoticeData::class.java)!!)
                 }
+                binding.FNRsvNotices.adapter?.notifyDataSetChanged()
+                noticeList.sortWith(compareByDescending { "${it.date}${it.time}" })
 
-            })
+            }
 
     }
 

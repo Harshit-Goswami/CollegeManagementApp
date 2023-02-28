@@ -2,108 +2,93 @@
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:backgroundTint="@color/shrine_pink_50"
+    android:layout_height="50dp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="8dp"
+    app:cardElevation="2dp"
     app:cardUseCompatPadding="true">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/black">
-
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@color/black">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/iYSstudName"
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_marginStart="10dp"
-                android:hint="Student"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
-
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/iYSstudRollNo"
                 style="@style/Widget.AppCompat.TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/iYSstudName"
-                android:hint="-(316)"
+                android:hint="316"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="5dp"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
+                android:padding="2dp"
                 android:textSize="25sp" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/iYSstudName"
+                style="@style/TextAppearance.AppCompat.Body1"
+                android:layout_width="400dp"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:hint="Student"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="25sp"
+                android:padding="2dp"
+                android:layout_marginEnd="15dp"
+                />
+
+
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/iYSstudDepartment"
                 style="@style/Widget.AppCompat.TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iYSstudName"
                 android:layout_toRightOf="@id/iYSyear"
                 android:hint="Department"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
+                android:layout_marginEnd="15dp"
+                android:padding="2dp"
                 android:textSize="25sp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/iYSyear"
                 style="@style/Widget.AppCompat.TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/iYSstudName"
                 android:layout_alignParentStart="true"
-                android:layout_marginStart="10dp"
                 android:hint="TY"
+                android:layout_marginEnd="15dp"
                 android:textAllCaps="false"
+                android:padding="2dp"
                 android:textColor="@color/black"
                 android:textSize="25sp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/iYS_txt_mobileMo"
-                style="@style/Widget.AppCompat.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/iYSyear"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="10dp"
-                android:text="ContactNo."
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="25sp" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/iYSstudContactNo"
                 style="@style/Widget.AppCompat.TextView"
-                android:layout_width="wrap_content"
+                android:layout_width="200dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/iYSstudDepartment"
-                android:layout_marginLeft="3dp"
-                android:layout_marginBottom="10dp"
-                android:layout_toRightOf="@+id/iYS_txt_mobileMo"
                 android:hint="1234567890"
                 android:textAllCaps="false"
                 android:textColor="@color/black"
+                android:padding="2dp"
                 android:textSize="25sp" />
 
             <com.google.android.material.imageview.ShapeableImageView
-                android:id="@+id/iYS_MoreOptions"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
+                android:id="@+id/iYS_btn_delete"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
                 android:layout_gravity="center_vertical"
-                android:src="@drawable/ic_more_vert" />
-        </RelativeLayout>
-    </RelativeLayout>
+                android:src="@drawable/ic_delete" />
+        </LinearLayout>
+
 
 
 </com.google.android.material.card.MaterialCardView>

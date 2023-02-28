@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".admin.AddStudent">
+
     <LinearLayout
         android:id="@+id/MS_years_btns"
         android:layout_width="match_parent"
@@ -13,17 +14,18 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_download_format"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/shrine_pink_900"
-            app:backgroundTint="@color/shrine_pink_100"
-            android:textAlignment="textStart"
-            android:drawableTint="@color/green_700"
             android:drawableEnd="@drawable/ic__file_download"
+            android:drawableTint="@color/green_700"
             android:text="Download Format of excel file"
-            />
+            android:textAlignment="textStart"
+            android:textColor="@color/shrine_pink_900"
+            app:backgroundTint="@color/shrine_pink_100" />
+
         <com.google.android.material.card.MaterialCardView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -36,8 +38,7 @@
                 android:id="@+id/btn_select_file"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
-                >
+                android:padding="5dp">
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="30dp"
@@ -71,9 +72,8 @@
                     android:layout_marginEnd="10dp"
                     android:layout_marginBottom="10dp"
                     android:scaleType="fitCenter"
-                    android:tint="@color/black"
                     android:src="@drawable/ic_arrow_forward"
-                    />
+                    android:tint="@color/black" />
             </RelativeLayout>
 
         </com.google.android.material.card.MaterialCardView>
@@ -82,18 +82,19 @@
             android:id="@+id/txt_file_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:text="No file Selected"
-            android:textColor="#121212"
-            android:layout_gravity="center_horizontal"/>
+            android:textColor="#121212" />
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/AS_txt_uploadData"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
             android:layout_margin="10dp"
-            app:backgroundTint="@color/shrine"
             android:text="Upload Data"
-            android:layout_gravity="center_horizontal"/>
-  </LinearLayout>
+            app:backgroundTint="@color/shrine" />
+    </LinearLayout>
 
     <!--    <TextView
         android:id="@+id/AS_txt_showAll"
@@ -110,9 +111,9 @@
         android:id="@+id/card_progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         app:cardElevation="20dp"
         app:cardUseCompatPadding="true"
-        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/MS_years_btns">
@@ -153,12 +154,109 @@
 
     </com.google.android.material.card.MaterialCardView>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rsv_student_data"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns" />
+        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/iYSstudRollNo"
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toEndOf="@+id/iYSstudName"
+                        android:text="RollNo"
+                        android:padding="2dp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textStyle="bold"
+                        android:textSize="25sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="400dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="15dp"
+                        android:text="Student Name"
+                        android:textStyle="bold"
+                        android:padding="2dp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iYSstudName"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toRightOf="@id/iYSyear"
+                        android:padding="2dp"
+                        android:text="Department"
+                        android:textStyle="bold"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iYSstudName"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginEnd="15dp"
+                        android:text="Year"
+                        android:textStyle="bold"
+                        android:padding="2dp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:text="ContactNo"
+                        android:textStyle="bold"
+                        android:padding="2dp"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp" />
+                </TableRow>
+            </TableLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rsv_student_data"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tableLayout" />
+        </LinearLayout>
+    </HorizontalScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

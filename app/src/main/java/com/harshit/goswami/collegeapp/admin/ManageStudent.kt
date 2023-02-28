@@ -92,7 +92,6 @@ class ManageStudent : AppCompatActivity() {
                             studentList.add(tempList[i])
                         }
                     }
-
                 }
             }
             binding.MSRsvYourStudents.adapter?.notifyDataSetChanged()

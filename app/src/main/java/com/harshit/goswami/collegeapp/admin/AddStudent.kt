@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.adapters.YourStudentAdapter
 import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddStudentBinding
-import org.apache.poi.ss.usermodel.Cell
+import org.apache.poi.ss.usermodel.DataFormatter
 import org.apache.poi.xssf.usermodel.XSSFSheet
 import org.apache.poi.xssf.usermodel.XSSFWorkbook
 import java.io.FileInputStream
@@ -84,19 +84,18 @@ class AddStudent : AppCompatActivity() {
                 try {
                     binding.cardProgressBar.visibility = View.VISIBLE
                     for (i in studentsList) {
-                        val rollNo = i.rollNo.removeRange(3, 5)
                         FirebaseDatabase.getInstance().reference.child("Students")
                             .child(i.department)
                             .child(i.year)
-                            .child(rollNo)
+                            .child(i.rollNo)
                             .setValue(
                                 StudentData(
                                     i.rollNo,
                                     i.fullName,
-                                    i.contactNo,
-                                    i.password,
                                     i.department,
-                                    i.year
+                                    i.year,
+                                    i.contactNo,
+                                    i.contactNo
                                 )
                             )
                     }
@@ -147,25 +146,27 @@ class AddStudent : AppCompatActivity() {
                         val cellIterator = row.cellIterator()
                         while (cellIterator.hasNext()) {
                             val cell = cellIterator.next()
-                            when (cell.cellType) {
-                                Cell.CELL_TYPE_STRING -> {
-//                                        Log.d(TAG, cell.stringCellValue)
-                                    studentRowDataList.add(cell.stringCellValue)
-                                }
-                                Cell.CELL_TYPE_NUMERIC -> {
-                                    studentRowDataList.add(cell.numericCellValue.toString())
-                                }
-                                else -> {}
-                            }
-
+                            val cv = DataFormatter().formatCellValue(cell)
+                            studentRowDataList.add(cv)
+                            /* when (cell.cellType) {
+                                 Cell.CELL_TYPE_STRING -> {
+ //                                Log.d(TAG, cell.stringCellValue)
+                                     studentRowDataList.add(cell.stringCellValue)
+                                 }
+                                 Cell.CELL_TYPE_NUMERIC -> {
+                                     studentRowDataList.add(cell.numericCellValue.toString())
+                                 }
+                             }*/
                         }
+//                        val roll =studentRowDataList[0]/*.removeRange(3,5)*/
+//                        val contactNo= studentRowDataList[5]/*.removeRange(1,2).removeRange(10,12)*/
                         studentsList.add(
                             StudentData(
-                                studentRowDataList[0],
-                                studentRowDataList[1],
-                                studentRowDataList[2],
-                                studentRowDataList[3],
-                                studentRowDataList[4],
+                              /*rollNo*/  studentRowDataList[0],
+                                /*fullname*/  studentRowDataList[1],
+                                /*dep*/ studentRowDataList[2],
+                                /*year*/  studentRowDataList[3],
+                                studentRowDataList[5],
                                 studentRowDataList[5]
                             )
                         )

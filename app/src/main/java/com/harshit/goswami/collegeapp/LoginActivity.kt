@@ -64,7 +64,6 @@ class LoginActivity : AppCompatActivity() {
                 val studentPref: SharedPreferences =
                     getSharedPreferences("studentPref", MODE_PRIVATE)
                 isStudentLogin = studentPref.getBoolean("studentLogin", false)
-
                 if (isStudentLogin) {
                     val intent = Intent(this, MainActivity::class.java)
                     intent.putExtra("user","student")
@@ -242,7 +241,11 @@ class LoginActivity : AppCompatActivity() {
                                             editor.putString("studentYear",item.getValue(
                                                 StudentData::class.java
                                             )?.year.toString()).apply()
+                                            editor.putString("studentName",item.getValue(
+                                                StudentData::class.java
+                                            )?.fullName.toString()).apply()
 
+                                            //for accessing MyClass "student" value is passed
                                             intent.putExtra("user","student")
                                             startActivity(intent)
                                             finish()

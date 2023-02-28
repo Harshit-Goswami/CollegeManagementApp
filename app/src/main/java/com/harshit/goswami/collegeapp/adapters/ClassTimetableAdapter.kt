@@ -30,7 +30,7 @@ class ClassTimetableAdapter(
         with(holder) {
             with(classList[position]) {
                 if (activity == "MyClass") {
-                    binding.ICTDeleteLL.visibility = View.GONE
+                    binding.ICTBtnDelete.visibility = View.GONE
                 }
                 binding.itemClassDate.text = this.date
                 binding.itemClassTime.text = this.time
@@ -46,9 +46,7 @@ class ClassTimetableAdapter(
                             Toast.makeText(context," Deleted ",Toast.LENGTH_SHORT).show()
                         }
                 }
-                binding.ICTBtnEdit.setOnClickListener {
 
-                }
             }
         }
     }

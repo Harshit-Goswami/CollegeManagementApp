@@ -5,12 +5,20 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.text.format.DateUtils
+import android.util.Log
+import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.google.firebase.messaging.FirebaseMessaging
 import com.harshit.goswami.collegeapp.databinding.ActivityUserSelectionBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
+import java.text.SimpleDateFormat
+import java.time.LocalDate
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class UserSelectionActivity : AppCompatActivity() {
     private lateinit var binding: ActivityUserSelectionBinding
@@ -42,6 +50,10 @@ class UserSelectionActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityUserSelectionBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+//        Toast.makeText(this, calendar.time.toString(), Toast.LENGTH_LONG).show()
+//       val date = LocalDate.now().plusDays(5).format(DateTimeFormatter.ofPattern("dd-MM-YYYY"))
+
 
         FirebaseMessaging.getInstance().subscribeToTopic("all")//all subscribed
 //        FirebaseMessaging.getInstance().unsubscribeFromTopic("notice")

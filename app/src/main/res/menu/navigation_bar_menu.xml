@@ -1,40 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-<item
-    android:id="@+id/campus"
-   android:title="Campus life"
-    android:icon="@drawable/ic_home"/>
+    <item
+        android:id="@+id/menu_campus_life"
+        android:icon="@drawable/ic_home"
+        android:title="Campus life" />
 
     <item
-        android:id="@+id/imp_links"
-        android:title="Important Links"
+        android:id="@+id/menu_imp_links"
         android:icon="@drawable/ic_notice"
-        />
+        android:title="Important Links" />
     <item
-        android:id="@+id/theme"
-        android:title="Theme"
+        android:id="@+id/menu_theme"
         android:icon="@drawable/ic_book"
-        />
+        android:title="Theme" />
     <item
-        android:id="@+id/faculty"
-        android:title="Faculty"
+        android:id="@+id/menu_faculty"
         android:icon="@drawable/ic_event_note"
-        />
+        android:title="Faculty" />
     <item
-        android:id="@+id/about"
-        android:title="Log Out"
-        android:icon="@drawable/ic_about"/>
-    <group android:id="@+id/group2"
-        >
-        <item android:id="@+id/developer"
-            android:title="Developer"
-            android:icon="@drawable/ic_person"/>
-        <item android:id="@+id/map"
-            android:title="Map"
-            android:icon="@drawable/img_college_location"/>
-         <item android:id="@+id/term_n_condition"
-            android:title="Term And Condition"
-            android:icon="@drawable/ic_notice"/>
+        android:id="@+id/menu_logout"
+        android:icon="@drawable/ic_about"
+        android:title="Log Out" />
+    <group android:id="@+id/group2">
+        <item
+            android:id="@+id/menu_developer"
+            android:icon="@drawable/ic_person"
+            android:title="Developer" />
+        <item
+            android:id="@+id/menu_map"
+            android:icon="@drawable/img_college_location"
+            android:title="Map" />
+        <item
+            android:id="@+id/menu_term_n_condition"
+            android:icon="@drawable/ic_notice"
+            android:title="Term And Condition" />
 
     </group>
 </menu>

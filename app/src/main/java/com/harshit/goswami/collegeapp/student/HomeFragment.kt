@@ -3,23 +3,26 @@ package com.harshit.goswami.collegeapp.student
 import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
-import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.appbar.MaterialToolbar
+import com.harshit.goswami.collegeapp.AttendanceActivity
+import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.databinding.DialogOurCoursesDetailsBinding
 import com.harshit.goswami.collegeapp.databinding.FragmentHomeBinding
+
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
@@ -41,13 +44,12 @@ class HomeFragment : Fragment() {
         toolbar = binding.toolbar
         drawerLayout = binding.drawer
 //        getSupportActionBar().setDisplayShowTitleEnabled(false);
-//         activity!!.applicationContext as Activity
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayShowTitleEnabled(false)
-//        toolbar.setNavigationIcon(R.drawable.ic_home);
-//        toolbar.setTitle("");
-//        toolbar.setSubtitle("");
-        //toolbar.setLogo(R.drawable.ic_toolbar);*/
+        /*  toolbar.setNavigationIcon(R.drawable.ic_home);
+          toolbar.setTitle("");
+          toolbar.setSubtitle("");
+          toolbar.setLogo(R.drawable.ic_toolbar);*/
         toggle = ActionBarDrawerToggle(
             container?.context as Activity?, drawerLayout, toolbar,
             R.string.open, R.string.close
@@ -55,36 +57,80 @@ class HomeFragment : Fragment() {
         drawerLayout.addDrawerListener(toggle)
         toggle.syncState()
 //########################################################################################################
-
-        imageSlider()
-        admissionGuidelinesSetUp()
-        ourCoursesSetUp()
         binding.scrollView3.viewTreeObserver.addOnScrollChangedListener {
             val y = binding.scrollView3.scrollY
             if (y > 500) {
                 MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
             } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
         }
-        binding.FHYoutubeIcon.setOnClickListener {
-            getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")
-        }
 
-// ################################### ON CLICK LISTENERS  ##################################*/
+
+        imageSlider()
+        navigationSetUp()
+        //......................................
+        admissionGuidelinesSetUp()
+        admissionGuidelinesLinksSetUp()
+        ourCoursesSetUp()
+        socialMediaIconClicks()
+
+
+        return binding.root
+    }
+
+    private fun navigationSetUp() {
+        val hView: View = binding.navView.getHeaderView(0)
+        hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
+//      hView.findViewById<ImageView>(R.id.imageView)
+        binding.navView.setNavigationItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_campus_life -> {
+
+                }
+                R.id.menu_imp_links -> {
+
+                }
+                R.id.menu_theme -> {
+
+                }
+                R.id.menu_faculty -> {
+
+                }
+                R.id.menu_logout -> {
+                    val pref: SharedPreferences = requireContext().getSharedPreferences(
+                        "studentPref",
+                        AppCompatActivity.MODE_PRIVATE
+                    )
+                    val editor = pref.edit()
+                    editor.putBoolean("studentLogin", false).apply()
+                    editor.putString("studentRollNo", "").apply()
+                    editor.putString("studentDep", "").apply()
+                    editor.putString("studentYear", "").apply()
+                    editor.putString("studentName", "").apply()
+                    val i = Intent(requireContext(), LoginActivity::class.java)
+                    i.putExtra("SelectedUser", "student")
+                    startActivity(i)
+                }
+                R.id.menu_developer -> {
+                    startActivity(Intent(requireContext(), AttendanceActivity::class.java))
+                }
+                R.id.menu_map -> {
+
+                }
+                R.id.menu_term_n_condition -> {
+
+                }
+            }
+            true
+        }
+    }
+
+    private fun socialMediaIconClicks() {
         binding.FHInstaIcon.setOnClickListener { getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en") }
         binding.FHFacebookIcon.setOnClickListener { getByUrl("https://www.facebook.com/profile.php?id=100064103347725") }
         binding.FHEmailIcon.setOnClickListener {}
-
-
-//        binding.navView.setNavigationItemSelectedListener {
-//            when (it.itemId) {
-//                R.id.home -> {
-//
-//                }
-//            }
-//            true
-//        }
-
-        return binding.root
+        binding.FHYoutubeIcon.setOnClickListener {
+            getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")
+        }
     }
 
     private fun admissionGuidelinesSetUp() {
@@ -173,11 +219,13 @@ class HomeFragment : Fragment() {
             }
         }
 
+    }
+
+    private fun admissionGuidelinesLinksSetUp() {
         binding.admissionNoticeLink.setOnClickListener { getByUrl("https://drive.google.com/file/d/1SgWhy7fWKmmZ7FRlm7ZEZo6viiXawNqV/view?usp=sharing") }
         binding.admissionGuidelinesLink.setOnClickListener { getByUrl("https://drive.google.com/file/d/1W-R1Ynpc4MdXlVB73wwJRP_dwti64a93/view?usp=sharing") }
         binding.addmissionFormLink.setOnClickListener { getByUrl("https://admission.onfees.com/admissionLogin?instituteId=447&formPolicyId=253") }
         binding.meritListLink.setOnClickListener { getByUrl("https://drive.google.com/drive/folders/1OW4u5zqMhI680rDBbj9lhEHDumKDpWlq?usp=sharing") }
-
     }
 
     private fun ourCoursesSetUp() {
@@ -186,7 +234,9 @@ class HomeFragment : Fragment() {
                 DialogOurCoursesDetailsBinding.inflate(layoutInflater)
             val dialog = Dialog(requireContext(), R.style.BottomSheetStyle)
             dialog.setContentView(courseBinding.root)
-           dialog.show()
+            dialog.show()
+//            courseBinding.ConstraintLayout.setOnClickListener { dialog.dismiss() }
+
         }
         binding.FHCardBaf.setOnClickListener {
             val courseBinding =
@@ -203,13 +253,15 @@ class HomeFragment : Fragment() {
             courseBinding.txtCourseDescription.text =
                 "The Bachelor of Accounting and Finance (BAF) course provides comprehensive training to students in the field of Accounting & Finance by way of interaction, projects, presentations, industrial visits, practical training, job orientation and placements."
             courseBinding.txtEligibilityCriteria.text =
-                "\uF0D8\tPassed XII Std. Examination of the Maharashtra Board of Higher Secondary Education\n" +
-                        "\uF0D8\tNot have secured less than 45% marks."
+                "▶Passed XII Std. Examination of the Maharashtra Board of Higher Secondary Education\n" +
+                        "▶Not have secured less than 45% marks."
             courseBinding.txtDurationAndInfo.text =
-                "\uF0D8\tSix semester spread over three years.\n" +
-                        "\uF0D8\t40 modules comprising 39 theory papers and 01 projects.\n" +
-                        "\uF0D8\tLectures per course (subject) shall be a minimum of 50 each of 50 minutes duration."
+                "▶Six semester spread over three years.\n" +
+                        "▶40 modules comprising 39 theory papers and 01 projects.\n" +
+                        "▶Lectures per course (subject) shall be a minimum of 50 each of 50 minutes duration."
             dialog.show()
+//            courseBinding.root.setOnClickListener { dialog.dismiss() }
+
         }
         binding.FHCardBms.setOnClickListener {
             val courseBinding =
@@ -220,13 +272,15 @@ class HomeFragment : Fragment() {
             courseBinding.txtCourseDescription.text =
                 "The Bachelor of Management Studies (BMS) course has designed to create professionally qualified management executives, with effect and interpersonal communication in the field of management."
             courseBinding.txtEligibilityCriteria.text =
-                "\uF0D8\tPassed XII Std. Examination of the Maharashtra Board of Higher Secondary Education\n" +
-                        "\uF0D8\tNot have secured less than 45% marks."
+                "▶Passed XII Std. Examination of the Maharashtra Board of Higher Secondary Education\n" +
+                        "▶Not have secured less than 45% marks."
             courseBinding.txtDurationAndInfo.text =
-                "\uF0D8\tSix semester spread over three years.\n" +
-                        "\uF0D8\t40 modules comprising 39 theory papers and 01 projects.\n" +
-                        "\uF0D8\tLectures per course (subject) shall be a minimum of 50 each of 50 minutes duration."
+                "▶Six semester spread over three years.\n" +
+                        "▶40 modules comprising 39 theory papers and 01 projects.\n" +
+                        "▶Lectures per course (subject) shall be a minimum of 50 each of 50 minutes duration."
             dialog.show()
+//            courseBinding.root.setOnClickListener { dialog.dismiss() }
+
         }
         binding.FHCardBammc.setOnClickListener {
             val courseBinding =
@@ -237,13 +291,14 @@ class HomeFragment : Fragment() {
             courseBinding.txtCourseDescription.text =
                 "The Bachelors in Mass Media (BMM) programme has been designed with this very agenda – to produce professionals armed with specialized skills in either advertising or journalism."
             courseBinding.txtEligibilityCriteria.text =
-                "\uF0D8\tPassed XII Std. Examination of the Maharashtra Board of Higher Secondary Education\n" +
-                        "\uF0D8\tNot have secured less than 35% marks."
+                "▶Passed XII Std. Examination of the Maharashtra Board of Higher Secondary Education\n" +
+                        "▶Not have secured less than 35% marks."
             courseBinding.txtDurationAndInfo.text =
-                "\uF0D8\tSix semester spread over three years.\n" +
-                        "\uF0D8\tCourse contain 36 modules. \n" +
-                        "\uF0D8\tLectures per course (subject) shall be a minimum of 50 each of 50 minutes duration."
+                "▶Six semester spread over three years.\n" +
+                        "▶Course contain 36 modules. \n" +
+                        "▶Lectures per course (subject) shall be a minimum of 50 each of 50 minutes duration."
             dialog.show()
+//            courseBinding.root.setOnClickListener { dialog.dismiss() }
         }
     }
 

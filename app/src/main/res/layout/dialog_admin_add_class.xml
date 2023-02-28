@@ -75,14 +75,50 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/AC_edt_class_time"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="ex.9AM To 10AM"
-                android:text=""
-               />
+                android:orientation="horizontal">
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/AC_class_start_time"
+                    android:layout_width="150dp"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="5dp"
+                    android:background="#e6e6e6"
+                    android:drawableEnd="@drawable/ic_double_arrow_down"
+                    android:gravity="start|center_vertical"
+                    android:textAlignment="center"
+                    android:hint="Select Start Time"
+                    android:textColor="#00838F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/textView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:text="To"
+                    android:textAlignment="center"
+                    android:textColor="#121212"
+                    android:textStyle="bold" />
+
+                <com.google.android.material.textview.MaterialTextView
+                    android:id="@+id/AC_class_end_time"
+                    android:layout_width="150dp"
+                    android:layout_height="45dp"
+                    android:layout_marginEnd="8dp"
+                    android:background="#e6e6e6"
+                    android:drawableEnd="@drawable/ic_double_arrow_down"
+                    android:gravity="start|center_vertical"
+                    android:textAlignment="center"
+                    android:hint="Select End Time"
+                    android:textColor="#00838F"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
         </com.google.android.material.textfield.TextInputLayout>
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"

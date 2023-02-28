@@ -8,16 +8,15 @@ import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts.GetContent
 import androidx.appcompat.app.AppCompatActivity
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.FCMnotificationSender
-import com.harshit.goswami.collegeapp.admin.DeleteNotice.Companion.binding
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadNoticeBinding
 import java.io.IOException
@@ -28,11 +27,13 @@ class UploadNotice : AppCompatActivity() {
     private lateinit var binding: ActivityAdminUploadNoticeBinding
     private var fileUri: Uri? = null
     private var downloadUrl: String? = null
-    private val firebaseDatabase = FirebaseDatabase.getInstance()
-    private var dbRef: DatabaseReference? = null
     private val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
+    private val firestore = FirebaseFirestore.getInstance()
     private var storageRef: StorageReference? = null
-    var dateTime = ""
+    private var date = ""
+    private var time = ""
+    private var deletionDate = ""
+    private var uniqueKey:String = ""
     private val getResult = registerForActivityResult(
         GetContent()
     ) { result: Uri? ->
@@ -76,9 +77,18 @@ class UploadNotice : AppCompatActivity() {
         }
         binding.btnUploadNotice.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val sdfDateTime =
-                    SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
-                dateTime = sdfDateTime.format(Calendar.getInstance().time)
+                val calendar = Calendar.getInstance()
+                calendar.add(Calendar.DATE, 15)
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                Log.i("five day time", dateFormat.format(calendar.time).toString())
+                val sdfDate =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdfTime =
+                    SimpleDateFormat("hh:mm a", Locale.getDefault())
+                time = sdfTime.format(Calendar.getInstance().time)
+                date = sdfDate.format(Calendar.getInstance().time)
+                deletionDate = sdfDate.format(calendar.time)
+                uniqueKey = firestore.collection("Notices").document().id
             }
             val title = binding.edtNotice.text.toString()
             if (title == "") {
@@ -90,16 +100,12 @@ class UploadNotice : AppCompatActivity() {
 
     private fun uploadData() {
         val title: String = Objects.requireNonNull(binding.edtNotice.text).toString()
-        dbRef = firebaseDatabase.reference
-
-
-        val noticeData = NoticeData(title,dateTime , downloadUrl.toString())
-        dbRef = firebaseDatabase.reference
-        dbRef!!.child("Notices").child(dateTime)
-            .setValue(noticeData)
+        val noticeData = NoticeData(title, downloadUrl.toString(), uniqueKey, date, time, deletionDate)
+        firestore.collection("Notices").document(uniqueKey).set(noticeData)
             .addOnSuccessListener {
-                if (fileUri != null){
-                    Toast.makeText(this@UploadNotice,"uploaded Successfully!",Toast.LENGTH_SHORT).show()
+                if (fileUri != null) {
+                    Toast.makeText(this@UploadNotice, "uploaded Successfully!", Toast.LENGTH_SHORT)
+                        .show()
                     FCMnotificationSender(
                         "/topics/all", title, "this is notice notification",
                         "BIGPIC",
@@ -107,12 +113,11 @@ class UploadNotice : AppCompatActivity() {
                         this@UploadNotice
                     )
                         .sendNotifications()
-                }
-                else{
+                } else {
                     FCMnotificationSender(
                         "/topics/all", title, "this is notice notification",
                         "BIGTEXT",
-                        "" , //applicationContext,
+                        "", //applicationContext,
                         this@UploadNotice
                     )
                         .sendNotifications()
@@ -138,7 +143,7 @@ class UploadNotice : AppCompatActivity() {
             progressDialog.show()
             // Defining the child of storageReference
             storageRef =
-                firebaseStorage.reference.child("NoticeImages").child(dateTime)
+                firebaseStorage.reference.child("NoticeImages").child(UUID.randomUUID().toString())
             // adding listeners on upload
             // or failure of image
             val uploadTask = storageRef!!.putFile(fileUri!!)

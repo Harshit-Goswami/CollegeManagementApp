@@ -21,6 +21,7 @@
         android:drawableLeft="@drawable/ic__search"
         android:drawableRight="@drawable/ic_double_arrow_down"
         android:backgroundTint="@color/shrine_pink_190"
+        android:visibility="gone"
         android:text="Filter"
         android:textAllCaps="false"
         android:textColor="@color/black" />
@@ -109,12 +110,108 @@
         android:textSize="20dp"
         android:textStyle="bold" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/MS_rsvYourStudents"
+    <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_below="@+id/MS_txt_total_student"
-        android:layout_alignParentBottom="true" />
+        android:layout_alignParentBottom="true"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TableLayout
+                android:id="@+id/tableLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <com.google.android.material.textview.MaterialTextView
+                        android:id="@+id/iYSstudRollNo"
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="5dp"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toEndOf="@+id/iYSstudName"
+                        android:padding="2dp"
+                        android:text="RollNo"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/TextAppearance.AppCompat.Body1"
+                        android:layout_width="400dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentStart="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginEnd="15dp"
+                        android:padding="2dp"
+                        android:text="Student Name"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="150dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iYSstudName"
+                        android:layout_marginEnd="15dp"
+                        android:layout_toRightOf="@id/iYSyear"
+                        android:padding="2dp"
+                        android:text="Department"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/iYSstudName"
+                        android:layout_alignParentStart="true"
+                        android:layout_marginEnd="15dp"
+                        android:padding="2dp"
+                        android:text="Year"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+
+
+                    <com.google.android.material.textview.MaterialTextView
+                        style="@style/Widget.AppCompat.TextView"
+                        android:layout_width="200dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="15dp"
+                        android:padding="2dp"
+                        android:text="ContactNo"
+                        android:textAllCaps="false"
+                        android:textColor="@color/black"
+                        android:textSize="25sp"
+                        android:textStyle="bold" />
+                </TableRow>
+            </TableLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/MS_rsvYourStudents"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/MS_txt_total_student"
+                android:layout_alignParentBottom="true" />
+        </LinearLayout>
+    </HorizontalScrollView>
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/MS_ProgressIndicator"

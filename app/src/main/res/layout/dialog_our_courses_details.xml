@@ -54,7 +54,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/heading_eligibility_criteria"
                 android:justificationMode="inter_word"
-                android:text="⁕ Passed XII with Mathematic and Statistics.\n⁕	Not have secured less than 35% marks.\n⁕	Diploma (Three years after S.S.C.- Xth Std.) OR Post HSC-Diploma in Information Technology / Computer Technology/ Computer Engineering/ Computer Science and allied branches will be eligible for direct admission to the Second year of B.Sc.(I.T)"
+                android:text="▶ Passed XII with Mathematic and Statistics.\n▶	Not have secured less than 35% marks.\n▶	Diploma (Three years after S.S.C.- Xth Std.) OR Post HSC-Diploma in Information Technology / Computer Technology/ Computer Engineering/ Computer Science and allied branches will be eligible for direct admission to the Second year of B.Sc.(I.T)"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -77,7 +77,7 @@
                 android:layout_marginBottom="20dp"
                 android:justificationMode="inter_word"
                 android:padding="2dp"
-                android:text="⁕Six semester spread over three years.\n⁕30 modules comprising 30 theory papers and 01 project."
+                android:text="▶Six semester spread over three years.\n▶30 modules comprising 30 theory papers and 01 project."
                 android:textColor="@color/black"
                 android:textSize="16sp" />
         </RelativeLayout>

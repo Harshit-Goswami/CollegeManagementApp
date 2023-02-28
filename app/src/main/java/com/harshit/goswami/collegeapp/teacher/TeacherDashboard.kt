@@ -1,5 +1,6 @@
 package com.harshit.goswami.collegeapp.teacher
 
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
@@ -12,6 +13,8 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.Gravity
 import android.view.View
+import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -32,12 +35,13 @@ import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherDashboardBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding
+import com.harshit.goswami.collegeapp.databinding.DialogTeacherAddCrBinding
 import java.io.IOException
 
 class TeacherDashboard : AppCompatActivity() {
     private lateinit var binding: ActivityTeacherDashboardBinding
-    private lateinit var viewProfileBinding :
-        DialogAdminViewProfileBinding
+    private lateinit var viewProfileBinding:
+            DialogAdminViewProfileBinding
     private lateinit var changePasswordBinding: DialogAdminChangePasswordBinding
     private val fireDb = FirebaseDatabase.getInstance().reference
     private var fileUri: Uri? = null
@@ -97,7 +101,6 @@ class TeacherDashboard : AppCompatActivity() {
         viewProfileBinding = DialogAdminViewProfileBinding.inflate(layoutInflater)
         changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
         binding = ActivityTeacherDashboardBinding.inflate(layoutInflater)
-
         setContentView(binding.root)
         val teacherPref: SharedPreferences =
             getSharedPreferences("teacherPref", MODE_PRIVATE)
@@ -108,6 +111,57 @@ class TeacherDashboard : AppCompatActivity() {
         onClicklisteners()
         if (loggedTeacherType == "teacher") {
             binding.TDHodContainer.visibility = View.GONE
+        }
+
+    }
+
+    private fun addCR_Dialog() {
+//        try {
+        val addCrBinding = DialogTeacherAddCrBinding.inflate(layoutInflater)
+        val bottomDialog = Dialog(this, com.google.android.material.R.style.Theme_AppCompat_Dialog)
+        bottomDialog.setContentView(addCrBinding.root)
+        bottomDialog
+            .setCanceledOnTouchOutside(false)
+
+        bottomDialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.MATCH_PARENT
+        )
+        bottomDialog.show()
+//        } catch (e: Exception) {
+//            Log.d("dialogError","${e.message}")
+//        }
+        val itemsYear = listOf("FY", "SY", "TY")
+        val adapterYear = ArrayAdapter(
+            this,
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            itemsYear
+        )
+        addCrBinding.ASClassYear.setAdapter(adapterYear)
+        addCrBinding.dialogACBtnAdd.setOnClickListener {
+            if (addCrBinding.ASClassYear.text.isEmpty()) {
+                addCrBinding.ASClassYear.error = "Please select Year"
+            } else if (addCrBinding.edtCrUsername.text?.isEmpty() == true) {
+                addCrBinding.edtCrUsername.error = "Please fill this field"
+            } else if (addCrBinding.edtCrPassword.text!!.isEmpty()) {
+                addCrBinding.edtCrPassword.error = "Please Enter Password"
+            } else {
+                fireDb.child("CR Data").child(loggedTeacherDep)
+                    .child(addCrBinding.ASClassYear.text.toString())
+                    .setValue(
+                        mapOf(
+                            "username" to addCrBinding.edtCrUsername.text.toString(),
+                            "password" to addCrBinding.edtCrPassword.text.toString()
+                        )
+                    )
+                    .addOnSuccessListener {
+                        Toast.makeText(
+                            this@TeacherDashboard,
+                            "Successfully Added...",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+            }
         }
     }
 
@@ -184,6 +238,9 @@ class TeacherDashboard : AppCompatActivity() {
             i.putExtra("userType", "HOD")
             startActivity(i)
         }
+        binding.TDAddCr.setOnClickListener {
+            addCR_Dialog()
+        }
     }
 
     private fun setupLogout() {
@@ -259,63 +316,66 @@ class TeacherDashboard : AppCompatActivity() {
         }
         builder.show()
     }
-private fun uploadProfileImage(){
-    if (fileUri!= null){
-        // Code for showing progressDialog while uploading
-        val progressDialog = ProgressDialog(this)
-        progressDialog.setTitle("Uploading...")
-        progressDialog.show()
-        // Defining the child of storageReference
-        val storageRef =
-            FirebaseStorage.getInstance().reference.child("Faculty Images")
-                .child("$loggedTeacherName(${loggedTeacherDep})")
-        // adding listeners on upload
-        // or failure of image
-        val uploadTask = storageRef.putFile(fileUri!!)
-        uploadTask.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                task.addOnSuccessListener {
-                    progressDialog.dismiss()
-                    Toast.makeText(
+
+    private fun uploadProfileImage() {
+        if (fileUri != null) {
+            // Code for showing progressDialog while uploading
+            val progressDialog = ProgressDialog(this)
+            progressDialog.setTitle("Uploading...")
+            progressDialog.show()
+            // Defining the child of storageReference
+            val storageRef =
+                FirebaseStorage.getInstance().reference.child("Faculty Images")
+                    .child("$loggedTeacherName(${loggedTeacherDep})")
+            // adding listeners on upload
+            // or failure of image
+            val uploadTask = storageRef.putFile(fileUri!!)
+            uploadTask.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    task.addOnSuccessListener {
+                        progressDialog.dismiss()
+                        Toast.makeText(
+                            this,
+                            "Image Uploaded!!",
+                            Toast.LENGTH_SHORT
+                        )
+                            .show()
+                        storageRef.downloadUrl
+                            .addOnSuccessListener { uri: Uri ->
+                                teacherImgUrl = uri.toString()
+                                try {
+                                    fireDb.child("Faculty Data").child(loggedTeacherDep).child(
+                                        loggedTeacherName
+                                    ).child("downloadUrl").setValue(teacherImgUrl)
+                                        .addOnSuccessListener {
+                                            builder.dismiss()
+                                        }
+                                } catch (e: Exception) {
+                                }
+                            }
+                    }
+                }
+            }.addOnFailureListener { e ->
+                progressDialog.dismiss()
+                Toast
+                    .makeText(
                         this,
-                        "Image Uploaded!!",
+                        "Failed: " + e.message,
                         Toast.LENGTH_SHORT
                     )
-                        .show()
-                    storageRef.downloadUrl
-                        .addOnSuccessListener { uri: Uri ->
-                            teacherImgUrl = uri.toString()
-                            try {
-                                fireDb.child("Faculty Data").child(loggedTeacherDep).child(
-                                    loggedTeacherName).child("downloadUrl").setValue(teacherImgUrl)
-                                    .addOnSuccessListener {
-                                        builder.dismiss()
-                                    }
-                            } catch (e: Exception) {
-                            }
-                        }
-                }
-            }
-        }.addOnFailureListener { e ->
-            progressDialog.dismiss()
-            Toast
-                .makeText(
-                    this,
-                    "Failed: " + e.message,
-                    Toast.LENGTH_SHORT
+                    .show()
+            }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
+                val progress = (100.0
+                        * taskSnapshot.bytesTransferred
+                        / taskSnapshot.totalByteCount)
+                progressDialog.setMessage(
+                    "Uploaded "
+                            + progress.toInt() + "%"
                 )
-                .show()
-        }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
-            val progress = (100.0
-                    * taskSnapshot.bytesTransferred
-                    / taskSnapshot.totalByteCount)
-            progressDialog.setMessage(
-                "Uploaded "
-                        + progress.toInt() + "%"
-            )
+            }
         }
     }
-}
+
     private fun dialogChangePassword() {
         try {
             changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)

@@ -4,7 +4,6 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.databinding.ActivityMainBinding
 
@@ -15,17 +14,22 @@ class MainActivity : AppCompatActivity() {
         var studentDep = ""
         var studentYear = ""
         var studRollNo = ""
+        var studName = ""
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mainBinding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(mainBinding.root)
         user = intent.getStringExtra("user").toString()
-        val studentPref: SharedPreferences =
-            getSharedPreferences("studentPref", MODE_PRIVATE)
-        studentDep= studentPref.getString("studentDep","none").toString()
-        studentYear= studentPref.getString("studentYear","none").toString()
-        studRollNo= studentPref.getString("studentRollNo","none").toString()
+        if (user == "student") {
+            val studentPref: SharedPreferences =
+                getSharedPreferences("studentPref", MODE_PRIVATE)
+            studentDep = studentPref.getString("studentDep", "none").toString()
+            studentYear = studentPref.getString("studentYear", "none").toString()
+            studRollNo = studentPref.getString("studentRollNo", "none").toString()
+            studName = studentPref.getString("studentName", "none").toString()
+        }
         val homeFrag = supportFragmentManager.beginTransaction()
         homeFrag.replace(R.id.fragment_container, HomeFragment()).commit()
         mainBinding.textViewHome.setTextColor(Color.parseColor("#FF6F00"))

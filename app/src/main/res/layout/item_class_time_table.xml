@@ -1,106 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="horizontal">
 
-            <com.google.android.material.card.MaterialCardView
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/grey_font"
+        app:cardCornerRadius="10dp"
+        app:cardElevation="10dp"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="#FFF8E1"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/item_class_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:cardCornerRadius="10dp"
-                android:backgroundTint="@color/grey_font"
-                app:cardElevation="10dp"
-                app:cardUseCompatPadding="true">
+                android:layout_gravity="center_horizontal"
+                android:text="Tomarrow"
+                android:textColor="#121212"
+                android:textSize="15sp"
+                android:textStyle="bold" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="vertical"
-                    android:background="#FFF8E1"
-                    android:padding="10dp">
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/black" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                       android:id="@+id/item_class_date"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Tomarrow"
-                        android:textColor="#121212"
-                        android:textSize="15sp"
-                        android:textStyle="bold" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/item_subject_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Business Intelligence"
+                android:textColor="#161616"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="2dp"
-                        android:background="@color/black" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/item_faculty_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="-Saravaman Raddy"
+                android:textColor="#161616"
+                android:textSize="14sp" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/item_subject_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Business Intelligence"
-                        android:textColor="#161616"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/item_class_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="9AM - 10AM"
+                android:textAlignment="center"
+                android:textColor="#161616"
+                android:textSize="16sp"
+                android:textStyle="bold" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/item_faculty_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="-Saravaman Raddy"
-                        android:textColor="#161616"
-                        android:textSize="14sp" />
+            <com.google.android.material.textview.MaterialTextView
+                android:id="@+id/item_classroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Room no -701"
+                android:textColor="#161616"
+                android:textSize="14sp" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/item_class_time"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="10dp"
-                        android:text="9AM - 10AM"
-                        android:textAlignment="center"
-                        android:textColor="#161616"
-                        android:textSize="16sp"
-                        android:textStyle="bold" />
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/ICT_btn_delete"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:backgroundTint="#F44336"
+                android:text="Delete" />
 
-                    <com.google.android.material.textview.MaterialTextView
-                        android:id="@+id/item_classroom"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_horizontal"
-                        android:text="Room no -701"
-                        android:textColor="#161616"
-                        android:textSize="14sp" />
-                    <LinearLayout
-                        android:id="@+id/ICT_delete_LL"
-                        android:layout_width="200dp"
-                        android:layout_height="wrap_content"
-                        android:weightSum="2"
-                        android:layout_marginBottom="-10dp"
-                        android:orientation="horizontal">
-                      <com.google.android.material.button.MaterialButton
-                          android:id="@+id/ICT_btn_edit"
-                          android:layout_width="0dp"
-                          android:layout_height="wrap_content"
-                          android:layout_weight="1"
-                          android:layout_marginEnd="2dp"
-                          android:backgroundTint="#4CAF50"
-                          android:text="EDIT"
-                          />
-                        <com.google.android.material.button.MaterialButton
-                         android:id="@+id/ICT_btn_delete"
-                          android:layout_width="0dp"
-                          android:layout_height="wrap_content"
-                          android:layout_weight="1"
-                            android:backgroundTint="#F44336"
-                          android:text="Delete"
-
-                            />
-
-                    </LinearLayout>
-                </LinearLayout>
-            </com.google.android.material.card.MaterialCardView>
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
 </LinearLayout>

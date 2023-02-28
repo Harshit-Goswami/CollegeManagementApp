@@ -19,6 +19,9 @@
         android:theme="@style/Theme.CollageApp"
         tools:targetApi="31">
         <activity
+            android:name=".AttendanceActivity"
+            android:exported="false" />
+        <activity
             android:name=".ViewPdfActivity"
             android:exported="false" />
         <activity

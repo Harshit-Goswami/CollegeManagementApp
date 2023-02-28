@@ -13,6 +13,7 @@ class FCMnotificationSender(
     private val userFcmToken: String,
     private val title: String,
     private val body: String,
+
     private  val type: String,
     private val imageUrl: String,
 //    private val mContext: Context,

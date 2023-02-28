@@ -2,6 +2,7 @@ package com.harshit.goswami.collegeapp.teacher
 
 import android.app.DatePickerDialog
 import android.app.Dialog
+import android.app.TimePickerDialog
 import android.icu.util.Calendar
 import android.os.Build
 import android.os.Bundle
@@ -41,7 +42,8 @@ class UploadClass : AppCompatActivity() {
     private val fireDb = FirebaseDatabase.getInstance().reference
 
     private var classDate = ""
-    private var classTime = ""
+    private var classStartTime = ""
+    private var classEndTime = ""
     private var classSubject = ""
     private var classRoom = ""
     private var classYear = ""
@@ -146,6 +148,7 @@ class UploadClass : AppCompatActivity() {
 //            Log.d("dialogError","${e.message}")
 //        }
         autoCompleteTextViewSetUp()
+        timePickerDialog()
         addClassBinding.ACClassDate.setOnClickListener {
             classDatePickerDialog()
         }
@@ -351,8 +354,9 @@ class UploadClass : AppCompatActivity() {
 
 
     //#################################  ADD CLASS FUNCTIONS   ########################################
+
     private fun addClass() {
-        if (classDate != "" && classTime != "" && classSubject != "" && classRoom != "" && classYear != "") {
+        if (classDate != "" && classStartTime != "" && classEndTime != "" && classSubject != "" && classRoom != "" && classYear != "") {
             fireDb.child("Faculty Data").child(TeacherDashboard.loggedTeacherDep)
                 .addValueEventListener(object : ValueEventListener {
                     lateinit var teacherName: String
@@ -373,7 +377,7 @@ class UploadClass : AppCompatActivity() {
                                 .setValue(
                                     ClassData(
                                         classDate,
-                                        classTime,
+                                        "$classStartTime - $classEndTime",
                                         classSubject,
                                         teacherName,
                                         classYear,
@@ -413,6 +417,114 @@ class UploadClass : AppCompatActivity() {
         }
     }
 
+    private fun timePickerDialog() {
+        val timePickerDialogListener1: TimePickerDialog.OnTimeSetListener =
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> // logic to properly handle
+
+                // the picked timings by user
+                val formattedTime: String = when {
+                    hourOfDay == 0 -> {
+                        if (minute < 10) {
+                            "${hourOfDay + 12}:0${minute} am"
+                        } else {
+                            "${hourOfDay + 12}:${minute} am"
+                        }
+                    }
+                    hourOfDay > 12 -> {
+                        if (minute < 10) {
+                            "${hourOfDay - 12}:0${minute} pm"
+                        } else {
+                            "${hourOfDay - 12}:${minute} pm"
+                        }
+                    }
+                    hourOfDay == 12 -> {
+                        if (minute < 10) {
+                            "${hourOfDay}:0${minute} pm"
+                        } else {
+                            "${hourOfDay}:${minute} pm"
+                        }
+                    }
+                    else -> {
+                        if (minute < 10) {
+                            "${hourOfDay}:${minute} am"
+                        } else {
+                            "${hourOfDay}:${minute} am"
+                        }
+                    }
+                }
+
+                addClassBinding.ACClassStartTime.text = formattedTime
+            }
+        val timePickerDialogListener2: TimePickerDialog.OnTimeSetListener =
+            TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute -> // logic to properly handle
+
+                // the picked timings by user
+                val formattedTime: String = when {
+                    hourOfDay == 0 -> {
+                        if (minute < 10) {
+                            "${hourOfDay + 12}:0${minute} am"
+                        } else {
+                            "${hourOfDay + 12}:${minute} am"
+                        }
+                    }
+                    hourOfDay > 12 -> {
+                        if (minute < 10) {
+                            "${hourOfDay - 12}:0${minute} pm"
+                        } else {
+                            "${hourOfDay - 12}:${minute} pm"
+                        }
+                    }
+                    hourOfDay == 12 -> {
+                        if (minute < 10) {
+                            "${hourOfDay}:0${minute} pm"
+                        } else {
+                            "${hourOfDay}:${minute} pm"
+                        }
+                    }
+                    else -> {
+                        if (minute < 10) {
+                            "${hourOfDay}:${minute} am"
+                        } else {
+                            "${hourOfDay}:${minute} am"
+                        }
+                    }
+                }
+
+                addClassBinding.ACClassEndTime.text = formattedTime
+            }
+
+        addClassBinding.ACClassStartTime.setOnClickListener {
+            val timePicker = TimePickerDialog(
+                this,
+                timePickerDialogListener1,
+                // default hour when the time picker dialog is opened
+                12,
+                // default minute when the time picker dialog is opened
+                10,
+                // 24 hours time picker is false (varies according to the region)
+                false
+            )
+            // then after building the timepicker
+            // dialog show the dialog to user
+            timePicker.show()
+        }
+        addClassBinding.ACClassEndTime.setOnClickListener {
+            val timePicker = TimePickerDialog(
+                this,
+                timePickerDialogListener2,
+                // default hour when the time picker dialog is opened
+                12,
+                // default minute when the time picker dialog is opened
+                10,
+                // 24 hours time picker is false (varies according to the region)
+                false
+            )
+            // then after building the timepicker
+            // dialog show the dialog to user
+            timePicker.show()
+        }
+    }
+
     private fun validation() {
         if (addClassBinding.ACClassDate.text != "") classDate =
             addClassBinding.ACClassDate.text.toString()
@@ -422,9 +534,13 @@ class UploadClass : AppCompatActivity() {
             addClassBinding.ACSubject.text.toString()
         else addClassBinding.ACSubject.error = "Please select subject!"
 
-        if (addClassBinding.ACEdtClassTime.text.toString() != "") classTime =
-            addClassBinding.ACEdtClassTime.text.toString()
-        else addClassBinding.ACEdtClassTime.error = "Please enter time!"
+        if (addClassBinding.ACClassStartTime.text.toString() != "") classStartTime =
+            addClassBinding.ACClassStartTime.text.toString()
+        else addClassBinding.ACClassStartTime.error = "Please enter Start time!"
+
+        if (addClassBinding.ACClassEndTime.text.toString() != "") classEndTime =
+            addClassBinding.ACClassEndTime.text.toString()
+        else addClassBinding.ACClassEndTime.error = "Please enter End time!"
 
         if (addClassBinding.ACEdtClassRoom.text.toString() != "") classRoom =
             addClassBinding.ACEdtClassRoom.text.toString()
