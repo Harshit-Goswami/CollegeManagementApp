@@ -162,7 +162,8 @@ class FacultyAdapter(
 
                                         })
 
-                                } catch (e: Exception) {
+                                } catch (e: Exception)
+                                {
                                     Toast.makeText(
                                         context,
                                         e.message.toString(),

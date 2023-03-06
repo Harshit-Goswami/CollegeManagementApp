@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:backgroundTint="#E6E6E6"
+    android:backgroundTint="@color/shrine_pink_100"
     app:cardCornerRadius="5dp"
     app:cardElevation="5dp"
     app:cardUseCompatPadding="true"
@@ -34,6 +34,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:layout_centerVertical="true"
         android:layout_marginStart="10dp"
         android:layout_toStartOf="@+id/txt_attendance_status"
         android:layout_toEndOf="@+id/I_student_roll"
@@ -46,8 +47,8 @@
 
     <com.google.android.material.textview.MaterialTextView
         android:id="@+id/txt_attendance_status"
-        android:layout_width="60dp"
-        android:layout_height="40dp"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:layout_marginEnd="5dp"

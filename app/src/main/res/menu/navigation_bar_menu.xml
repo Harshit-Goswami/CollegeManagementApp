@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
+        android:id="@+id/menu_take_attendance"
+        android:icon="@drawable/ic_home"
+        android:title="Take Attendance"
+        android:visible="false" />
+    <item
+        android:id="@+id/menu_view_attendance"
+        android:icon="@drawable/ic_home"
+        android:title="View Attendance"
+        android:visible="false" />
+
+    <item
         android:id="@+id/menu_campus_life"
         android:icon="@drawable/ic_home"
         android:title="Campus life" />
@@ -10,17 +21,19 @@
         android:icon="@drawable/ic_notice"
         android:title="Important Links" />
     <item
-        android:id="@+id/menu_theme"
-        android:icon="@drawable/ic_book"
-        android:title="Theme" />
-    <item
         android:id="@+id/menu_faculty"
         android:icon="@drawable/ic_event_note"
         android:title="Faculty" />
     <item
+        android:id="@+id/menu_theme"
+        android:icon="@drawable/ic_book"
+        android:title="Theme" />
+
+    <item
         android:id="@+id/menu_logout"
         android:icon="@drawable/ic_about"
         android:title="Log Out" />
+
     <group android:id="@+id/group2">
         <item
             android:id="@+id/menu_developer"
@@ -36,4 +49,11 @@
             android:title="Term And Condition" />
 
     </group>
+
+    <item
+        android:id="@+id/a"
+        android:title="" />
+    <item
+        android:id="@+id/b"
+        android:title="" />
 </menu>

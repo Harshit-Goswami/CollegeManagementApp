@@ -138,20 +138,42 @@ class TeacherDashboard : AppCompatActivity() {
             itemsYear
         )
         addCrBinding.ASClassYear.setAdapter(adapterYear)
+        addCrBinding.imgbtnGetName.setOnClickListener {
+            if (addCrBinding.ASClassYear.text.isEmpty()) {
+                addCrBinding.ASClassYear.error = "Please select Year"
+            } else if (addCrBinding.edtCrRollno.text?.isEmpty() == true) {
+                addCrBinding.edtCrRollno.error = "Please fill this field"
+            } else {
+                fireDb.child("Students").child(loggedTeacherDep)
+                    .child(addCrBinding.ASClassYear.text.toString())
+                    .child(addCrBinding.edtCrRollno.text.toString())
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            addCrBinding.txtCrName.text =
+                                snapshot.child("fullName").value.toString()
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                            TODO("Not yet implemented")
+                        }
+                    })
+            }
+        }
         addCrBinding.dialogACBtnAdd.setOnClickListener {
             if (addCrBinding.ASClassYear.text.isEmpty()) {
                 addCrBinding.ASClassYear.error = "Please select Year"
-            } else if (addCrBinding.edtCrUsername.text?.isEmpty() == true) {
-                addCrBinding.edtCrUsername.error = "Please fill this field"
-            } else if (addCrBinding.edtCrPassword.text!!.isEmpty()) {
-                addCrBinding.edtCrPassword.error = "Please Enter Password"
+            } else if (addCrBinding.edtCrRollno.text?.isEmpty() == true) {
+                addCrBinding.edtCrRollno.error = "Please fill this field"
+            } else if (addCrBinding.txtCrName.text?.isEmpty() == true) {
+                addCrBinding.txtCrName.error = "Please Click on the arrow Button."
             } else {
                 fireDb.child("CR Data").child(loggedTeacherDep)
                     .child(addCrBinding.ASClassYear.text.toString())
+                    .child(addCrBinding.edtCrRollno.text.toString())
                     .setValue(
                         mapOf(
-                            "username" to addCrBinding.edtCrUsername.text.toString(),
-                            "password" to addCrBinding.edtCrPassword.text.toString()
+                            "RollNo" to addCrBinding.edtCrRollno.text.toString(),
+                            "Name" to addCrBinding.txtCrName.text.toString()
                         )
                     )
                     .addOnSuccessListener {

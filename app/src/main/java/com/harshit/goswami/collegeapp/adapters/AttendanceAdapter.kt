@@ -1,6 +1,8 @@
 package com.harshit.goswami.collegeapp.adapters
 
+import android.app.ActionBar.LayoutParams
 import android.content.Context
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import com.harshit.goswami.collegeapp.databinding.ItemTakeAttendanceBinding
 class AttendanceAdapter(
     private var StudentList: ArrayList<StudentData> = ArrayList(),
     private val context: Context,
+    private val work:String
 ) : RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
     val attendanceMap = HashMap<String, String>()
 
@@ -34,9 +37,22 @@ class AttendanceAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(StudentList[position]) {
-                var isPresent = false
+                if (work=="view"){
+                    binding.txtAttendanceStatus.setBackgroundColor(  ContextCompat.getColor(
+                        context,
+                        R.color.shrine_pink_50
+                    ))
+                    binding.txtAttendanceStatus.setTextColor(Color.BLACK)
+//                    binding.txtAttendanceStatus.textSize = 20F
+                    binding.IStudentRoll.text = "|${this.rollNo}|"
+                    binding.txtAttendanceStatus.text = this.department
+                    binding.IStudentName.text = this.fullName
+
+                } else {
+                    var isPresent = false
+
                 binding.IStudentName.text = this.fullName
-                binding.IStudentRoll.text = "(${this.rollNo})"
+                binding.IStudentRoll.text = "|${this.rollNo}|"
 
                 attendanceList.add(AttendanceDataModal(this.rollNo, this.fullName, "A"))
 
@@ -81,6 +97,9 @@ class AttendanceAdapter(
 //                        attendanceList.add(AttendanceDataModal(this.rollNo,this.fullName,"P"))
                     }
                 }
+                }
+
+
             }
         }
     }

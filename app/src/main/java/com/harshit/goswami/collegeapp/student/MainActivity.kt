@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         var studentYear = ""
         var studRollNo = ""
         var studName = ""
+        var isCR:Boolean = false
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,6 +30,7 @@ class MainActivity : AppCompatActivity() {
             studentYear = studentPref.getString("studentYear", "none").toString()
             studRollNo = studentPref.getString("studentRollNo", "none").toString()
             studName = studentPref.getString("studentName", "none").toString()
+            isCR = studentPref.getBoolean("isCR", false)
         }
         val homeFrag = supportFragmentManager.beginTransaction()
         homeFrag.replace(R.id.fragment_container, HomeFragment()).commit()

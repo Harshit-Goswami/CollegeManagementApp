@@ -12,6 +12,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.get
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.denzcoskun.imageslider.constants.ScaleTypes
@@ -20,6 +21,7 @@ import com.google.android.material.appbar.MaterialToolbar
 import com.harshit.goswami.collegeapp.AttendanceActivity
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.ViewAttendanceActivity
 import com.harshit.goswami.collegeapp.databinding.DialogOurCoursesDetailsBinding
 import com.harshit.goswami.collegeapp.databinding.FragmentHomeBinding
 
@@ -81,8 +83,18 @@ class HomeFragment : Fragment() {
         val hView: View = binding.navView.getHeaderView(0)
         hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
 //      hView.findViewById<ImageView>(R.id.imageView)
+        if (MainActivity.isCR){
+            binding.navView.menu.getItem(0).isVisible = true
+            binding.navView.menu.getItem(1).isVisible = true
+        }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
+                R.id.menu_take_attendance -> {
+//                    startActivity(Intent(requireContext(), AttendanceActivity::class.java))
+                }
+                R.id.menu_view_attendance -> {
+                    startActivity(Intent(requireContext(), ViewAttendanceActivity::class.java))
+                }
                 R.id.menu_campus_life -> {
 
                 }
@@ -111,7 +123,6 @@ class HomeFragment : Fragment() {
                     startActivity(i)
                 }
                 R.id.menu_developer -> {
-                    startActivity(Intent(requireContext(), AttendanceActivity::class.java))
                 }
                 R.id.menu_map -> {
 
