@@ -75,27 +75,8 @@ class UploadNotice : AppCompatActivity() {
                 "image/*"
             )
         }
-        binding.btnUploadNotice.setOnClickListener {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val calendar = Calendar.getInstance()
-                calendar.add(Calendar.DATE, 15)
-                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
-                Log.i("five day time", dateFormat.format(calendar.time).toString())
-                val sdfDate =
-                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
-                val sdfTime =
-                    SimpleDateFormat("hh:mm a", Locale.getDefault())
-                time = sdfTime.format(Calendar.getInstance().time)
-                date = sdfDate.format(Calendar.getInstance().time)
-                deletionDate = sdfDate.format(calendar.time)
-                uniqueKey = firestore.collection("Notices").document().id
-            }
-            val title = binding.edtNotice.text.toString()
-            if (title == "") {
-                binding.edtNotice.error = "title is empty"
-                binding.edtNotice.isFocusable = true
-            } else if (fileUri == null) uploadData() else uploadImgAndData()
-        }
+
+
     }
 
     private fun uploadData() {

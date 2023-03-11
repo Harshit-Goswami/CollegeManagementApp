@@ -15,5 +15,6 @@
     <color name="green_700">#388E3C</color>
     <color name="red_800">#C62828</color>
     <color name="green_800">#2E7D32</color>
+    <color name="theme_color_orange">#F4511E</color>
 
 </resources>

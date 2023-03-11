@@ -57,7 +57,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_horizontal"
             android:padding="10dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -331,7 +331,7 @@
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="8dp"
                         android:contentDescription="@string/image_description"
-                        android:src="@drawable/delete" />
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -343,9 +343,10 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
+                        android:textAlignment="center"
                         android:layout_marginTop="15dp"
                         android:layout_marginBottom="15dp"
-                        android:text="@string/txt_delete_notice"
+                        android:text="Upload Magazine"
                         android:textColor="@color/black"
                         android:textSize="18sp"
                         android:textStyle="bold" />

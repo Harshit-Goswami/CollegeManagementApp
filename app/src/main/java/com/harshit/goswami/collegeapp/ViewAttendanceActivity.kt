@@ -86,7 +86,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                 if (binding.ACTVSelectYear.text.isNotEmpty()) {
                     if (binding.ACTVMonth.text.isNotEmpty()) {
                         if (binding.ACTVSelectSubject.text.isNotEmpty()) {
-                            fetchAttendanceDataBYMonth_n_Sub()
+                            fetchAttendanceDataBYMonthNSub()
                         } else binding.TILSelectSubject.error = "Please Select Subject"
                     } else binding.TILMonth.error = "Please Select Month"
                 } else binding.TILSelectYear.error = "Please Select Year"
@@ -103,6 +103,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ) -> {
+                    Log.d("rollname", "${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
                     if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
                         if (binding.ACTVSelectYear.text.isNotEmpty()) {
                             if (binding.ACTVMonth.text.isNotEmpty()) {
@@ -168,6 +169,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
+
     }
 
     private fun writeExcel() {
@@ -237,21 +239,29 @@ class ViewAttendanceActivity : AppCompatActivity() {
                         var cellIndexSub = 5
                         if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible && binding.ACTVMonth.text.isNotEmpty()) {
                             val month = binding.ACTVMonth.text.toString()
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].rollNo}")
+
+                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
                                 .child(month).children.forEach { date ->
                                     var subjCount = 0
                                     row0.apply {
-                                        createCell(cellIndexDate)
-                                            .apply {
-                                                setCellValue(XSSFRichTextString(date.key.toString()))
+                                        createCell(cellIndexDate).apply {
+                                            setCellValue(XSSFRichTextString(date.key.toString()))
+                                            cellStyle = workbook.createCellStyle().apply {
+                                                setAlignment(HorizontalAlignment.CENTER)
+                                                setFont(workbook.createFont().apply {
+                                                    bold = true
+                                                })
                                             }
+                                        }
                                     }
                                     date.children.forEach { sub ->
                                         subjCount += 1
                                         row1.apply {
-                                            createCell(cellIndexSub).apply {
-                                                setCellValue(XSSFRichTextString(sub.key.toString()))
-                                            }
+                                            createCell(cellIndexSub).setCellValue(
+                                                XSSFRichTextString(
+                                                    sub.key.toString()
+                                                )
+                                            )
                                         }
                                         cellIndexSub += 1
                                     }
@@ -263,7 +273,6 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                             cellIndexDate + subjCount - 1
                                         )
                                     )
-
                                     cellIndexDate += subjCount
                                 }
 
@@ -295,7 +304,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(2)
                                     .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
                                 try {
-                                    val per = ((p / (p + a)) * 100).toInt()
+                                    val per = ((p / (p + a)) * 100)
                                     dataRow.createCell(3)
                                         .setCellValue(XSSFRichTextString("${per}%"))
                                 } catch (e: Exception) {
@@ -303,7 +312,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                                 rowIndex += 1
                             }
-                            var fos: FileOutputStream? = null
+                            val fos: FileOutputStream? = null
                             try {
 //                            val file_path =
 //                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
@@ -314,7 +323,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
 //                            workbook.write(fos)
 
                                 val file = File(
-                                    "${Environment.getExternalStorageDirectory()}/Documents/${month}Attendance.xlsx"
+                                    "${Environment.getExternalStorageDirectory()}/Documents/${month}_Attendance.xlsx"
                                 )
                                 if (file.exists()) file.delete()
                                 workbook.write(FileOutputStream(file))
@@ -353,36 +362,48 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             }
                         }
                         if (binding.TILSelectSubject.isVisible && !binding.TILMonth.isVisible && binding.ACTVSelectSubject.text.isNotEmpty()) {
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].rollNo}")
+                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
                                 .children.forEach { month ->
                                     month.children.forEach { date ->
                                         var subjCount = 0
-                                        row0.apply {
-                                            createCell(cellIndexDate)
-                                                .apply {
-                                                    setCellValue(XSSFRichTextString(date.key.toString()))
-                                                }
-                                        }
+
                                         date.children.forEach { sub ->
                                             if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
                                                 subjCount += 1
                                                 row1.apply {
                                                     createCell(cellIndexSub).apply {
                                                         setCellValue(XSSFRichTextString(sub.key.toString()))
+                                                        cellStyle =
+                                                            workbook.createCellStyle().apply {
+                                                                setAlignment(HorizontalAlignment.CENTER)
+                                                                setFont(
+                                                                    workbook.createFont().apply {
+                                                                        bold = true
+
+                                                                    })
+                                                            }
                                                     }
+                                                }
+                                                row0.apply {
+                                                    createCell(cellIndexDate).setCellValue(
+                                                        XSSFRichTextString(date.key.toString())
+                                                    )
                                                 }
                                                 cellIndexSub += 1
                                             }
                                         }
-                                        firstSheet.addMergedRegion(
-                                            CellRangeAddress(
-                                                0,
-                                                0,
-                                                cellIndexDate,
-                                                cellIndexDate + subjCount - 1
+                                        try {
+                                            firstSheet.addMergedRegion(
+                                                CellRangeAddress(
+                                                    0,
+                                                    0,
+                                                    cellIndexDate,
+                                                    cellIndexDate + subjCount - 1
+                                                )
                                             )
-                                        )
-
+                                        } catch (e: Exception) {
+                                            e.printStackTrace()
+                                        }
                                         cellIndexDate += subjCount
                                     }
                                 }
@@ -418,7 +439,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(2)
                                     .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
                                 try {
-                                    val per = ((p / (p + a)) * 100).toInt()
+                                    val per = ((p / (p + a)) * 100)
                                     dataRow.createCell(3)
                                         .setCellValue(XSSFRichTextString("${per}%"))
                                 } catch (e: Exception) {
@@ -430,7 +451,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             try {
 
                                 val file = File(
-                                    "${Environment.getExternalStorageDirectory()}/Documents/${binding.ACTVSelectSubject.text.toString()}_Attendance.xlsx"
+                                    "${Environment.getExternalStorageDirectory()}/Documents/${binding.ACTVSelectSubject.text}_Attendance.xlsx"
                                 )
                                 if (file.exists()) file.delete()
                                 workbook.write(FileOutputStream(file))
@@ -474,34 +495,45 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             && binding.ACTVSelectSubject.text.isNotEmpty()
                         ) {
                             val month = binding.ACTVMonth.text.toString()
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].rollNo}")
+                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
                                 .child(month).children.forEach { date ->
                                     var subjCount = 0
-                                    row0.apply {
-                                        createCell(cellIndexDate)
-                                            .apply {
-                                                setCellValue(XSSFRichTextString(date.key.toString()))
-                                            }
-                                    }
+
                                     date.children.forEach { sub ->
                                         if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
                                             subjCount += 1
                                             row1.apply {
                                                 createCell(cellIndexSub).apply {
                                                     setCellValue(XSSFRichTextString(sub.key.toString()))
+                                                    cellStyle = workbook.createCellStyle().apply {
+                                                        setAlignment(HorizontalAlignment.CENTER)
+                                                        setFont(workbook.createFont().apply {
+                                                            bold = true
+                                                        })
+                                                    }
                                                 }
+                                            }
+                                            row0.apply {
+                                                createCell(cellIndexDate)
+                                                    .apply {
+                                                        setCellValue(XSSFRichTextString(date.key.toString()))
+                                                    }
                                             }
                                             cellIndexSub += 1
                                         }
                                     }
-                                    firstSheet.addMergedRegion(
-                                        CellRangeAddress(
-                                            0,
-                                            0,
-                                            cellIndexDate,
-                                            cellIndexDate + subjCount - 1
+                                    try {
+                                        firstSheet.addMergedRegion(
+                                            CellRangeAddress(
+                                                0,
+                                                0,
+                                                cellIndexDate,
+                                                cellIndexDate + subjCount - 1
+                                            )
                                         )
-                                    )
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
 
                                     cellIndexDate += subjCount
                                 }
@@ -535,7 +567,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(2)
                                     .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
                                 try {
-                                    val per = ((p / (p + a)) * 100).toInt()
+                                    val per = ((p / (p + a)) * 100)
                                     dataRow.createCell(3)
                                         .setCellValue(XSSFRichTextString("${per}%"))
                                 } catch (e: Exception) {
@@ -543,7 +575,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                                 rowIndex += 1
                             }
-                            var fos: FileOutputStream? = null
+                            val fos: FileOutputStream? = null
                             try {
 
                                 val file = File(
@@ -585,9 +617,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 ).show()
                             }
                         }
-                        if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
-                            val month = binding.ACTVMonth.text.toString()
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].rollNo}")
+                        if (!binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
+                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
                                 .children.forEach { month ->
                                     month.children.forEach { date ->
                                         var subjCount = 0
@@ -595,6 +626,14 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                             createCell(cellIndexDate)
                                                 .apply {
                                                     setCellValue(XSSFRichTextString(date.key.toString()))
+                                                    cellStyle = workbook.createCellStyle().apply {
+                                                        setAlignment(HorizontalAlignment.CENTER)
+                                                        setFont(workbook.createFont().apply {
+                                                            bold = true
+                                                            underline
+
+                                                        })
+                                                    }
                                                 }
                                         }
                                         date.children.forEach { sub ->
@@ -649,7 +688,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(2)
                                     .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
                                 try {
-                                    val per = ((p / (p + a)) * 100).toInt()
+                                    val per = ((p / (p + a)) * 100)
                                     dataRow.createCell(3)
                                         .setCellValue(XSSFRichTextString("${per}%"))
                                 } catch (e: Exception) {
@@ -714,9 +753,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                     Log.e("errrr", error.message, error.toException())
                 }
             })
-
     }
-
 
     private fun fetchAttendanceDataDefault() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
@@ -743,19 +780,19 @@ class ViewAttendanceActivity : AppCompatActivity() {
 //                                    val status = subs.child("status").value.toString()
                                     }
                                 }
-                                try {
-                                    val per = ((p / a) * 100).toInt()
-                                    studAttendList.add(
-                                        StudentData(
-                                            rollNo,
-                                            studName,/*Percentage*/
-                                            "${per}%"
-                                        )
+                            }
+                            try {
+                                val per = ((p / a) * 100).toInt()
+                                studAttendList.add(
+                                    StudentData(
+                                        rollNo,
+                                        studName,/*Percentage*/
+                                        "${per}%"
                                     )
-                                    binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
-                                } catch (e: Exception) {
+                                )
+                                binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                            } catch (e: Exception) {
 //                                Log.e("errrr",e.message,e)
-                                }
                             }
                         }
                     }
@@ -867,7 +904,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
             })
     }
 
-    private fun fetchAttendanceDataBYMonth_n_Sub() {
+    private fun fetchAttendanceDataBYMonthNSub() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
             .child(MainActivity.studentYear)
             .addValueEventListener(object : ValueEventListener {

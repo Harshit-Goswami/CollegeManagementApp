@@ -1,5 +1,6 @@
 package com.harshit.goswami.collegeapp.admin
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -30,6 +31,15 @@ open class DeleteNotice : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rsvNotices.adapter = DeleteNoticeAdapter(noticeList, this, "DeleteNotice")
         binding.rsvNotices.setHasFixedSize(true)
+        binding.FABaddNotice.setOnClickListener {
+            startActivity(
+                Intent(
+                    this,
+                    UploadNotice::class.java
+                )
+            )
+        }
+
     }
 
     fun retrieveNotices() {

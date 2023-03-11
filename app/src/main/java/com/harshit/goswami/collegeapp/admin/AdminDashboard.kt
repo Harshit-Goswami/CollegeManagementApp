@@ -359,7 +359,7 @@ class AdminDashboard : AppCompatActivity() {
             startActivity(
                 Intent(
                     this,
-                    UploadNotice::class.java
+                    DeleteNotice::class.java
                 )
             )
         }
@@ -388,12 +388,12 @@ class AdminDashboard : AppCompatActivity() {
             startActivity(i)
         }
         binding.deleteNotice.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    DeleteNotice::class.java
-                )
-            )
+//            val i = Intent(
+//                this,
+//                UploadNotice::class.java
+//            )
+//            i.putExtra("isMagazineClick",true)
+//            startActivity(i)
         }
     }
 }

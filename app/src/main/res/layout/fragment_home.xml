@@ -167,7 +167,7 @@
                             android:text="First Year Admission Notice by University of Mumbai for AY 2022-23"
                             android:textColor="#EC407A"
                             android:textStyle="italic"
-                            android:visibility = "gone"/>
+                            android:visibility="gone" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/txt_admission_guidelines"
@@ -191,7 +191,7 @@
                             android:text="Admission Guidelines for First Year"
                             android:textColor="#EC407A"
                             android:textStyle="italic"
-                            android:visibility = "gone"/>
+                            android:visibility="gone" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/txt_addmission_form"
@@ -215,7 +215,7 @@
                             android:text="First Year Admission Form 2022-23"
                             android:textColor="#EC407A"
                             android:textStyle="italic"
-                            android:visibility = "gone"/>
+                            android:visibility="gone" />
 
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/txt_merit_list"
@@ -228,6 +228,7 @@
                             android:padding="10dp"
                             android:text="MERIT LIST"
                             android:textColor="@color/black" />
+
                         <com.google.android.material.textview.MaterialTextView
                             android:id="@+id/merit_list_link"
                             android:layout_width="match_parent"
@@ -238,7 +239,7 @@
                             android:text="Third Merit List 2022-23"
                             android:textColor="#EC407A"
                             android:textStyle="italic"
-                            android:visibility = "gone"/>
+                            android:visibility="gone" />
 
 
                     </LinearLayout>
@@ -410,113 +411,170 @@
                         android:orientation="horizontal">
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/materialCardView12"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="5dp"
+                            android:id="@+id/magazine_card1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="8dp"
                             app:cardUseCompatPadding="true">
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/chaitanya1" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/txt_magazine2"
-                                style="@style/TextAppearance.Material3.BodyMedium"
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:background="#8D000000"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="2021-2022"
-                                android:textColor="#eeeeee"
-                                android:textStyle="bold" />
+                                android:layout_gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="290dp"
+                                    android:layout_height="220dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/magazine_2020_21" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="290dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="2021-2022"
+                                    android:textColor="#121212"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/materialCardView11"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="5dp"
+                            android:id="@+id/magazine_card2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="8dp"
                             app:cardUseCompatPadding="true">
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/chaitanya1" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/txt_magazine3"
-                                style="@style/TextAppearance.Material3.BodyMedium"
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:background="#8D000000"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="2020-2021"
-                                android:textColor="#eeeeee"
-                                android:textStyle="bold" />
+                                android:layout_gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="290dp"
+                                    android:layout_height="220dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/magazine_2019_20" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="290dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="2021-2022"
+                                    android:textColor="#121212"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/materialCardView13"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="5dp"
+                            android:id="@+id/magazine_card3"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="8dp"
                             app:cardUseCompatPadding="true">
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/chaitanya1" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/txt_magazine4"
-                                style="@style/TextAppearance.Material3.BodyMedium"
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:background="#8D000000"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="2019-2020"
-                                android:textColor="#eeeeee"
-                                android:textStyle="bold" />
+                                android:layout_gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="290dp"
+                                    android:layout_height="220dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/magazine_2018_19" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="290dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="2021-2022"
+                                    android:textColor="#121212"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
                         <com.google.android.material.card.MaterialCardView
-                            android:id="@+id/materialCardView15"
-                            android:layout_width="300dp"
-                            android:layout_height="250dp"
-                            app:cardCornerRadius="5dp"
-                            app:cardElevation="5dp"
+                            android:id="@+id/magazine_card4"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="8dp"
                             app:cardUseCompatPadding="true">
 
-                            <com.google.android.material.imageview.ShapeableImageView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
-                                android:src="@drawable/chaitanya1" />
-
-                            <com.google.android.material.textview.MaterialTextView
-                                android:id="@+id/txt_magazine1"
-                                style="@style/TextAppearance.Material3.BodyMedium"
-                                android:layout_width="match_parent"
+                            <LinearLayout
+                                android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_gravity="bottom"
-                                android:background="#8D000000"
-                                android:gravity="center"
-                                android:padding="10dp"
-                                android:text="2018-2019"
-                                android:textColor="#eeeeee"
-                                android:textStyle="bold" />
+                                android:layout_gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="290dp"
+                                    android:layout_height="220dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/magazine_2017_18" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="290dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="2021-2022"
+                                    android:textColor="#121212"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
 
+                        <com.google.android.material.card.MaterialCardView
+                            android:id="@+id/magazine_card5"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            app:cardCornerRadius="8dp"
+                            app:cardElevation="8dp"
+                            app:cardUseCompatPadding="true">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical"
+                                android:padding="5dp">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="290dp"
+                                    android:layout_height="220dp"
+                                    android:padding="2dp"
+                                    android:src="@drawable/magazine_2016_17" />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    android:id="@+id/txt_magazine2"
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="290dp"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="2021-2022"
+                                    android:textColor="#121212"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
                 </HorizontalScrollView>
 
