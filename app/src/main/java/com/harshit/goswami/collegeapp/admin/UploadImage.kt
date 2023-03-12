@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadImageBinding
@@ -22,12 +23,12 @@ import java.util.*
 
 class UploadImage : AppCompatActivity() {
     private lateinit var binding: ActivityAdminUploadImageBinding
-    private var category: String? = null
+//    private var category: String? = null
     private var imgUri: Uri? = null
     private var storage: FirebaseStorage? = null
     private var storageRef: StorageReference? = null
     private var database: FirebaseDatabase? = null
-    private var dbRef: DatabaseReference? = null
+//    private var dbRef: DatabaseReference? = null
     private var downloadImgUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -101,14 +102,14 @@ class UploadImage : AppCompatActivity() {
     }
 
     private fun uploadData() {
-        dbRef = database?.reference?.child(" Gallery")?.child(binding.imageCategory.selectedItem.toString())
-        val uniqueKey = dbRef!!.push().key
-        dbRef!!.child(uniqueKey.toString()).setValue(downloadImgUrl.toString())
+        FirebaseFirestore.getInstance().collection("Campus Gallery Images")
+            .document(binding.imageCategory.selectedItem.toString())
+            .collection("images").document().set(mapOf("url" to downloadImgUrl.toString()) )
             .addOnSuccessListener {
                 Toast
                     .makeText(
                         this,
-                        "Notice uploaded..",
+                        "Image uploaded..",
                         Toast.LENGTH_SHORT
                     )
                     .show()

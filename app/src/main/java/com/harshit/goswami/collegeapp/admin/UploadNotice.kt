@@ -33,7 +33,6 @@ class UploadNotice : AppCompatActivity() {
     private var date = ""
     private var time = ""
     private var deletionDate = ""
-    private var uniqueKey:String = ""
     private val getResult = registerForActivityResult(
         GetContent()
     ) { result: Uri? ->
@@ -75,14 +74,32 @@ class UploadNotice : AppCompatActivity() {
                 "image/*"
             )
         }
-
-
+        binding.btnUploadNotice.setOnClickListener {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                val calendar = Calendar.getInstance()
+                calendar.add(Calendar.DATE, 15)
+                val dateFormat = SimpleDateFormat("dd-MM-yyyy")
+                Log.i("five day time", dateFormat.format(calendar.time).toString())
+                val sdfDate =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                val sdfTime =
+                    SimpleDateFormat("hh:mm a", Locale.getDefault())
+                time = sdfTime.format(Calendar.getInstance().time)
+                date = sdfDate.format(Calendar.getInstance().time)
+                deletionDate = sdfDate.format(calendar.time)
+            }
+            val title = binding.edtNotice.text.toString()
+            if (title == "") {
+                binding.edtNotice.error = "title is empty"
+                binding.edtNotice.isFocusable = true
+            } else if (fileUri == null) uploadData() else uploadImgAndData()
+        }
     }
 
     private fun uploadData() {
         val title: String = Objects.requireNonNull(binding.edtNotice.text).toString()
-        val noticeData = NoticeData(title, downloadUrl.toString(), uniqueKey, date, time, deletionDate)
-        firestore.collection("Notices").document(uniqueKey).set(noticeData)
+        val noticeData = NoticeData(title, downloadUrl.toString(), date, time, deletionDate)
+        firestore.collection("Notices").document(date+time).set(noticeData)
             .addOnSuccessListener {
                 if (fileUri != null) {
                     Toast.makeText(this@UploadNotice, "uploaded Successfully!", Toast.LENGTH_SHORT)
@@ -124,7 +141,7 @@ class UploadNotice : AppCompatActivity() {
             progressDialog.show()
             // Defining the child of storageReference
             storageRef =
-                firebaseStorage.reference.child("NoticeImages").child(UUID.randomUUID().toString())
+                firebaseStorage.reference.child("NoticeImages").child(date+time)
             // adding listeners on upload
             // or failure of image
             val uploadTask = storageRef!!.putFile(fileUri!!)

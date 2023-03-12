@@ -13,14 +13,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#e6e6e6">
-
         <com.google.android.material.appbar.AppBarLayout
             android:id="@+id/AppBar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
             android:fitsSystemWindows="true"
             android:theme="@style/AppTheme.AppBarOverlay"
             app:cardElevation="2dp"
@@ -41,7 +37,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="start"
                     android:gravity="center"
-                    android:text="Welcome to Chetana H.S Collage"
+                    android:text="Welcome to Chetana H.S College"
                     android:textColor="#FFFFFF"
                     android:textSize="18sp"
                     android:textStyle="bold" />

@@ -13,6 +13,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
@@ -30,7 +31,8 @@ class AddNewEvent : AppCompatActivity() {
     private var dbRef: DatabaseReference? = null
     private val firebaseStorage: FirebaseStorage = FirebaseStorage.getInstance()
     private var storageRef: StorageReference? = null
-    private lateinit var dateTime: String
+    private lateinit var date: String
+    private lateinit var time: String
 
     private val getResult = registerForActivityResult(
         ActivityResultContracts.GetContent()
@@ -76,9 +78,12 @@ class AddNewEvent : AppCompatActivity() {
 
         binding.btnUploadEvent.setOnClickListener {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                val sdfDateTime =
-                    SimpleDateFormat("dd-MM-yyyy hh:mm:ss a", Locale.getDefault())
-                dateTime = sdfDateTime.format(Calendar.getInstance().time)
+                val sdfDate =
+                    SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+                date = sdfDate.format(Calendar.getInstance().time)
+                val sdfTime =
+                    SimpleDateFormat("hh:mm:ss a", Locale.getDefault())
+                time = sdfTime.format(Calendar.getInstance().time)
             }
             val title = binding.edtEventTitle.text.toString()
             val desciption = binding.edtNoticeDescription.text.toString()
@@ -96,9 +101,8 @@ class AddNewEvent : AppCompatActivity() {
         dbRef = firebaseDatabase.reference
 //        val uniqueKey = dbRef!!.child("Events").push().key
 
-        val noticeData = NoticeData(title, dateTime, downloadUrl.toString(), description)
-        dbRef = firebaseDatabase.reference
-        dbRef!!.child("Events").child(dateTime).setValue(noticeData)
+        val noticeData = NoticeData(title,downloadUrl.toString(),date,time,"")
+        FirebaseFirestore.getInstance().collection("Events").document(date+time).set(noticeData)
             .addOnSuccessListener {
                 if (fileUri != null) {
                     FCMnotificationSender(
@@ -129,7 +133,7 @@ class AddNewEvent : AppCompatActivity() {
             progressDialog.show()
             // Defining the child of storageReference
             storageRef =
-                firebaseStorage.reference.child("EventImages").child(dateTime)
+                firebaseStorage.reference.child("EventImages").child(date+time)
             // adding listeners on upload
             // or failure of image
             val uploadTask = storageRef!!.putFile(fileUri!!)

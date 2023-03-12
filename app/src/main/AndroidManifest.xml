@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    package="com.harshit.goswami.collegeapp">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -20,22 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.CollageApp"
         tools:targetApi="31">
+
         <activity
-            android:name=".GalleryActivity"
+            android:name=".student.GalleryActivity"
             android:exported="false"
             android:label="@string/title_activity_gallery"
             android:theme="@style/Theme.CollageApp.NoActionBar" />
-        <!--  -->
-        <provider
-            android:name="androidx.core.content.FileProvider"
-            android:authorities="${applicationId}.provider"
-            android:exported="false"
-            android:grantUriPermissions="true">
-            <meta-data
-                android:name="android.support.FILE_PROVIDER_PATHS"
-                android:resource="@xml/file_paths" />
-        </provider>
-
         <activity
             android:name=".ViewAttendanceActivity"
             android:exported="false" />
@@ -60,22 +49,12 @@
         <activity
             android:name=".LoginActivity"
             android:exported="false" />
-        <!--
-    <activity
-            android:name=".student.ResisterAsStutent"
-            android:exported="false" />
-        -->
         <activity
             android:name=".admin.AddStudent"
             android:exported="false" />
         <activity
             android:name=".admin.AddFaculty"
             android:exported="false" />
-        <!--
-    <activity
-            android:name=".teacher.AddNewEvent"
-            android:exported="false" />
-        -->
         <activity
             android:name=".teacher.UploadNotes"
             android:exported="false" />
@@ -124,6 +103,16 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/file_paths" />
+        </provider>
+
     </application>
 
 </manifest>

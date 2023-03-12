@@ -40,5 +40,4 @@
         app:shapeAppearanceOverlay="@style/ShapeCornerCut">
 
     </com.google.android.material.floatingactionbutton.FloatingActionButton>
-
 </RelativeLayout>

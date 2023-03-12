@@ -16,5 +16,4 @@
         android:id="@+id/menu_send_massage"
         android:title="Send a massage"
         />
-
 </menu>

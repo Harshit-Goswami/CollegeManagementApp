@@ -44,7 +44,7 @@ class DeleteNoticeAdapter(
                 Glide.with(context).load(this.downloadUrl).into(binding.noticeImage)
                 binding.deleteNoticeBtn.setOnClickListener {
                     FirebaseFirestore.getInstance().collection("Notices")
-                        .document(this.uniqueKey).delete().addOnSuccessListener {
+                        .document(this.date+this.time).delete().addOnSuccessListener {
                             Toast.makeText(
                                 context,
                                 "${this.title} Notice deleted",
@@ -68,7 +68,7 @@ class DeleteNoticeAdapter(
                 val date = sdfDate.format(Calendar.getInstance().time)
                 if (date == this.deletionDate) {
                     FirebaseFirestore.getInstance().collection("Notices")
-                        .document(this.uniqueKey).delete().addOnSuccessListener {
+                        .document(this.date+this.time).delete().addOnSuccessListener {
                             Toast.makeText(
                                 context,
                                 "${this.title} Notice deleted",
