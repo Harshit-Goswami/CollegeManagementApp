@@ -96,7 +96,7 @@ class HomeFragment : Fragment() {
                     startActivity(Intent(requireContext(), ViewAttendanceActivity::class.java))
                 }
                 R.id.menu_campus_life -> {
-//                    startActivity(Intent(requireContext(), GalleryActivity::class.java))
+                    startActivity(Intent(requireContext(), GalleryActivity::class.java))
 
                 }
                 R.id.menu_imp_links -> {

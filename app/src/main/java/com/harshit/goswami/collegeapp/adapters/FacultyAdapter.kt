@@ -2,6 +2,7 @@ package com.harshit.goswami.collegeapp.adapters
 
 import android.app.Dialog
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.ViewImageActivity
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.data.FacultyData
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddSubjectBinding
@@ -42,6 +44,11 @@ class FacultyAdapter(
                 binding.IFiTvFacultyDepartment.text = this.department
                 binding.IFiTxtContactNo.text = this.contactNo
                 Glide.with(context).load(this.downloadUrl).into(binding.IFiFacultyDp)
+                binding.IFiFacultyDp.setOnClickListener {
+                    val i = Intent(context, ViewImageActivity::class.java)
+                    i.putExtra("imageUrl",this.downloadUrl)
+                    context.startActivity(i)
+                }
                 binding.IFiBtnMoreOption.setOnClickListener {
 
                     val popupMenu = PopupMenu(context, binding.IFiBtnMoreOption)

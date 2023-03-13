@@ -10,6 +10,7 @@ import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
 import com.harshit.goswami.collegeapp.data.NoticeData
 import com.harshit.goswami.collegeapp.databinding.FragmentEventBinding
@@ -50,31 +51,16 @@ class EventFragment : Fragment() {
 
     private fun retrieveEvents() {
         eventList = ArrayList()
-        FirebaseDatabase.getInstance().reference.child("Events")
-            .addChildEventListener(object : ChildEventListener {
-                override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                    if (snapshot.exists()) {
-                        eventList.add(snapshot.getValue(NoticeData::class.java)!!)
-                        binding.rsvEvent.adapter?.notifyDataSetChanged()
-
-                    }
-                    eventList.sortByDescending { it.date}
+        eventList = ArrayList()
+        FirebaseFirestore.getInstance().collection("Events").addSnapshotListener { value, error ->
+            if (error == null){
+                value?.forEach {
+                    eventList.add(it.toObject(NoticeData::class.java))
+                    binding.rsvEvent.adapter?.notifyDataSetChanged()
                 }
-                override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
-                }
-
-                override fun onChildRemoved(snapshot: DataSnapshot) {
-
-                }
-
-                override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-
-                }
-            })
-
+            }
+        }
+        eventList.sortWith(compareByDescending { "${it.date}${it.time}"})
     }
-
 }
+
