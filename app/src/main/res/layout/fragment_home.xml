@@ -383,6 +383,391 @@
 
 
                 </LinearLayout>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableBottom="@color/black"
+                    android:text="Our Facilities"
+                    android:textAlignment="center"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_parking"
+
+                                    />
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Parking"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_assembly_hall"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Assembly Hall"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_computer_lab"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Computer Lab"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_canteen"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Canteen"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_nss"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="NSS"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/img_ncc"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="NCC"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/magazine_2020_21"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Parking"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                             app:cardCornerRadius="1dp"
+                            
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/magazine_2020_21"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Parking"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+                        <com.google.android.material.card.MaterialCardView
+                            android:layout_width="250dp"
+                            android:layout_height="250dp"
+                            app:cardCornerRadius="1dp"
+                            app:cardElevation="1dp"
+                            app:cardUseCompatPadding="true"
+                            android:paddingBottom="20dp">
+
+                            <LinearLayout
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:orientation="vertical">
+
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="200dp"
+
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/magazine_2020_21"/>
+
+                                <com.google.android.material.textview.MaterialTextView
+                                    style="@style/TextAppearance.Material3.BodyMedium"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:gravity="center"
+                                    android:padding="10dp"
+                                    android:text="Parking"
+                                    android:textColor="@color/shrine_pink_900"
+                                    android:background="#E6E6E6"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+                        </com.google.android.material.card.MaterialCardView>
+
+
+                    </LinearLayout>
+                </HorizontalScrollView>
+                <com.google.android.material.textview.MaterialTextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:drawableBottom="@color/black"
+                    android:text="Placement partners"
+                    android:textAlignment="center"
+                    android:textColor="#F4511E"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+                <HorizontalScrollView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                    android:src="@drawable/neosoft"
+                                     android:layout_marginEnd="10dp"
+                                    android:layout_marginStart="5dp"
+                                    app:shapeAppearanceOverlay="@style/circular"/>
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                     android:src="@drawable/reliance_jio"
+                                     android:layout_marginEnd="10dp"
+                                    android:layout_marginStart="5dp"
+                                    app:shapeAppearanceOverlay="@style/circular"/>
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                     android:src="@drawable/tcs"
+                                     android:layout_marginEnd="10dp"
+                                    android:layout_marginStart="5dp"
+                                    app:shapeAppearanceOverlay="@style/circular"/>
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                     android:src="@drawable/tech_mahindra"
+                                     android:layout_marginEnd="10dp"
+                                    android:layout_marginStart="5dp"
+                                    app:shapeAppearanceOverlay="@style/circular"/>
+                                <com.google.android.material.imageview.ShapeableImageView
+                                    android:layout_width="100dp"
+                                    android:layout_height="100dp"
+                                    android:scaleType="fitXY"
+                                     android:src="@drawable/wipro"
+                                     android:layout_marginEnd="10dp"
+                                    android:layout_marginStart="5dp"
+                                    app:shapeAppearanceOverlay="@style/circular"/>
+
+
+                    </LinearLayout>
+                </HorizontalScrollView>
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_magazine"
@@ -433,7 +818,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="2021-2022"
+                                    android:text="2020-2021"
                                     android:textColor="#121212"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -466,7 +851,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="2021-2022"
+                                    android:text="2019-2020"
                                     android:textColor="#121212"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -499,7 +884,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="2021-2022"
+                                    android:text="2018-2019"
                                     android:textColor="#121212"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -532,7 +917,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="2021-2022"
+                                    android:text="2017-2018"
                                     android:textColor="#121212"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -566,7 +951,7 @@
                                     android:layout_height="wrap_content"
                                     android:gravity="center"
                                     android:padding="10dp"
-                                    android:text="2021-2022"
+                                    android:text="2016-2017"
                                     android:textColor="#121212"
                                     android:textStyle="bold" />
                             </LinearLayout>
@@ -862,12 +1247,12 @@
                         android:src="@drawable/img_instagram" />
 
                     <com.google.android.material.imageview.ShapeableImageView
-                        android:id="@+id/FH_email_icon"
+                        android:id="@+id/FH_linkedin_icon"
                         android:layout_width="60dp"
                         android:layout_height="60dp"
                         android:layout_gravity="center"
                         android:layout_weight="1"
-                        android:src="@drawable/img_email_ic" />
+                        android:src="@drawable/ic_linkedin" />
 
                     <com.google.android.material.imageview.ShapeableImageView
                         android:id="@+id/FH_facebook_icon"
@@ -945,6 +1330,7 @@
         app:itemHorizontalPadding="20dp"
         app:itemIconPadding="40dp"
         app:itemIconSize="25dp"
+        android:visibility="gone"
         app:itemIconTint="@color/shrine_pink_900"
         app:itemTextColor="@color/shrine_pink_900"
         app:menu="@menu/navigation_bar_menu" />

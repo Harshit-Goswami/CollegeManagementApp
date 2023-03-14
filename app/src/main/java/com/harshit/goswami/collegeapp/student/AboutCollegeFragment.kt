@@ -48,7 +48,7 @@ class AboutCollegeFragment : Fragment() {
                 )
             }
         }
-        binding.FAOurGoalsHeading.setOnClickListener {
+       /* binding.FAOurGoalsHeading.setOnClickListener {
             if (!isOurGoalsOpen) {
                 isOurGoalsOpen = true
                 binding.FATxtOurGoals.visibility = View.VISIBLE
@@ -68,7 +68,7 @@ class AboutCollegeFragment : Fragment() {
                     0
                 )
             }
-        }
+        }*/
 
         return binding.root
     }

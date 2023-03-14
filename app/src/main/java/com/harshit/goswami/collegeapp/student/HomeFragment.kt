@@ -74,11 +74,28 @@ class HomeFragment : Fragment() {
         admissionGuidelinesLinksSetUp()
         ourCoursesSetUp()
         socialMediaIconClicks()
+        magazineClickSetUp()
 
 
         return binding.root
     }
-
+private fun magazineClickSetUp(){
+    binding.magazineCard1.setOnClickListener {
+        getByUrl("https://drive.google.com/file/d/1uQYjyG6rdXkDgrhloCpbKXDj_I25U7RI/view?usp=sharing")
+    }
+    binding.magazineCard2.setOnClickListener {
+        getByUrl("https://drive.google.com/file/d/17d4wWzlWa3Sl36_EM8cnfwbsa4_f_N07/view?usp=sharing")
+    }
+    binding.magazineCard3.setOnClickListener {
+        getByUrl("https://drive.google.com/file/d/1Gb-fHbwNJpJectmOA3E6FaUXqIdWI8bf/view?usp=sharing")
+    }
+    binding.magazineCard4.setOnClickListener {
+        getByUrl("https://drive.google.com/file/d/1krANEJjWq33XPvEn4OgCa8ei2cVHcRMp/view?usp=sharing")
+    }
+    binding.magazineCard5.setOnClickListener {
+        getByUrl("https://drive.google.com/file/d/1854ejko5AnoS7OL22-fgh8OBTGeXqXhr/view?usp=sharing")
+    }
+}
     private fun navigationSetUp() {
         val hView: View = binding.navView.getHeaderView(0)
         hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
@@ -139,7 +156,7 @@ class HomeFragment : Fragment() {
     private fun socialMediaIconClicks() {
         binding.FHInstaIcon.setOnClickListener { getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en") }
         binding.FHFacebookIcon.setOnClickListener { getByUrl("https://www.facebook.com/profile.php?id=100064103347725") }
-        binding.FHEmailIcon.setOnClickListener {}
+        binding.FHLinkedinIcon.setOnClickListener {getByUrl("https://www.linkedin.com/company/chetana-college/")}
         binding.FHYoutubeIcon.setOnClickListener {
             getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")
         }

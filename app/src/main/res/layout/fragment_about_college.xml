@@ -95,9 +95,7 @@
         android:layout_gravity="center"
         android:padding="10dp"
         android:justificationMode="inter_word"
-        android:text="Chetana’s was established with the twin objective of providing quality education  infusing students with dynamism. Chetana has created many success stories and today it has become one of the most preferred Institutes in India.
-Our high caliber faculty with vast experience would add the required momentum to the whole process. Apart from core faculty, who are always a source of motivation for the students, we have an erudite industry experts that comprises of top managers from the corporate world who share their rich experience with the students.
-\n\t\nI take pride in welcoming you all to Chetana’s Institute."
+        android:text="@string/about_college_text"
         android:textAlignment="center"
         android:background="@color/white"
         android:textColor="@color/black"
@@ -130,18 +128,9 @@ Our high caliber faculty with vast experience would add the required momentum to
             android:textColor="@color/black"
             android:textSize="18dp"
             tools:targetApi="o" />
-        <HorizontalScrollView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp">
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="350dp"
-                    android:layout_height="230dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp"
                     app:cardUseCompatPadding="true"
@@ -169,13 +158,47 @@ Our high caliber faculty with vast experience would add the required momentum to
                             android:textSize="18sp"
                             android:textColor="@color/black"
                             android:justificationMode="inter_word"
-                            android:text="To raise our institution to higher levels of academic and cultural excellence and create an urge to enrich the personality of our students to serve humanity as one global family."
+                            android:text="To develop Chetana as a World Class Institute of academic excellence and to develop outstanding business professionals who make valuable contributions to the corporate world and to society"
                             />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
                 <com.google.android.material.card.MaterialCardView
-                    android:layout_width="350dp"
-                    android:layout_height="230dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true"
+                    android:backgroundTint="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:background="#FFA000"
+                            android:gravity="start"
+                            android:textStyle="bold"
+                            android:layout_margin="10dp"
+                            android:textSize="25sp"
+                            android:padding="5dp"
+                            android:text="Our Goals"/>
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center|center_vertical"
+                            android:padding="10dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/black"
+                            android:justificationMode="inter_word"
+                            android:text="To impact value-based education to the students.
+To bring educational opportunities within the reach of the under-privileged section of society."/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     app:cardCornerRadius="10dp"
                     app:cardElevation="5dp"
                     app:cardUseCompatPadding="true"
@@ -203,38 +226,44 @@ Our high caliber faculty with vast experience would add the required momentum to
                             android:textSize="18sp"
                             android:textColor="@color/black"
                             android:justificationMode="inter_word"
-                            android:text="Chetana Family solemnly resolves to provide quality education to the students and mould them into responsible citizens and dynamic leaders of resurgent India."
+                            android:text="Chetana is committed to prepare student as successful leaders who combine the use of managerial skill with the understanding of socio-culture system, to meet the current and future needs of industry. The institute is committed to academic excellence through high quality teaching and research"
                             />
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
-            </LinearLayout>
-        </HorizontalScrollView>
+                <com.google.android.material.card.MaterialCardView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:cardCornerRadius="10dp"
+                    app:cardElevation="5dp"
+                    app:cardUseCompatPadding="true"
+                    android:backgroundTint="@color/white">
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/black"
+                            android:background="#FFA000"
+                            android:gravity="start"
+                            android:textStyle="bold"
+                            android:layout_margin="10dp"
+                            android:textSize="25sp"
+                            android:padding="5dp"
+                            android:text="Our Culture"/>
+                        <com.google.android.material.textview.MaterialTextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:padding="10dp"
+                            android:textSize="18sp"
+                            android:textColor="@color/black"
+                            android:justificationMode="inter_word"
+                            android:text="The institute fosters a learning environment which is inclusive and driven by respect and care for society and environment. As an institute, we firmly instill a value-system that shall help create moral and ethical business leaders. The institute through all its activities, academic and otherwise has always strived to inculcate passion for lifelong learning. The institute offer an environment for all its stakeholders that is conducive, promotes harmony and ensures growth both in terms of career and intellect."/>
+                    </LinearLayout>
+                </com.google.android.material.card.MaterialCardView>
 
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/FA_ourGoals_heading"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:background="#FFA000"
-            android:gravity="start"
-            android:textStyle="bold"
-            android:drawableEnd="@drawable/ic_double_arrow_down"
-            android:textSize="25dp"
-            android:padding="5dp"
-            android:text="Our Goals"/>
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/FA_txt_ourGoals"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:visibility="gone"
-            android:justificationMode="inter_word"
-            android:text="@string/text_goals"
-            android:background="@color/white"
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            tools:targetApi="o" />
         <View
             android:layout_width="match_parent"
             android:layout_height="80dp"
