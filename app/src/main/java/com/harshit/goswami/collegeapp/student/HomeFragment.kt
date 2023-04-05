@@ -6,31 +6,49 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ArrayAdapter
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.PopupMenu
 import androidx.core.view.get
+import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
 import com.denzcoskun.imageslider.constants.ScaleTypes
 import com.denzcoskun.imageslider.models.SlideModel
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.AttendanceActivity
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.ViewAttendanceActivity
+import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.databinding.ActivityStudentViewAttendanceBinding
+import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogOurCoursesDetailsBinding
 import com.harshit.goswami.collegeapp.databinding.FragmentHomeBinding
 
 
 class HomeFragment : Fragment() {
+    private lateinit var bindingAttendance:ActivityStudentViewAttendanceBinding
     private lateinit var binding: FragmentHomeBinding
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var toolbar: MaterialToolbar
     private lateinit var drawerLayout: DrawerLayout
+    private val fireDb = FirebaseDatabase.getInstance().reference
+
 
     // ********************** admission guidelines variables ***************
     private var isAdmissionNotice = false
@@ -43,6 +61,7 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        val bindingAttendance = ActivityStudentViewAttendanceBinding.inflate(layoutInflater)
         toolbar = binding.toolbar
         drawerLayout = binding.drawer
 //        getSupportActionBar().setDisplayShowTitleEnabled(false);
@@ -99,19 +118,96 @@ private fun magazineClickSetUp(){
     private fun navigationSetUp() {
         val hView: View = binding.navView.getHeaderView(0)
         hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
-//      hView.findViewById<ImageView>(R.id.imageView)
-        if (MainActivity.isCR){
+        if (MainActivity.user == "student" || MainActivity.isCR){
             binding.navView.menu.getItem(0).isVisible = true
-            binding.navView.menu.getItem(1).isVisible = true
         }
+//      hView.findViewById<ImageView>(R.id.imageView)
+//        if (MainActivity.isCR){
+//            binding.navView.menu.getItem(0).isVisible = true
+//            binding.navView.menu.getItem(1).isVisible = true
+//        }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-                R.id.menu_take_attendance -> {
+             /*   R.id.menu_take_attendance -> {
 //                    startActivity(Intent(requireContext(), AttendanceActivity::class.java))
-                }
+                }*/
                 R.id.menu_view_attendance -> {
-                    startActivity(Intent(requireContext(), ViewAttendanceActivity::class.java))
-                }
+//                    startActivity(Intent(requireContext(), ViewAttendanceActivity::class.java))
+                    bindingAttendance = ActivityStudentViewAttendanceBinding.inflate(layoutInflater)
+                    try {
+                        val dialog = AlertDialog.Builder(
+                            requireContext(),
+                            R.style.CustomAlertDialogEditProfile
+                        ).create()
+                        dialog.window?.setGravity(Gravity.TOP)
+                        dialog.setCancelable(true)
+                        dialog.setView(bindingAttendance.root)
+                        dialog.setCanceledOnTouchOutside(false)
+                        dialog.show()
+                    } catch (e: Exception) {
+                        Log.d("dialog Error-", "${e.message}")
+                    }
+                    bindingAttendance.VAIcSort.setOnClickListener {
+                        val popupMenu = PopupMenu(requireContext(), bindingAttendance.VAIcSort)
+                        popupMenu.menuInflater.inflate(R.menu.view_attendance_sort_menu, popupMenu.menu)
+                        popupMenu.setOnMenuItemClickListener { menu ->
+                            when (menu.itemId) {
+                                R.id.menu_searchby_month -> {
+                                    bindingAttendance.TILSelectSubject.visibility = View.GONE
+                                    bindingAttendance.TILMonth.visibility = View.VISIBLE
+                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
+                                }
+                                R.id.menu_searchby_subject -> {
+                                    bindingAttendance.TILMonth.visibility = View.GONE
+                                    bindingAttendance.TILSelectSubject.visibility = View.VISIBLE
+                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
+                                }
+                                R.id.menu_searchby_month_n_sub -> {
+                                    bindingAttendance.TILMonth.visibility = View.VISIBLE
+                                    bindingAttendance.TILSelectSubject.visibility = View.VISIBLE
+                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
+
+                                }
+                                R.id.menu_default -> {
+                                    bindingAttendance.TILMonth.visibility = View.GONE
+                                    bindingAttendance.TILSelectSubject.visibility = View.GONE
+                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
+
+                                }
+                            }
+                            true
+                        }
+                        popupMenu.show()
+                    }
+                    bindingAttendance.btnSearch.setOnClickListener {
+                        if (bindingAttendance.TILMonth.isVisible && !bindingAttendance.TILSelectSubject.isVisible) {
+                                if (bindingAttendance.ACTVMonth.text.isNotEmpty()) {
+                                    fetchAttendanceDataBYMonth()
+                                } else bindingAttendance.TILMonth.error = "Please Select Month"
+
+                        }
+                        if (!bindingAttendance.TILMonth.isVisible && bindingAttendance.TILSelectSubject.isVisible) {
+
+                                if (bindingAttendance.ACTVSelectSubject.text.isNotEmpty()) {
+                                    fetchAttendanceDataBYSub()
+                                } else bindingAttendance.TILSelectSubject.error = "Please Select Subject"
+                        }
+                        if (bindingAttendance.TILMonth.isVisible && bindingAttendance.TILSelectSubject.isVisible) {
+                                if (bindingAttendance.ACTVMonth.text.isNotEmpty()) {
+                                    if (bindingAttendance.ACTVSelectSubject.text.isNotEmpty()) {
+                                        fetchAttendanceDataBYMonthNSub()
+                                    } else bindingAttendance.TILSelectSubject.error = "Please Select Subject"
+                                } else bindingAttendance.TILMonth.error = "Please Select Month"
+                        }
+//                        if (!bindingAttendance.TILMonth.isVisible && !bindingAttendance.TILSelectSubject.isVisible) {
+//                                fetchAttendanceDataDefault()
+//                        }
+                    }
+                    autoCompleteTV()
+                    fetchAttendanceDataDefault()
+
+
+            }
                 R.id.menu_campus_life -> {
                     startActivity(Intent(requireContext(), GalleryActivity::class.java))
 
@@ -136,6 +232,9 @@ private fun magazineClickSetUp(){
                     editor.putString("studentDep", "").apply()
                     editor.putString("studentYear", "").apply()
                     editor.putString("studentName", "").apply()
+                    if(MainActivity.isCR){
+                        editor.putBoolean("isCR", false).apply()
+                    }
                     val i = Intent(requireContext(), LoginActivity::class.java)
                     i.putExtra("SelectedUser", "student")
                     startActivity(i)
@@ -348,4 +447,206 @@ private fun magazineClickSetUp(){
 
         binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
     }
+    private fun fetchAttendanceDataDefault() {
+        fireDb.child("Student Attendance").child(MainActivity.studentDep)
+            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var p = 0F
+                        var a = 0F
+//                        val rollNo = MainActivity.studRollNo
+//                                .removeRange(2, rollno.key.toString().lastIndex).trim()
+//                        val studName = MainActivity.studName
+//                                rollno.key.toString().removeRange(0, 4).trim()
+                        snapshot.children.forEach { month ->
+                            month.children.forEach { dates ->
+                                dates.children.forEach { subs ->
+                                    if (subs.child("status").value.toString() == "P") p += 1 else a += 1
+//                                    val sub = subs.key.toString()
+//                                    val status = subs.child("status").value.toString()
+                                }
+                            }
+                        }
+                        try {
+                            val per = ((p/(a+p)) * 100).toInt()
+                            bindingAttendance.txtAttendanceHeading.text = "Total Attendance"
+                            bindingAttendance.txtPercentage.text = "${per}%"
+                            bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
+                            bindingAttendance.txtAbsentCount.text = "Absent - ${a.toInt()}"
+                        } catch (e: Exception) {
+//                                Log.e("errrr",e.message,e)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("errrr", error.message, error.toException())
+                }
+            })
+    }
+    private fun fetchAttendanceDataBYMonth() {
+        fireDb.child("Student Attendance").child(MainActivity.studentDep)
+            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var p = 0F
+                        var a = 0F
+//                        val rollNo = MainActivity.studRollNo
+//                                .removeRange(2, rollno.key.toString().lastIndex).trim()
+//                        val studName = MainActivity.studName
+//                                rollno.key.toString().removeRange(0, 4).trim()
+                        snapshot.child(bindingAttendance.ACTVMonth.text.toString()).children.forEach { dates ->
+                            dates.children.forEach { subs ->
+                                if (subs.child("status").value.toString() == "P") p += 1 else a += 1
+//                                    val sub = subs.key.toString()
+//                                    val status = subs.child("status").value.toString()
+                            }
+                        }
+                        try {
+                            val per = ((p/(a+p)) * 100).toInt()
+                            bindingAttendance.txtAttendanceHeading.text = "${bindingAttendance.ACTVMonth.text} Attendance"
+                            bindingAttendance.txtPercentage.text = "$per%"
+                            bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
+                            bindingAttendance.txtAbsentCount.text = "Absent - ${a.toInt()}"
+                        } catch (e: Exception) {
+//                                Log.e("errrr",e.message,e)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("errrr", error.message, error.toException())
+                }
+            })
+    }
+    private fun fetchAttendanceDataBYSub() {
+        fireDb.child("Student Attendance").child(MainActivity.studentDep)
+            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var p = 0F
+                        var a = 0F
+                        val rollNo = MainActivity.studRollNo
+//                                .removeRange(2, rollno.key.toString().lastIndex).trim()
+                        val studName = MainActivity.studName
+//                                rollno.key.toString().removeRange(0, 4).trim()
+                        snapshot.children.forEach { month ->
+                            month.children.forEach { dates ->
+                                dates.children.forEach { subs ->
+                                    if (subs.key.toString() == bindingAttendance.ACTVSelectSubject.text.toString()) {
+                                        if (subs.child("status").value.toString() == "P") p += 1 else a += 1
+//                                    val sub = subs.key.toString()
+//                                    val status = subs.child("status").value.toString()
+                                    }
+                                }
+                            }
+                        }
+                        try {
+                            val per = ((p/(a+p)) * 100).toInt()
+                            bindingAttendance.txtAttendanceHeading.text = "${bindingAttendance.ACTVSelectSubject.text} Attendance"
+                            bindingAttendance.txtPercentage.text = "$per%"
+                            bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
+                            bindingAttendance.txtAbsentCount.text = "Absent - ${a.toInt()}"
+                            Log.d("attendance","$p / ${a+p} = ${((p/(a+p))*100).toInt()}")
+                        } catch (e: Exception) {
+//                                Log.e("errrr",e.message,e)
+                        }
+                    }
+                }
+
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("errrr", error.message, error.toException())
+                }
+            })
+    }
+    private fun fetchAttendanceDataBYMonthNSub() {
+        fireDb.child("Student Attendance").child(MainActivity.studentDep)
+            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        var p = 0F
+                        var a = 0F
+//                        val rollNo = MainActivity.studRollNo
+//                                .removeRange(2, rollno.key.toString().lastIndex).trim()
+//                        val studName = MainActivity.studName
+//                                rollno.key.toString().removeRange(0, 4).trim()
+                        snapshot.child(bindingAttendance.ACTVMonth.text.toString()).children.forEach { dates ->
+                            dates.children.forEach { subs ->
+                                if (subs.key.toString() == bindingAttendance.ACTVSelectSubject.text.toString()) {
+                                    if (subs.child("status").value.toString() == "P") p += 1 else a += 1
+//                                    val sub = subs.key.toString()
+//                                    val status = subs.child("status").value.toString()
+                                }
+                            }
+                        }
+                        try {
+                            val per = ((p/(a+p)) * 100).toInt()
+                            bindingAttendance.txtAttendanceHeading.text = "${bindingAttendance.ACTVMonth.text} ${bindingAttendance.ACTVSelectSubject.text} Attendance"
+                            bindingAttendance.txtPercentage.text = "$per%"
+                            bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
+                            bindingAttendance.txtAbsentCount.text = "Absent - ${a.toInt()}"
+                        } catch (e: Exception) {
+//                                Log.e("errrr",e.message,e)
+                        }
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("errrr", error.message, error.toException())
+                }
+            })
+    }
+private fun autoCompleteTV(){
+    val subjects = ArrayList<String>()
+    FirebaseFirestore.getInstance()
+        .collection("${MainActivity.studentYear}${MainActivity.studentDep}-Subjects")
+        .addSnapshotListener { value, error ->
+            subjects.clear()
+            if (error != null) {
+                Toast.makeText(
+                    requireContext(),
+                    "Error found is $error",
+                    Toast.LENGTH_SHORT
+                )
+                    .show()
+            }
+            value?.forEach { ds ->
+                subjects.add(ds["subjectName"].toString())
+            }
+        }
+//    subjects.forEach {
+//        Log.i("subjects", it)
+//    }
+    val adapterSubject = ArrayAdapter(
+        requireContext(),
+        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+        subjects
+    )
+        bindingAttendance.ACTVSelectSubject.setAdapter(adapterSubject)
+
+    val itemsMonth = listOf(
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec"
+    )
+    val adapterMonth = ArrayAdapter(
+        requireContext(),
+        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+        itemsMonth
+    )
+    bindingAttendance.ACTVMonth.setAdapter(adapterMonth)
+}
 }

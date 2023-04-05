@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.adapters.AttendanceAdapter
-import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.data.*
 import com.harshit.goswami.collegeapp.databinding.ActivityViewAttendanceBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
 import org.apache.poi.ss.usermodel.HorizontalAlignment
@@ -38,6 +38,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
     private lateinit var binding: ActivityViewAttendanceBinding
     private val fireDb = FirebaseDatabase.getInstance().reference
     val studAttendList = ArrayList<StudentData>()
+    val allAttendanceList = ArrayList<AllAttendanceData>()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -169,7 +171,42 @@ class ViewAttendanceActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
+        fireDb.child("Student Attendance").child(MainActivity.studentDep)
+            .child(MainActivity.studentYear)
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        studAttendList.clear()
+                        snapshot.children.forEach { rollno ->
+                            var p = 0F
+                            var a = 0F
+                            val rollNo = rollno.key.toString()
+                                .removeRange(2, rollno.key.toString().lastIndex).trim()
+                            val studName = rollno.key.toString().removeRange(0, 4).trim()
+                            rollno.children.forEach { month ->
+                                month.children.forEach { dates ->
+                                    dates.children.forEach { subs ->
+                                        val subData =  SubjectData(subs.key.toString(),subs.child("status").value.toString())
+                                        val dateData = DateData(dates.key.toString(),subData)
+                                        val monthData= MonthData(month.key.toString(),dateData)
+                                        val allAttendanceData = AllAttendanceData(rollNo,studName,monthData)
+                                        allAttendanceList.add(allAttendanceData)
+                                    }
+                                }
+                            }
+                        }
+                        Log.d("attendance",allAttendanceList.size.toString())
+                        allAttendanceList.forEach {
+                            Log.d("attendance","${it.rollNo} ${it.name} ${it.month.month} ${it.month.dateData.date} " +
+                                    "${it.month.dateData.subData.subject} ${it.month.dateData.subData.status} ")
+                        }
 
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("errrr", error.message, error.toException())
+                }
+            })
     }
 
     private fun writeExcel() {

@@ -78,7 +78,6 @@ class LoginActivity : AppCompatActivity() {
 
     private fun updateUI() {
         val user = intent.getStringExtra("SelectedUser")
-
         when (user) {
             "admin" -> {
                 userName = ""

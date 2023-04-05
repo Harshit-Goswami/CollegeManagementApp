@@ -9,7 +9,7 @@ import com.harshit.goswami.collegeapp.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
     companion object {
-        lateinit var mainBinding: ActivityMainBinding
+       lateinit var mainBinding: ActivityMainBinding
         var user = ""
         var studentDep = ""
         var studentYear = ""

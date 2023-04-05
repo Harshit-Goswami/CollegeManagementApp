@@ -4,15 +4,19 @@ data class ViewAttendanceDataModal(
     var rollNo: String = "",
 var attendancePer:String = ""
 )
-
+data class AllAttendanceData(
+    var rollNo: String = "",
+    var name: String = "",
+    val month:MonthData = MonthData()
+):java.io.Serializable
 data class MonthData(
     var month: String = "",
-    var dateData: ArrayList<DateData> = ArrayList()
-)
+    var dateData: DateData = DateData()
+):java.io.Serializable
 
-data class DateData(var date: String = "", var subData: ArrayList<SubjectData> = ArrayList())
+data class DateData(var date: String = "", var subData: SubjectData= SubjectData()):java.io.Serializable
 
 data class SubjectData(
     var subject: String = "",
     var status: String = ""
-)
+):java.io.Serializable

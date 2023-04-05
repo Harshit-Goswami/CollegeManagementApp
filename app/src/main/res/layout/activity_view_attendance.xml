@@ -7,57 +7,6 @@
     android:orientation="vertical"
     tools:context=".ViewAttendanceActivity">
 
- <!--   <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <com.google.android.material.textview.MaterialTextView
-                android:id="@+id/iYSstudRollNo"
-                style="@style/Widget.AppCompat.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="15dp"
-                android:background="@color/shrine_pink_100"
-                android:padding="2dp"
-                android:text="search by rollNo."
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/TextAppearance.AppCompat.Body1"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:background="@color/shrine_pink_100"
-                android:padding="2dp"
-                android:text="Search by Date"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-
-            <com.google.android.material.textview.MaterialTextView
-                style="@style/Widget.AppCompat.TextView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
-                android:background="@color/shrine_pink_100"
-                android:padding="2dp"
-                android:text="Search by Month"
-                android:textAllCaps="false"
-                android:textColor="@color/black"
-                android:textSize="25sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </HorizontalScrollView>-->
 
     <RelativeLayout
         android:id="@+id/RL"
@@ -111,19 +60,21 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
             android:layout_below="@+id/TIL_select_year"
-            android:layout_margin="5dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
             android:hint="Select Subject"
-            android:visibility="gone"
-            >
+            android:visibility="gone">
+
             <AutoCompleteTextView
                 android:id="@+id/ACTV_select_subject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="none"
-                tools:ignore="LabelFor"
-                />
+                tools:ignore="LabelFor" />
         </com.google.android.material.textfield.TextInputLayout>
 <!--
         <com.google.android.material.textfield.TextInputLayout
@@ -153,16 +104,19 @@
             android:visibility="gone" />-->
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/TIL_month"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
             android:layout_below="@+id/TIL_select_subject"
             android:layout_alignParentStart="true"
-            android:layout_margin="5dp"
-            android:hint="Month"
-            android:visibility="gone"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="5dp"
 
-           >
+            android:layout_marginEnd="5dp"
+            android:layout_marginBottom="5dp"
+            android:hint="Month"
+            android:visibility="gone">
+
             <AutoCompleteTextView
                 android:id="@+id/ACTV_month"
                 android:layout_width="match_parent"

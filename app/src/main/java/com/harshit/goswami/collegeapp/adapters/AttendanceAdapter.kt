@@ -18,7 +18,7 @@ class AttendanceAdapter(
     private val context: Context,
     private val work:String
 ) : RecyclerView.Adapter<AttendanceAdapter.ViewHolder>() {
-    val attendanceMap = HashMap<String, String>()
+//    val attendanceMap = HashMap<String, String>()
 
     companion object {
         val attendanceList = ArrayList<AttendanceDataModal>()

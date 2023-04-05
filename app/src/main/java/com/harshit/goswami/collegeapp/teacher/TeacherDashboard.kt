@@ -29,6 +29,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.ViewAttendanceActivity
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.admin.ManageStudent
 import com.harshit.goswami.collegeapp.data.FacultyData
@@ -262,6 +263,14 @@ class TeacherDashboard : AppCompatActivity() {
         }
         binding.TDAddCr.setOnClickListener {
             addCR_Dialog()
+        }
+        binding.TDViewAttendance.setOnClickListener{
+            val i = Intent(
+                this,
+                ViewAttendanceActivity::class.java
+            )
+//            i.putExtra("userType", "HOD")
+            startActivity(i)
         }
     }
 
