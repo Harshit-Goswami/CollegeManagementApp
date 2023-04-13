@@ -18,7 +18,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
-import androidx.core.view.get
 import androidx.core.view.isVisible
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.fragment.app.Fragment
@@ -30,13 +29,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.harshit.goswami.collegeapp.AttendanceActivity
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.ViewAttendanceActivity
-import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityStudentViewAttendanceBinding
-import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
+import com.harshit.goswami.collegeapp.databinding.DialogDeveloperProfileBinding
 import com.harshit.goswami.collegeapp.databinding.DialogOurCoursesDetailsBinding
 import com.harshit.goswami.collegeapp.databinding.FragmentHomeBinding
 
@@ -84,7 +80,7 @@ class HomeFragment : Fragment() {
                 MainActivity.mainBinding.cordinatorNavBar.visibility = View.GONE
             } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
         }
-
+        binding.imgCollegeLocation.setOnClickListener { getByUrl("https://www.google.com/maps/place/Chetana's+Institute+of+Management+%26+Research/@19.0628721,72.8336613,15z/data=!4m6!3m5!1s0x3be7c9000496fab9:0x225542a39da6c430!8m2!3d19.060986!4d72.8480809!16s%2Fg%2F1tg4jvtk?authuser=0") }
 
         imageSlider()
         navigationSetUp()
@@ -98,7 +94,7 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
-private fun magazineClickSetUp(){
+    private fun magazineClickSetUp(){
     binding.magazineCard1.setOnClickListener {
         getByUrl("https://drive.google.com/file/d/1uQYjyG6rdXkDgrhloCpbKXDj_I25U7RI/view?usp=sharing")
     }
@@ -115,24 +111,19 @@ private fun magazineClickSetUp(){
         getByUrl("https://drive.google.com/file/d/1854ejko5AnoS7OL22-fgh8OBTGeXqXhr/view?usp=sharing")
     }
 }
+
     private fun navigationSetUp() {
         val hView: View = binding.navView.getHeaderView(0)
         hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
         if (MainActivity.user == "student" || MainActivity.isCR){
             binding.navView.menu.getItem(0).isVisible = true
         }
-//      hView.findViewById<ImageView>(R.id.imageView)
-//        if (MainActivity.isCR){
-//            binding.navView.menu.getItem(0).isVisible = true
-//            binding.navView.menu.getItem(1).isVisible = true
-//        }
+        if (MainActivity.user == "other") {
+            binding.navView.menu.getItem(5).isVisible = false
+        }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
-             /*   R.id.menu_take_attendance -> {
-//                    startActivity(Intent(requireContext(), AttendanceActivity::class.java))
-                }*/
                 R.id.menu_view_attendance -> {
-//                    startActivity(Intent(requireContext(), ViewAttendanceActivity::class.java))
                     bindingAttendance = ActivityStudentViewAttendanceBinding.inflate(layoutInflater)
                     try {
                         val dialog = AlertDialog.Builder(
@@ -144,7 +135,8 @@ private fun magazineClickSetUp(){
                         dialog.setView(bindingAttendance.root)
                         dialog.setCanceledOnTouchOutside(false)
                         dialog.show()
-                    } catch (e: Exception) {
+                    }
+                    catch (e: Exception) {
                         Log.d("dialog Error-", "${e.message}")
                     }
                     bindingAttendance.VAIcSort.setOnClickListener {
@@ -171,7 +163,7 @@ private fun magazineClickSetUp(){
                                 R.id.menu_default -> {
                                     bindingAttendance.TILMonth.visibility = View.GONE
                                     bindingAttendance.TILSelectSubject.visibility = View.GONE
-                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
+                                    bindingAttendance.btnSearch.visibility = View.GONE
 
                                 }
                             }
@@ -240,6 +232,18 @@ private fun magazineClickSetUp(){
                     startActivity(i)
                 }
                 R.id.menu_developer -> {
+//        try {
+                       val developerProfileDialog = DialogDeveloperProfileBinding.inflate(layoutInflater)
+                        val bottomDialog = Dialog(requireContext(), R.style.BottomSheetStyle)
+                        bottomDialog.setContentView(developerProfileDialog.root)
+                        bottomDialog
+                            .setCanceledOnTouchOutside(false)
+                        bottomDialog.show()
+//        } catch (e: Exception) {
+//            Log.d("dialogError","${e.message}")
+//        }
+
+
                 }
                 R.id.menu_map -> {
 
@@ -447,6 +451,7 @@ private fun magazineClickSetUp(){
 
         binding.imageSlider.setImageList(imageList, ScaleTypes.FIT)
     }
+
     private fun fetchAttendanceDataDefault() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
             .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
@@ -600,7 +605,7 @@ private fun magazineClickSetUp(){
                 }
             })
     }
-private fun autoCompleteTV(){
+    private fun autoCompleteTV(){
     val subjects = ArrayList<String>()
     FirebaseFirestore.getInstance()
         .collection("${MainActivity.studentYear}${MainActivity.studentDep}-Subjects")

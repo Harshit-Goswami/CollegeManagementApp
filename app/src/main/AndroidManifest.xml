@@ -20,13 +20,6 @@
         android:theme="@style/Theme.CollageApp"
         tools:targetApi="31" >
         <activity
-            android:name=".StudentViewAttendance"
-            android:exported="false" >
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
-        </activity>
-        <activity
             android:name=".ViewImageActivity"
             android:exported="false" >
             <meta-data
@@ -39,11 +32,11 @@
             android:label="@string/title_activity_gallery"
             android:theme="@style/Theme.CollageApp.NoActionBar" />
         <activity
-            android:name=".ViewAttendanceActivity"
+            android:name=".teacher.ViewAttendanceActivity"
             android:exported="false" />
         <activity
             android:name=".AttendanceActivity"
-            android:exported="false" />
+            android:exported="false" /><!--Harshit Goshwami-->
         <activity
             android:name=".ViewPdfActivity"
             android:exported="false" />

@@ -1,6 +1,7 @@
 package com.harshit.goswami.collegeapp.student
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -13,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.adapters.ClassTimetableAdapter
+import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.data.ClassData
 import com.harshit.goswami.collegeapp.databinding.FragmentMyClassBinding
 
@@ -57,15 +59,18 @@ class MyClassFragment : Fragment() {
             startActivity(intent)
         }
         binding.FMCCardPreviousPapers.setOnClickListener {
-//            val intent = Intent(context,ManageFaculty::class.java)
-//            intent.putExtra("userType","HOD")
-//            startActivity(intent)
+            val uri = Uri.parse("https://drive.google.com/drive/folders/1BA0mwqKdf3AQs0jI3YXHgdThwfSU6U39?usp=share_link")
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
         }
         binding.FMCCardFaculty.setOnClickListener {
-
+            val intent = Intent(context, ManageFaculty::class.java)
+            intent.putExtra("userType","student")
+            intent.putExtra("department",MainActivity.studentDep)
+            startActivity(intent)
         }
         binding.FMCCardResult.setOnClickListener {
-
+            val uri = Uri.parse("https://drive.google.com/drive/folders/1BA0mwqKdf3AQs0jI3YXHgdThwfSU6U39?usp=share_link")
+            startActivity(Intent(Intent.ACTION_VIEW, uri))
         }
 
         return binding.root

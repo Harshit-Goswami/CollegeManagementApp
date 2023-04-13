@@ -40,6 +40,9 @@ class FacultyAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(facultyList[position]) {
+                if (ManageFaculty.loggedUser == "student"){
+                    binding.IFiBtnMoreOption.visibility = View.GONE
+                }
                 binding.IFiTvFacultyName.text = this.name
                 binding.IFiTvFacultyDepartment.text = this.department
                 binding.IFiTxtContactNo.text = this.contactNo

@@ -1,5 +1,5 @@
 package com.harshit.goswami.collegeapp.adapters
-
+/*DEVELOPED BY Harshit goshwami */
 import android.app.ActionBar.LayoutParams
 import android.content.Context
 import android.graphics.Color
@@ -11,7 +11,6 @@ import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.data.AttendanceDataModal
 import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ItemTakeAttendanceBinding
-
 
 class AttendanceAdapter(
     private var StudentList: ArrayList<StudentData> = ArrayList(),
@@ -88,7 +87,7 @@ class AttendanceAdapter(
                         for (i in 0 until attendanceList.size) {
                             if (attendanceList[i].rollNo == this.rollNo) {
                                 attendanceList[i] = AttendanceDataModal(
-                                    attendanceList[i].rollNo,
+                                    attendanceList[i].rollNo,/*DEVELOPED BY HARSHIT GOSHWAMI*/
                                     attendanceList[i].studName,
                                     "P"
                                 )

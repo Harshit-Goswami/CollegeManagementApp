@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp
+package com.harshit.goswami.collegeapp.teacher
 
 import android.Manifest
 import android.content.Intent
@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.adapters.AttendanceAdapter
 import com.harshit.goswami.collegeapp.data.*
 import com.harshit.goswami.collegeapp.databinding.ActivityViewAttendanceBinding

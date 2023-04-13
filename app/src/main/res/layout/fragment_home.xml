@@ -601,109 +601,6 @@
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="250dp"
-                            android:layout_height="250dp"
-                             app:cardCornerRadius="1dp"
-                            
-                            app:cardElevation="1dp"
-                            app:cardUseCompatPadding="true"
-                            android:paddingBottom="20dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:orientation="vertical">
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="200dp"
-
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/magazine_2020_21"/>
-
-                                <com.google.android.material.textview.MaterialTextView
-                                    style="@style/TextAppearance.Material3.BodyMedium"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="10dp"
-                                    android:text="Parking"
-                                    android:textColor="@color/shrine_pink_900"
-                                    android:background="#E6E6E6"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="250dp"
-                            android:layout_height="250dp"
-                             app:cardCornerRadius="1dp"
-                            
-                            app:cardElevation="1dp"
-                            app:cardUseCompatPadding="true"
-                            android:paddingBottom="20dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:orientation="vertical">
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="200dp"
-
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/magazine_2020_21"/>
-
-                                <com.google.android.material.textview.MaterialTextView
-                                    style="@style/TextAppearance.Material3.BodyMedium"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="10dp"
-                                    android:text="Parking"
-                                    android:textColor="@color/shrine_pink_900"
-                                    android:background="#E6E6E6"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-                        <com.google.android.material.card.MaterialCardView
-                            android:layout_width="250dp"
-                            android:layout_height="250dp"
-                            app:cardCornerRadius="1dp"
-                            app:cardElevation="1dp"
-                            app:cardUseCompatPadding="true"
-                            android:paddingBottom="20dp">
-
-                            <LinearLayout
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_gravity="center"
-                                android:orientation="vertical">
-
-                                <com.google.android.material.imageview.ShapeableImageView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="200dp"
-
-                                    android:scaleType="fitXY"
-                                    android:src="@drawable/magazine_2020_21"/>
-
-                                <com.google.android.material.textview.MaterialTextView
-                                    style="@style/TextAppearance.Material3.BodyMedium"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:gravity="center"
-                                    android:padding="10dp"
-                                    android:text="Parking"
-                                    android:textColor="@color/shrine_pink_900"
-                                    android:background="#E6E6E6"
-                                    android:textStyle="bold" />
-                            </LinearLayout>
-                        </com.google.android.material.card.MaterialCardView>
-
-
                     </LinearLayout>
                 </HorizontalScrollView>
                 <com.google.android.material.textview.MaterialTextView
@@ -823,7 +720,6 @@
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
-
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/magazine_card2"
                             android:layout_width="wrap_content"
@@ -856,7 +752,6 @@
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
-
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/magazine_card3"
                             android:layout_width="wrap_content"
@@ -889,7 +784,6 @@
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
-
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/magazine_card4"
                             android:layout_width="wrap_content"
@@ -922,7 +816,6 @@
                                     android:textStyle="bold" />
                             </LinearLayout>
                         </com.google.android.material.card.MaterialCardView>
-
                         <com.google.android.material.card.MaterialCardView
                             android:id="@+id/magazine_card5"
                             android:layout_width="wrap_content"
@@ -1301,6 +1194,7 @@
                         android:textColor="#000000" />
 
                     <com.google.android.material.imageview.ShapeableImageView
+                        android:id="@+id/img_college_location"
                         android:layout_width="match_parent"
                         android:layout_height="190dp"
                         android:scaleType="fitXY"
@@ -1332,5 +1226,6 @@
         app:itemIconSize="25dp"
         app:itemIconTint="@color/shrine_pink_900"
         app:itemTextColor="@color/shrine_pink_900"
-        app:menu="@menu/navigation_bar_menu" />
+        app:menu="@menu/navigation_bar_menu"
+        android:visibility="gone"/>
 </androidx.drawerlayout.widget.DrawerLayout>

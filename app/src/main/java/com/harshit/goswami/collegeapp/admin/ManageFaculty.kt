@@ -22,6 +22,7 @@ class ManageFaculty : AppCompatActivity() {
     companion object {
         var facultyList = ArrayList<FacultyData>()
         var loggedUser = ""
+        var studDep = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,7 +30,11 @@ class ManageFaculty : AppCompatActivity() {
         binding = ActivityAdminFacultyinfoBinding.inflate(layoutInflater)
         setContentView(binding.root)
         loggedUser = intent.getStringExtra("userType").toString()
+        studDep = intent.getStringExtra("department").toString()
         retrieveFacultyData()
+        if (loggedUser == "student"){
+            binding.addFaculty.visibility = View.GONE
+        }
         binding.addFaculty.setOnClickListener {
             startActivity(
                 Intent(
@@ -45,9 +50,29 @@ class ManageFaculty : AppCompatActivity() {
     }
 
     private fun retrieveFacultyData() {
+
         if (loggedUser == "HOD") {
             Toast.makeText(this@ManageFaculty, TeacherDashboard.loggedTeacherDep, Toast.LENGTH_SHORT).show()
             FirebaseDatabase.getInstance().reference.child("Faculty Data").child(TeacherDashboard.loggedTeacherDep)
+                .addValueEventListener(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            facultyList.clear()
+                            for (list in snapshot.children) {
+                                facultyList.add(list.getValue(FacultyData::class.java)!!)
+                            }
+                            binding.rsvFaculty.adapter?.notifyDataSetChanged()
+                            binding.facultyProgbar.visibility = View.GONE
+                        }
+                    }
+
+                    override fun onCancelled(error: DatabaseError) {
+                    }
+                })
+        }
+        if (loggedUser == "student" && studDep !="") {
+//            Toast.makeText(this@ManageFaculty, studDep, Toast.LENGTH_SHORT).show()
+            FirebaseDatabase.getInstance().reference.child("Faculty Data").child(studDep)
                 .addValueEventListener(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
                         if (snapshot.exists()) {

@@ -35,6 +35,7 @@ class ClassTimetableAdapter(
                 if (activity == "MyClass") {
                     binding.ICTBtnDelete.visibility = View.GONE
                 }
+                //created by Harshit GosHwami
                 binding.itemClassDate.text = this.date
                 binding.itemClassTime.text = this.time
                 binding.itemSubjectName.text = this.subject
@@ -58,7 +59,7 @@ class ClassTimetableAdapter(
                         context.startActivity(intent)
                     }
                 }
-
+// H A R S H i T
             }
         }
     }
