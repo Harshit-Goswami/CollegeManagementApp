@@ -13,7 +13,7 @@
 
     <item
         android:id="@+id/menu_campus_life"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/img_parking"
         android:title="Campus life" />
 
     <item
@@ -22,17 +22,21 @@
         android:title="Important Links" />
     <item
         android:id="@+id/menu_faculty"
-        android:icon="@drawable/ic_event_note"
+        android:icon="@drawable/ic__file_download"
         android:title="Faculty" />
     <item
         android:id="@+id/menu_theme"
         android:icon="@drawable/ic_book"
         android:title="Theme" />
-
+    <item
+        android:id="@+id/menu_change_password"
+        android:icon="@drawable/ic_lock"
+        android:title="Change Password" />
     <item
         android:id="@+id/menu_logout"
-        android:icon="@drawable/ic_about"
+        android:icon="@drawable/ic_arrow_back"
         android:title="Log Out" />
+
 
     <group android:id="@+id/group2">
         <item

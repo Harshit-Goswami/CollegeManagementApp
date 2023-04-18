@@ -24,7 +24,6 @@
         android:background="@drawable/circular_img_bg"
         app:shapeAppearanceOverlay="@style/circular"
         android:src="@drawable/ic_person"
-
         />
     <LinearLayout
         android:layout_width="match_parent"

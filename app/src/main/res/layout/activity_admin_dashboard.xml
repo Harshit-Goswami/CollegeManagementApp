@@ -57,7 +57,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
+            android:layout_gravity="center"
             android:padding="10dp">
 
             <com.google.android.material.card.MaterialCardView
@@ -71,7 +71,7 @@
                 app:cardUseCompatPadding="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
-
+                <!--HARSHIT    G O S H W A M I-->
                 <LinearLayout
                     android:id="@+id/uploadNotice"
                     android:layout_width="130dp"

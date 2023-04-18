@@ -1227,5 +1227,5 @@
         app:itemIconTint="@color/shrine_pink_900"
         app:itemTextColor="@color/shrine_pink_900"
         app:menu="@menu/navigation_bar_menu"
-        android:visibility="gone"/>
+        />
 </androidx.drawerlayout.widget.DrawerLayout>

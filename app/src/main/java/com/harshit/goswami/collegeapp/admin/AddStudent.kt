@@ -80,9 +80,10 @@ class AddStudent : AppCompatActivity() {
         }
         binding.ASTxtUploadData.setOnClickListener {
             if (studentsList.isNotEmpty()) {
-                binding.cardProgressBar.visibility = View.VISIBLE
+//                binding.cardProgressBar.visibility = View.VISIBLE
                 try {
                     binding.cardProgressBar.visibility = View.VISIBLE
+                    Toast.makeText(this@AddStudent,studentsList.size.toString(),Toast.LENGTH_SHORT).show()
                     for (i in studentsList) {
                         FirebaseDatabase.getInstance().reference.child("Students")
                             .child(i.department)
@@ -99,7 +100,7 @@ class AddStudent : AppCompatActivity() {
                                 )
                             )
                     }
-
+//                    binding.ASTxtUploading.text = "Uploading-${(studCount/studentsList.size)*100}%"
                 } catch (e: Exception) {
                     Log.d("Storing Data", "Errr-:${e.message}", e)
                 }
@@ -116,7 +117,7 @@ class AddStudent : AppCompatActivity() {
                     textView.setTextColor(Color.WHITE)
                     snackBar.show()
                     binding.cardProgressBar.visibility = View.GONE
-                }, 3000)
+                }, 8000)
             } else Toast.makeText(this, "Something Went Wrong!", Toast.LENGTH_SHORT).show()
         }
     }
@@ -162,12 +163,12 @@ class AddStudent : AppCompatActivity() {
 //                        val contactNo= studentRowDataList[5]/*.removeRange(1,2).removeRange(10,12)*/
                         studentsList.add(
                             StudentData(
-                              /*rollNo*/  studentRowDataList[0],
-                                /*fullname*/  studentRowDataList[1],
-                                /*dep*/ studentRowDataList[2],
-                                /*year*/  studentRowDataList[3],
-                                studentRowDataList[5],
-                                studentRowDataList[5]
+                              /*rollNo*/  studentRowDataList[0].trim(),
+                                /*fullname*/  studentRowDataList[1].trim(),
+                                /*dep*/ studentRowDataList[2].trim(),
+                                /*year*/  studentRowDataList[3].trim(),
+                                studentRowDataList[5].trim(),
+                                studentRowDataList[5].trim()
                             )
                         )
                         binding.rsvStudentData.adapter?.notifyDataSetChanged()

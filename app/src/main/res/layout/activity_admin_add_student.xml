@@ -111,17 +111,16 @@
         android:id="@+id/card_progressBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         app:cardElevation="20dp"
         app:cardUseCompatPadding="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns">
+        app:layout_constraintTop_toBottomOf="@+id/MS_years_btns"
+        android:visibility="gone">
 
         <LinearLayout
             android:layout_width="200dp"
             android:layout_height="100dp"
-
             android:orientation="vertical">
 
             <com.google.android.material.progressindicator.CircularProgressIndicator
@@ -144,7 +143,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:text="Uploading..."
+                android:text="Uploadin..."
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"

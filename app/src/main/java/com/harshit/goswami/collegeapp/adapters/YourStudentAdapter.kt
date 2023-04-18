@@ -1,18 +1,28 @@
 package com.harshit.goswami.collegeapp.adapters
 
 import android.content.Context
+import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
+import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.admin.ManageStudent
 import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
+import com.harshit.goswami.collegeapp.databinding.DialogStudentDetailsBinding
 import com.harshit.goswami.collegeapp.databinding.ItemYourStudentsBinding
+import com.harshit.goswami.collegeapp.teacher.TeacherDashboard
 
 
 class YourStudentAdapter(
     private var StudentList: ArrayList<StudentData> = ArrayList(),
     private val context: Context,
+    private val activity:String = ""
 ) : RecyclerView.Adapter<YourStudentAdapter.ViewHolder>() {
 
     class ViewHolder(internal val binding: ItemYourStudentsBinding) :
@@ -28,20 +38,24 @@ class YourStudentAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(StudentList[position]) {
+
                 binding.iYSstudName.text = this.fullName
                 binding.iYSstudDepartment.text = this.department
                 binding.iYSyear.text = this.year
                 binding.iYSstudContactNo.text = this.contactNo
                 binding.iYSstudRollNo.text = this.rollNo
+                if (ManageStudent.userType == "HOD") binding.iYSBtnDelete.visibility = View.GONE
+                if (activity == "manageCr") binding.iYSBtnDelete.visibility = View.VISIBLE
                 binding.iYSBtnDelete.setOnClickListener {
-                    // Initializing the popup menu and giving the reference as current context
-//                    val popupMenu = PopupMenu(context, binding.iYSMoreOptions)
-//                    popupMenu.menuInflater.inflate(R.menu.students,popupMenu.menu)
-//                    popupMenu.setOnMenuItemClickListener {
-//                        when(it.title){
-//                            "Delete Student"->{
-                    FirebaseDatabase.getInstance().reference.keepSynced(true)
-                    FirebaseDatabase.getInstance().reference
+                    if (activity == "manageCr"){
+                        FirebaseDatabase.getInstance().reference.child("CR Data").child(
+                            TeacherDashboard.loggedTeacherDep
+                        ).child(this.year).child(this.rollNo).removeValue().addOnSuccessListener {
+                            Toast.makeText(context,"CR Removed",Toast.LENGTH_SHORT).show()
+                        }
+                    }else{
+                        FirebaseDatabase.getInstance().reference.keepSynced(true)
+                        FirebaseDatabase.getInstance().reference
                         .child("Students")
                         .child(this.department)
                         .child(this.year)
@@ -60,6 +74,7 @@ class YourStudentAdapter(
                                 Toast.LENGTH_SHORT
                             ).show()
                         }
+                    }
 //                            }
 //
 //                        }
@@ -67,6 +82,28 @@ class YourStudentAdapter(
 //                    }
 
 //                    popupMenu.show()
+
+                }
+                binding.root.setOnClickListener {
+                    try {
+                        val viewBinding= DialogStudentDetailsBinding.inflate(LayoutInflater.from(context))
+                        val viewStudDialog = AlertDialog.Builder(
+                            context,
+                            com.google.android.material.R.style.Base_Theme_Material3_Light_Dialog
+                        ).create()
+                        viewStudDialog.window?.setGravity(Gravity.CENTER)
+                        viewStudDialog.setCancelable(true)
+                        viewStudDialog.setView(viewBinding.root)
+                        viewStudDialog.setCanceledOnTouchOutside(true)
+                        viewBinding.dialogStudRollNo.text = this.rollNo
+                        viewBinding.dialogStudName.text = this.fullName
+                        viewBinding.dialogStudYearDep.text = "${this.year}${this.department}"
+                        viewBinding.dialogStudContact.text = this.contactNo
+                        viewBinding.dialogStudPassword.text = this.password
+                        viewStudDialog.show()
+                    } catch (e: Exception) {
+                        Log.d("dialog Error-", "${e.message}")
+                    }
 
                 }
             }

@@ -78,11 +78,6 @@ class AdminDashboard : AppCompatActivity() {
             }
         }
     }
-
-    //    override fun onBackPressed() {
-//        super.onBackPressed()
-//        changePasswordDialog.dismiss()
-//    }
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         viewProfileBinding = DialogAdminViewProfileBinding.inflate(layoutInflater)
@@ -186,7 +181,6 @@ class AdminDashboard : AppCompatActivity() {
         } catch (e: Exception) {
             Log.d("dialog Error-", "${e.message}")
         }
-
 
         changePasswordBinding.DEPBtnSubmit.setOnClickListener {
             validation()
@@ -386,14 +380,6 @@ class AdminDashboard : AppCompatActivity() {
             )
             i.putExtra("userType", "admin")
             startActivity(i)
-        }
-        binding.deleteNotice.setOnClickListener {
-//            val i = Intent(
-//                this,
-//                UploadNotice::class.java
-//            )
-//            i.putExtra("isMagazineClick",true)
-//            startActivity(i)
         }
     }
 }

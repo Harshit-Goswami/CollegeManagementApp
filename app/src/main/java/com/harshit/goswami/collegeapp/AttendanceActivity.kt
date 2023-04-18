@@ -3,6 +3,7 @@ package com.harshit.goswami.collegeapp
 import android.icu.text.SimpleDateFormat
 import android.os.Build
 import android.os.Bundle
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -46,7 +47,6 @@ class AttendanceActivity : AppCompatActivity() {
                             snapshot.children.forEach {
                                 it.getValue(StudentData::class.java)
                                     ?.let { it1 -> studentList.add(it1) }
-
                             }
                             binding.rsvTakeAttendance.adapter?.notifyDataSetChanged()
                         }
@@ -70,8 +70,10 @@ class AttendanceActivity : AppCompatActivity() {
 
             AttendanceAdapter.attendanceList.forEach { it2 ->
                 fireDb.child("Student Attendance").child(MainActivity.studentDep).child(MainActivity.studentYear)
-                    .child("${it2.rollNo} ${it2.studName}").child("Apr").child(Cdate).child(subName)
-                    .child("status").setValue(it2.status)
+                    .child("${it2.rollNo}").child(month).child(Cdate).child(subName)
+                    .child("status").setValue(it2.status).addOnSuccessListener {
+                        Toast.makeText(this@AttendanceActivity,"Attendance Taken Successfully!!",Toast.LENGTH_SHORT).show()
+                    }
 //                if (it2.status == "P") {
 //                    fireDb.child("Student Attendance").child(MainActivity.studentDep).child(MainActivity.studentYear)
 //                        .child(it2.rollNo).child(month).child(Cdate)

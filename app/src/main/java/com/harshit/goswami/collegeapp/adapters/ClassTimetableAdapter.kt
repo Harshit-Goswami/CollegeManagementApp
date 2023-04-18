@@ -50,13 +50,13 @@ class ClassTimetableAdapter(
                             Toast.makeText(context, " Deleted ", Toast.LENGTH_SHORT).show()
                         }
                 }
-
                 if (MainActivity.isCR) {
-                    binding.root.setOnClickListener {
+                    binding.root.setOnLongClickListener {
                         val intent = Intent(context, AttendanceActivity::class.java)
                         intent.putExtra("subjectName", this.subject)
                         intent.putExtra("date", this.date)
                         context.startActivity(intent)
+                        true
                     }
                 }
 // H A R S H i T

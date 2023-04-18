@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="20dp"
@@ -25,11 +26,11 @@
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
                 android:layout_gravity="start"
-                android:layout_marginStart="0dp"
+                android:layout_marginStart="10dp"
                 android:orientation="vertical">
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/noticeDateAndTime"
+                    android:id="@+id/noticeTite"
                     style="@style/Widget.MaterialComponents.TextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -37,25 +38,25 @@
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
                     android:shadowColor="#304FFE"
-                    android:text="Date and Time"
+                    android:text="Harshit"
                     android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                     android:textColor="@color/black"
-                    android:textSize="20sp"
+                    android:textSize="22sp"
                     android:textStyle="bold" />
 
                 <com.google.android.material.textview.MaterialTextView
-                    android:id="@+id/noticeTite"
+                    android:id="@+id/noticeDateAndTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_gravity="end"
                     android:layout_marginTop="5dp"
                     android:layout_marginEnd="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_marginBottom="2dp"
-                    android:text="Notice Title"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:textColor="#010837"
-                    android:textSize="18sp"
-                    android:textStyle="normal" />
+                    android:text="date And time"
+                    android:textStyle="normal"
+                    style="@style/TextAppearance.Material3.BodySmall"
+                    tools:ignore="SmallSp" />
 
             </LinearLayout>
 
@@ -69,7 +70,8 @@
                 android:layout_marginEnd="-2dp"
                 android:backgroundTint="@android:color/transparent"
                 android:gravity="center_vertical|end"
-                android:src="@drawable/ic_delete" />
+                android:src="@drawable/ic_delete"
+                />
         </RelativeLayout>
 
 

@@ -288,6 +288,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginBottom="8dp"
+                                android:src="@drawable/logo_other"
                                 android:contentDescription="@string/image_description" />
 
                             <View
@@ -302,7 +303,7 @@
                                 android:layout_marginTop="15dp"
                                 android:layout_marginBottom="15dp"
                                 android:gravity="center"
-                                android:text="Add CR"
+                                android:text="Add CR\n"
                                 android:textColor="@color/black"
                                 android:textSize="18sp"
                                 android:textStyle="bold" />
@@ -333,6 +334,7 @@
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="15dp"
                                 android:layout_marginBottom="8dp"
+                                android:src="@drawable/attendance_logo"
                                 android:contentDescription="@string/image_description" />
 
                             <View

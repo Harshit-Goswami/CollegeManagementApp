@@ -46,11 +46,14 @@ class FacultyAdapter(
                 binding.IFiTvFacultyName.text = this.name
                 binding.IFiTvFacultyDepartment.text = this.department
                 binding.IFiTxtContactNo.text = this.contactNo
-                Glide.with(context).load(this.downloadUrl).into(binding.IFiFacultyDp)
-                binding.IFiFacultyDp.setOnClickListener {
+                if (this.downloadUrl != "null") {
+                    Glide.with(context).load(this.downloadUrl).placeholder(R.drawable.ic_person).into(binding.IFiFacultyDp)
+
+                    binding.IFiFacultyDp.setOnClickListener {
                     val i = Intent(context, ViewImageActivity::class.java)
                     i.putExtra("imageUrl",this.downloadUrl)
                     context.startActivity(i)
+                    }
                 }
                 binding.IFiBtnMoreOption.setOnClickListener {
 

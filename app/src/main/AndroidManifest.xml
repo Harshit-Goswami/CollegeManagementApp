@@ -58,6 +58,7 @@
         <activity
             android:name=".admin.AddStudent"
             android:exported="false" />
+        <!--Created by HARSHIT-->
         <activity
             android:name=".admin.AddFaculty"
             android:exported="false" />
@@ -79,6 +80,7 @@
         <activity
             android:name=".admin.UploadNotice"
             android:exported="false" />
+        <!--Developeded by Harshit Goshwami-->
         <activity
             android:name=".student.MainActivity"
             android:exported="false" />
@@ -122,3 +124,15 @@
     </application>
 
 </manifest>
+
+
+
+
+
+
+
+
+
+
+
+<!--Developeded by Harshit Goshwami-->

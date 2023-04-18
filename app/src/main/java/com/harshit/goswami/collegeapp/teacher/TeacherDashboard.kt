@@ -20,6 +20,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.PopupMenu
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,9 +30,11 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.adapters.YourStudentAdapter
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.admin.ManageStudent
 import com.harshit.goswami.collegeapp.data.FacultyData
+import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherDashboardBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding
@@ -116,6 +119,7 @@ class TeacherDashboard : AppCompatActivity() {
     }
 
     private fun addCR_Dialog() {
+        val studentList = ArrayList<StudentData>()
 //        try {
         val addCrBinding = DialogTeacherAddCrBinding.inflate(layoutInflater)
         val bottomDialog = Dialog(this, com.google.android.material.R.style.Theme_AppCompat_Dialog)
@@ -142,7 +146,7 @@ class TeacherDashboard : AppCompatActivity() {
             if (addCrBinding.ASClassYear.text.isEmpty()) {
                 addCrBinding.ASClassYear.error = "Please select Year"
             } else if (addCrBinding.edtCrRollno.text?.isEmpty() == true) {
-                addCrBinding.edtCrRollno.error = "Please fill this field"
+                addCrBinding.edtCrRollno.error = "Please enter rollNo!"
             } else {
                 fireDb.child("Students").child(loggedTeacherDep)
                     .child(addCrBinding.ASClassYear.text.toString())
@@ -174,6 +178,7 @@ class TeacherDashboard : AppCompatActivity() {
                         mapOf(
                             "RollNo" to addCrBinding.edtCrRollno.text.toString(),
                             "Name" to addCrBinding.txtCrName.text.toString()
+//                            "Year" to addCrBinding.ASClassYear.text.toString()
                         )
                     )
                     .addOnSuccessListener {
@@ -185,6 +190,41 @@ class TeacherDashboard : AppCompatActivity() {
                     }
             }
         }
+        addCrBinding.rsvDialogAddCr.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        addCrBinding.rsvDialogAddCr.adapter = YourStudentAdapter(studentList, this, "manageCr")
+        addCrBinding.rsvDialogAddCr.setHasFixedSize(true)
+
+        fireDb.child("CR Data").child(loggedTeacherDep)
+            .addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()){
+                        studentList.clear()
+                            snapshot.children.forEach{ year->
+                                year.children.forEach { rollno->
+                                    fireDb.child("Students").child(loggedTeacherDep)
+                                        .child(year.key.toString()).child(rollno.key.toString())
+                                        .addValueEventListener(object :ValueEventListener{
+                                            override fun onDataChange(snapshot: DataSnapshot) {
+                                                studentList.add(snapshot.getValue(StudentData::class.java)!!)
+                                                addCrBinding.rsvDialogAddCr.adapter!!.notifyDataSetChanged()
+                                            }
+                                            override fun onCancelled(error: DatabaseError) {
+                                                Log.e("firebaseError",error.message,error.toException())
+                                            }
+
+                                        })
+                                }
+                            }
+                    }
+
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("firebaseError",error.message,error.toException())
+                }
+            })
+
+
     }
 
     private fun onClicklisteners() {
@@ -452,69 +492,6 @@ class TeacherDashboard : AppCompatActivity() {
 
     }
 
-/*
-    private fun uploadImgAndData() {
-        if (fileUri != null) {
-            // Code for showing progressDialog while uploading
-            val progressDialog = ProgressDialog(this)
-            progressDialog.setTitle("Uploading...")
-            progressDialog.show()
-            // Defining the child of storageReference
-            val storageRef =
-                FirebaseStorage.getInstance().reference.child("Faculty Images")
-                    .child("$loggedTeacherName(${loggedTeacherDep})")
-            // adding listeners on upload
-            // or failure of image
-            val uploadTask = storageRef.putFile(fileUri!!)
-            uploadTask.addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    task.addOnSuccessListener {
-
-                        progressDialog.dismiss()
-                        Toast.makeText(
-                            this,
-                            "Image Uploaded!!",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                        storageRef.downloadUrl
-                            .addOnSuccessListener { uri: Uri ->
-                                teacherImgUrl = uri.toString()
-                                try {
-                                    uploadData()
-                                } catch (e: Exception) {
-                                    Toast
-                                        .makeText(
-                                            this,
-                                            "Data Failed:- " + e.message,
-                                            Toast.LENGTH_SHORT
-                                        )
-                                        .show()
-                                }
-                            }
-                    }
-                }
-            }.addOnFailureListener { e ->
-                progressDialog.dismiss()
-                Toast
-                    .makeText(
-                        this,
-                        "Failed: " + e.message,
-                        Toast.LENGTH_SHORT
-                    )
-                    .show()
-            }.addOnProgressListener { taskSnapshot: UploadTask.TaskSnapshot ->
-                val progress = (100.0
-                        * taskSnapshot.bytesTransferred
-                        / taskSnapshot.totalByteCount)
-                progressDialog.setMessage(
-                    "Uploaded "
-                            + progress.toInt() + "%"
-                )
-            }
-        }
-    }
-*/
 
     private fun uploadData() {
         if (teacherOldPassword != "" && teacherReNewPassword != "") {

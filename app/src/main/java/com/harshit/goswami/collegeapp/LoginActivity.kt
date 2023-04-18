@@ -51,9 +51,6 @@ class LoginActivity : AppCompatActivity() {
                 val teacherPref: SharedPreferences =
                     getSharedPreferences("teacherPref", MODE_PRIVATE)
                 isTeacherLogin = teacherPref.getBoolean("teacherLogin", false)
-//                val teacherName = teacherPref.getString("TeacherName", "No Faculty")
-//                val teacherType = teacherPref.getString("teacherType", "null")
-//                val teacherDep = teacherPref.getString("teacherDep", "null")
                 if (isTeacherLogin) {
                     val intent = Intent(this, TeacherDashboard::class.java)
                     startActivity(intent)

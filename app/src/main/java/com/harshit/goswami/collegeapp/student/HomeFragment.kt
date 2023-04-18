@@ -31,14 +31,14 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.databinding.ActivityStudentViewAttendanceBinding
-import com.harshit.goswami.collegeapp.databinding.DialogDeveloperProfileBinding
-import com.harshit.goswami.collegeapp.databinding.DialogOurCoursesDetailsBinding
-import com.harshit.goswami.collegeapp.databinding.FragmentHomeBinding
+import com.harshit.goswami.collegeapp.data.AdminLoginData
+import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.databinding.*
 
 
 class HomeFragment : Fragment() {
     private lateinit var bindingAttendance:ActivityStudentViewAttendanceBinding
+    private lateinit var changePasswordBinding:DialogAdminChangePasswordBinding
     private lateinit var binding: FragmentHomeBinding
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var toolbar: MaterialToolbar
@@ -46,6 +46,9 @@ class HomeFragment : Fragment() {
     private val fireDb = FirebaseDatabase.getInstance().reference
 
 
+    var studOldPassword = ""
+    private var studNewPassword = ""
+    var studReNewPassword = ""
     // ********************** admission guidelines variables ***************
     private var isAdmissionNotice = false
     private var isAdmissionGuidelines = false
@@ -57,6 +60,7 @@ class HomeFragment : Fragment() {
     ): View {
         // Inflate the layout for this fragment
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
         val bindingAttendance = ActivityStudentViewAttendanceBinding.inflate(layoutInflater)
         toolbar = binding.toolbar
         drawerLayout = binding.drawer
@@ -81,7 +85,7 @@ class HomeFragment : Fragment() {
             } else MainActivity.mainBinding.cordinatorNavBar.visibility = View.VISIBLE
         }
         binding.imgCollegeLocation.setOnClickListener { getByUrl("https://www.google.com/maps/place/Chetana's+Institute+of+Management+%26+Research/@19.0628721,72.8336613,15z/data=!4m6!3m5!1s0x3be7c9000496fab9:0x225542a39da6c430!8m2!3d19.060986!4d72.8480809!16s%2Fg%2F1tg4jvtk?authuser=0") }
-
+        studentCheck()
         imageSlider()
         navigationSetUp()
         //......................................
@@ -119,90 +123,17 @@ class HomeFragment : Fragment() {
             binding.navView.menu.getItem(0).isVisible = true
         }
         if (MainActivity.user == "other") {
+            binding.navView.menu.getItem(0).isVisible = false
             binding.navView.menu.getItem(5).isVisible = false
+            binding.navView.menu.getItem(6).isVisible = false
         }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
                 R.id.menu_view_attendance -> {
-                    bindingAttendance = ActivityStudentViewAttendanceBinding.inflate(layoutInflater)
-                    try {
-                        val dialog = AlertDialog.Builder(
-                            requireContext(),
-                            R.style.CustomAlertDialogEditProfile
-                        ).create()
-                        dialog.window?.setGravity(Gravity.TOP)
-                        dialog.setCancelable(true)
-                        dialog.setView(bindingAttendance.root)
-                        dialog.setCanceledOnTouchOutside(false)
-                        dialog.show()
-                    }
-                    catch (e: Exception) {
-                        Log.d("dialog Error-", "${e.message}")
-                    }
-                    bindingAttendance.VAIcSort.setOnClickListener {
-                        val popupMenu = PopupMenu(requireContext(), bindingAttendance.VAIcSort)
-                        popupMenu.menuInflater.inflate(R.menu.view_attendance_sort_menu, popupMenu.menu)
-                        popupMenu.setOnMenuItemClickListener { menu ->
-                            when (menu.itemId) {
-                                R.id.menu_searchby_month -> {
-                                    bindingAttendance.TILSelectSubject.visibility = View.GONE
-                                    bindingAttendance.TILMonth.visibility = View.VISIBLE
-                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
-                                }
-                                R.id.menu_searchby_subject -> {
-                                    bindingAttendance.TILMonth.visibility = View.GONE
-                                    bindingAttendance.TILSelectSubject.visibility = View.VISIBLE
-                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
-                                }
-                                R.id.menu_searchby_month_n_sub -> {
-                                    bindingAttendance.TILMonth.visibility = View.VISIBLE
-                                    bindingAttendance.TILSelectSubject.visibility = View.VISIBLE
-                                    bindingAttendance.btnSearch.visibility = View.VISIBLE
-
-                                }
-                                R.id.menu_default -> {
-                                    bindingAttendance.TILMonth.visibility = View.GONE
-                                    bindingAttendance.TILSelectSubject.visibility = View.GONE
-                                    bindingAttendance.btnSearch.visibility = View.GONE
-
-                                }
-                            }
-                            true
-                        }
-                        popupMenu.show()
-                    }
-                    bindingAttendance.btnSearch.setOnClickListener {
-                        if (bindingAttendance.TILMonth.isVisible && !bindingAttendance.TILSelectSubject.isVisible) {
-                                if (bindingAttendance.ACTVMonth.text.isNotEmpty()) {
-                                    fetchAttendanceDataBYMonth()
-                                } else bindingAttendance.TILMonth.error = "Please Select Month"
-
-                        }
-                        if (!bindingAttendance.TILMonth.isVisible && bindingAttendance.TILSelectSubject.isVisible) {
-
-                                if (bindingAttendance.ACTVSelectSubject.text.isNotEmpty()) {
-                                    fetchAttendanceDataBYSub()
-                                } else bindingAttendance.TILSelectSubject.error = "Please Select Subject"
-                        }
-                        if (bindingAttendance.TILMonth.isVisible && bindingAttendance.TILSelectSubject.isVisible) {
-                                if (bindingAttendance.ACTVMonth.text.isNotEmpty()) {
-                                    if (bindingAttendance.ACTVSelectSubject.text.isNotEmpty()) {
-                                        fetchAttendanceDataBYMonthNSub()
-                                    } else bindingAttendance.TILSelectSubject.error = "Please Select Subject"
-                                } else bindingAttendance.TILMonth.error = "Please Select Month"
-                        }
-//                        if (!bindingAttendance.TILMonth.isVisible && !bindingAttendance.TILSelectSubject.isVisible) {
-//                                fetchAttendanceDataDefault()
-//                        }
-                    }
-                    autoCompleteTV()
-                    fetchAttendanceDataDefault()
-
-
-            }
+                    viewAttendanceSetupByHarshit()
+                }
                 R.id.menu_campus_life -> {
                     startActivity(Intent(requireContext(), GalleryActivity::class.java))
-
                 }
                 R.id.menu_imp_links -> {
 
@@ -213,24 +144,13 @@ class HomeFragment : Fragment() {
                 R.id.menu_faculty -> {
 
                 }
-                R.id.menu_logout -> {
-                    val pref: SharedPreferences = requireContext().getSharedPreferences(
-                        "studentPref",
-                        AppCompatActivity.MODE_PRIVATE
-                    )
-                    val editor = pref.edit()
-                    editor.putBoolean("studentLogin", false).apply()
-                    editor.putString("studentRollNo", "").apply()
-                    editor.putString("studentDep", "").apply()
-                    editor.putString("studentYear", "").apply()
-                    editor.putString("studentName", "").apply()
-                    if(MainActivity.isCR){
-                        editor.putBoolean("isCR", false).apply()
-                    }
-                    val i = Intent(requireContext(), LoginActivity::class.java)
-                    i.putExtra("SelectedUser", "student")
-                    startActivity(i)
+                R.id.menu_change_password -> {
+                    studentChangePasswordSetUp()
                 }
+                R.id.menu_logout -> {
+                    studentLogOutSetUp()
+                }
+
                 R.id.menu_developer -> {
 //        try {
                        val developerProfileDialog = DialogDeveloperProfileBinding.inflate(layoutInflater)
@@ -242,8 +162,6 @@ class HomeFragment : Fragment() {
 //        } catch (e: Exception) {
 //            Log.d("dialogError","${e.message}")
 //        }
-
-
                 }
                 R.id.menu_map -> {
 
@@ -256,6 +174,182 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun studentLogOutSetUp() {
+        val pref: SharedPreferences = requireContext().getSharedPreferences(
+            "studentPref",
+            AppCompatActivity.MODE_PRIVATE
+        )
+        val editor = pref.edit()
+        editor.putBoolean("studentLogin", false).apply()
+        editor.putString("studentRollNo", "").apply()
+        editor.putString("studentDep", "").apply()
+        editor.putString("studentYear", "").apply()
+        editor.putString("studentName", "").apply()
+        if(MainActivity.isCR){
+            editor.putBoolean("isCR", false).apply()
+        }
+        val i = Intent(requireContext(), LoginActivity::class.java)
+        i.putExtra("SelectedUser", "student")
+        startActivity(i)
+
+    }
+
+    private fun studentChangePasswordSetUp() {
+        changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
+        try {
+                val changePasswordDialog = AlertDialog.Builder(
+                    requireContext(),
+                    R.style.CustomAlertDialogEditProfile
+                ).create()
+                changePasswordDialog.window?.setGravity(Gravity.TOP)
+                changePasswordDialog.setCancelable(true)
+                changePasswordDialog.setView(changePasswordBinding.root)
+                changePasswordDialog.setCanceledOnTouchOutside(false)
+                changePasswordDialog.show()
+            } catch (e: Exception) {
+                Log.d("dialog Error-", "${e.message}")
+            }
+            changePasswordBinding.DEPBtnSubmit.setOnClickListener {
+                changePasswordValidation()
+                uploadPasswordData()
+            }
+    }
+    private fun changePasswordValidation() {
+        if (changePasswordBinding.DEPEdtOldPassword.text.toString().isNotEmpty()) studOldPassword =
+            changePasswordBinding.DEPEdtOldPassword.text.toString()
+        else changePasswordBinding.DEPEdtOldPassword.error = "Please Enter your Old Password"
+
+        if (changePasswordBinding.DEPEdtNewPassword.text.toString().isNotEmpty()) studNewPassword =
+            changePasswordBinding.DEPEdtNewPassword.text.toString()
+        else changePasswordBinding.DEPEdtNewPassword.error = "Please Enter your New Password"
+
+        if (changePasswordBinding.DEPEdtReNewPassword.text.toString().isEmpty())
+            changePasswordBinding.DEPEdtReNewPassword.error = "Please Re-Enter your New Password"
+
+        if (changePasswordBinding.DEPEdtReNewPassword.text.toString() == studNewPassword) studReNewPassword =
+            changePasswordBinding.DEPEdtReNewPassword.text.toString()
+        else changePasswordBinding.DEPEdtReNewPassword.error = "Password Does not match!!"
+    }
+    private fun uploadPasswordData() {
+        if (studOldPassword != "" && studReNewPassword != "") {
+            fireDb.child("Students").child(MainActivity.studentDep).child(MainActivity.studentYear)
+                .child(MainActivity.studRollNo).addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        if (studOldPassword == snapshot.getValue(AdminLoginData::class.java)?.password) {
+                            fireDb.child("Students").child(MainActivity.studentDep).child(MainActivity.studentYear)
+                                .child(MainActivity.studRollNo)
+                                .setValue(
+                                    StudentData(
+                                        snapshot.getValue(StudentData::class.java)?.rollNo.toString(),
+                                        snapshot.getValue(StudentData::class.java)?.fullName.toString(),
+                                        snapshot.getValue(StudentData::class.java)?.department.toString(),
+                                        snapshot.getValue(StudentData::class.java)?.year.toString(),
+                                        snapshot.getValue(StudentData::class.java)?.contactNo.toString(),
+                                        studReNewPassword,
+                                    )
+                                ).addOnSuccessListener {
+                                    Toast
+                                        .makeText(
+                                            requireContext(),
+                                            "Password Updated Successfully!",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                        .show()
+                                }
+                        } else changePasswordBinding.DEPEdtOldPassword.error =
+                            "Incorrect Old Password!!"
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Toast
+                        .makeText(
+                            requireContext(),
+                            "Something went wong!!",
+                            Toast.LENGTH_SHORT
+                        )
+                        .show()
+                }
+            })
+        }
+    }
+
+    private fun viewAttendanceSetupByHarshit() {
+        bindingAttendance = ActivityStudentViewAttendanceBinding.inflate(layoutInflater)
+        try {
+            val dialog = AlertDialog.Builder(
+                requireContext(),
+                R.style.CustomAlertDialogEditProfile
+            ).create()
+            dialog.window?.setGravity(Gravity.TOP)
+            dialog.setCancelable(true)
+            dialog.setView(bindingAttendance.root)
+            dialog.setCanceledOnTouchOutside(false)
+            dialog.show()
+        }
+        catch (e: Exception) {
+            Log.d("dialog Error-", "${e.message}")
+        }
+        bindingAttendance.VAIcSort.setOnClickListener {
+            val popupMenu = PopupMenu(requireContext(), bindingAttendance.VAIcSort)
+            popupMenu.menuInflater.inflate(R.menu.view_attendance_sort_menu, popupMenu.menu)
+            popupMenu.setOnMenuItemClickListener { menu ->
+                when (menu.itemId) {
+                    R.id.menu_searchby_month -> {
+                        bindingAttendance.TILSelectSubject.visibility = View.GONE
+                        bindingAttendance.TILMonth.visibility = View.VISIBLE
+                        bindingAttendance.btnSearch.visibility = View.VISIBLE
+                    }
+                    R.id.menu_searchby_subject -> {
+                        bindingAttendance.TILMonth.visibility = View.GONE
+                        bindingAttendance.TILSelectSubject.visibility = View.VISIBLE
+                        bindingAttendance.btnSearch.visibility = View.VISIBLE
+                    }
+                    R.id.menu_searchby_month_n_sub -> {
+                        bindingAttendance.TILMonth.visibility = View.VISIBLE
+                        bindingAttendance.TILSelectSubject.visibility = View.VISIBLE
+                        bindingAttendance.btnSearch.visibility = View.VISIBLE
+
+                    }
+                    R.id.menu_default -> {
+                        bindingAttendance.TILMonth.visibility = View.GONE
+                        bindingAttendance.TILSelectSubject.visibility = View.GONE
+                        bindingAttendance.btnSearch.visibility = View.GONE
+
+                    }
+                }
+                true
+            }
+            popupMenu.show()
+        }
+        bindingAttendance.btnSearch.setOnClickListener {
+            if (bindingAttendance.TILMonth.isVisible && !bindingAttendance.TILSelectSubject.isVisible) {
+                if (bindingAttendance.ACTVMonth.text.isNotEmpty()) {
+                    fetchAttendanceDataBYMonth()
+                } else bindingAttendance.TILMonth.error = "Please Select Month"
+
+            }
+            if (!bindingAttendance.TILMonth.isVisible && bindingAttendance.TILSelectSubject.isVisible) {
+
+                if (bindingAttendance.ACTVSelectSubject.text.isNotEmpty()) {
+                    fetchAttendanceDataBYSub()
+                } else bindingAttendance.TILSelectSubject.error = "Please Select Subject"
+            }
+            if (bindingAttendance.TILMonth.isVisible && bindingAttendance.TILSelectSubject.isVisible) {
+                if (bindingAttendance.ACTVMonth.text.isNotEmpty()) {
+                    if (bindingAttendance.ACTVSelectSubject.text.isNotEmpty()) {
+                        fetchAttendanceDataBYMonthNSub()
+                    } else bindingAttendance.TILSelectSubject.error = "Please Select Subject"
+                } else bindingAttendance.TILMonth.error = "Please Select Month"
+            }
+//                        if (!bindingAttendance.TILMonth.isVisible && !bindingAttendance.TILSelectSubject.isVisible) {
+//                                fetchAttendanceDataDefault()
+//                        }
+        }
+        autoCompleteTV()
+        fetchAttendanceDataDefault()
+    }
     private fun socialMediaIconClicks() {
         binding.FHInstaIcon.setOnClickListener { getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en") }
         binding.FHFacebookIcon.setOnClickListener { getByUrl("https://www.facebook.com/profile.php?id=100064103347725") }
@@ -654,4 +748,22 @@ class HomeFragment : Fragment() {
     )
     bindingAttendance.ACTVMonth.setAdapter(adapterMonth)
 }
+    private fun studentCheck(){
+        if (MainActivity.user == "student"){
+            fireDb.child("Students").child(MainActivity.studentDep).child(MainActivity.studentYear)
+                .child(MainActivity.studRollNo).addListenerForSingleValueEvent(object:ValueEventListener{
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (!snapshot.exists()){
+                            studentLogOutSetUp()
+                            Toast.makeText(requireContext(),"Student Not exist!!",Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast.makeText(requireContext(),"${error.message}!!",Toast.LENGTH_SHORT).show()
+                        studentLogOutSetUp()
+                    }
+                })
+        }
+    }
+
 }

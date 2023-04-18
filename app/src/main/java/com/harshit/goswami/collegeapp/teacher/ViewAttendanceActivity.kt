@@ -25,7 +25,6 @@ import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.adapters.AttendanceAdapter
 import com.harshit.goswami.collegeapp.data.*
 import com.harshit.goswami.collegeapp.databinding.ActivityViewAttendanceBinding
-import com.harshit.goswami.collegeapp.student.MainActivity
 import org.apache.poi.ss.usermodel.HorizontalAlignment
 import org.apache.poi.ss.usermodel.VerticalAlignment
 import org.apache.poi.ss.util.CellRangeAddress
@@ -106,7 +105,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                     this,
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 ) -> {
-                    Log.d("rollname", "${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
+//                    Log.d("rollname", "${studAttendList[0].rollNo}")
                     if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
                         if (binding.ACTVSelectYear.text.isNotEmpty()) {
                             if (binding.ACTVMonth.text.isNotEmpty()) {
@@ -172,8 +171,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
             }
             popupMenu.show()
         }
-        fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear)
+       /* fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
+            .child(binding.ACTVSelectYear.text.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -181,9 +180,18 @@ class ViewAttendanceActivity : AppCompatActivity() {
                         snapshot.children.forEach { rollno ->
                             var p = 0F
                             var a = 0F
+                            var studName:String = null.toString()
                             val rollNo = rollno.key.toString()
-                                .removeRange(2, rollno.key.toString().lastIndex).trim()
-                            val studName = rollno.key.toString().removeRange(0, 4).trim()
+//                                .removeRange(2, rollno.key.toString().lastIndex).trim()
+                            fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").addListenerForSingleValueEvent(object:ValueEventListener{
+                                    override fun onDataChange(snapshot: DataSnapshot) {
+                                        studName = snapshot.value.toString()
+                                    }
+                                    override fun onCancelled(error: DatabaseError) {
+                                    }
+                                })
+//                            val studName = rollno.key.toString().removeRange(0, 4).trim()
                             rollno.children.forEach { month ->
                                 month.children.forEach { dates ->
                                     dates.children.forEach { subs ->
@@ -196,23 +204,23 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                             }
                         }
-                        Log.d("attendance",allAttendanceList.size.toString())
-                        allAttendanceList.forEach {
-                            Log.d("attendance","${it.rollNo} ${it.name} ${it.month.month} ${it.month.dateData.date} " +
-                                    "${it.month.dateData.subData.subject} ${it.month.dateData.subData.status} ")
-                        }
+//                        Log.d("attendance",allAttendanceList.size.toString())
+//                        allAttendanceList.forEach {
+//                            Log.d("attendance","${it.rollNo} ${it.name} ${it.month.month} ${it.month.dateData.date} " +
+//                                    "${it.month.dateData.subData.subject} ${it.month.dateData.subData.status}")
+//                        }
 
                     }
                 }
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("errrr", error.message, error.toException())
                 }
-            })
+            })*/
     }
 
     private fun writeExcel() {
-        fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear)
+        fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
+            .child(binding.ACTVSelectYear.text.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -278,7 +286,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                         if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible && binding.ACTVMonth.text.isNotEmpty()) {
                             val month = binding.ACTVMonth.text.toString()
 
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
+                            snapshot.child("${studAttendList[0].rollNo}")
                                 .child(month).children.forEach { date ->
                                     var subjCount = 0
                                     row0.apply {
@@ -322,14 +330,19 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(0).setCellValue(
                                     XSSFRichTextString(
                                         rollNo.key.toString()
-                                            .removeRange(2, rollNo.key.toString().lastIndex)
                                     )
                                 )
-                                dataRow.createCell(1).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString().removeRange(0, 4)
-                                    )
-                                )
+
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo.key.toString()).child("fullName").get().addOnSuccessListener{
+                                        dataRow.createCell(1).setCellValue(
+                                            XSSFRichTextString(
+                                                it.value.toString()
+                                            )
+                                        )
+                                    }
+
+
                                 rollNo.child(month).children.forEach { date ->
                                     date.children.forEach { sub ->
 //                                     val cell = row
@@ -400,7 +413,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             }
                         }
                         if (binding.TILSelectSubject.isVisible && !binding.TILMonth.isVisible && binding.ACTVSelectSubject.text.isNotEmpty()) {
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
+                            snapshot.child("${studAttendList[0].rollNo}")
                                 .children.forEach { month ->
                                     month.children.forEach { date ->
                                         var subjCount = 0
@@ -453,14 +466,16 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(0).setCellValue(
                                     XSSFRichTextString(
                                         rollNo.key.toString()
-                                            .removeRange(2, rollNo.key.toString().lastIndex)
                                     )
                                 )
-                                dataRow.createCell(1).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString().removeRange(0, 4)
-                                    )
-                                )
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo.key.toString()).child("fullName").get().addOnSuccessListener {
+                                        dataRow.createCell(1).setCellValue(
+                                            XSSFRichTextString(
+                                                it.value.toString()
+                                            )
+                                        )
+                                    }
                                 rollNo.children.forEach { month ->
                                     month.children.forEach { date ->
                                         date.children.forEach { sub ->
@@ -533,7 +548,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             && binding.ACTVSelectSubject.text.isNotEmpty()
                         ) {
                             val month = binding.ACTVMonth.text.toString()
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
+                            snapshot.child("${studAttendList[0].rollNo}")
                                 .child(month).children.forEach { date ->
                                     var subjCount = 0
 
@@ -583,14 +598,16 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(0).setCellValue(
                                     XSSFRichTextString(
                                         rollNo.key.toString()
-                                            .removeRange(2, rollNo.key.toString().lastIndex)
                                     )
                                 )
-                                dataRow.createCell(1).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString().removeRange(0, 4)
-                                    )
-                                )
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo.key.toString()).child("fullName").get().addOnSuccessListener {
+                                        dataRow.createCell(1).setCellValue(
+                                            XSSFRichTextString(
+                                                it.value.toString()
+                                            )
+                                        )
+                                    }
                                 rollNo.child(month).children.forEach { date ->
                                     date.children.forEach { sub ->
                                         if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
@@ -656,7 +673,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             }
                         }
                         if (!binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
-                            snapshot.child("${studAttendList[0].rollNo} ${studAttendList[0].fullName}")
+                            Log.d("studroll","${studAttendList[0].rollNo}")
+                            snapshot.child("${studAttendList[0].rollNo}")
                                 .children.forEach { month ->
                                     month.children.forEach { date ->
                                         var subjCount = 0
@@ -704,14 +722,35 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 dataRow.createCell(0).setCellValue(
                                     XSSFRichTextString(
                                         rollNo.key.toString()
-                                            .removeRange(2, rollNo.key.toString().lastIndex)
                                     )
                                 )
-                                dataRow.createCell(1).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString().removeRange(0, 4)
-                                    )
-                                )
+//                                dataRow.createCell(1).setCellValue(
+//                                    XSSFRichTextString(
+//                                       it.value.toString()
+//                                    )
+//                                )
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo.key.toString()).child("fullName")
+                                    .addListenerForSingleValueEvent(object:ValueEventListener{
+                                        override fun onDataChange(snapshot: DataSnapshot) {
+                                            dataRow.createCell(1).setCellValue(
+                                            XSSFRichTextString(
+                                                snapshot.value.toString()
+                                            )
+                                        )
+                                        }
+
+                                        override fun onCancelled(error: DatabaseError) {
+                                            TODO("Not yet implemented")
+                                        }
+
+                                    })
+//                                        dataRow.createCell(1).setCellValue(
+//                                            XSSFRichTextString(
+//                                                it.value.toString()
+//                                            )
+//                                        )
+//                                    }
                                 rollNo.children.forEach { month ->
                                     month.children.forEach { date ->
                                         date.children.forEach { sub ->
@@ -794,8 +833,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
     }
 
     private fun fetchAttendanceDataDefault() {
-        fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear)
+        fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
+            .child(binding.ACTVSelectYear.text.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -804,8 +843,18 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             var p = 0F
                             var a = 0F
                             val rollNo = rollno.key.toString()
-                                .removeRange(2, rollno.key.toString().lastIndex).trim()
-                            val studName = rollno.key.toString().removeRange(0, 4).trim()
+//                                .removeRange(2, rollno.key.toString().lastIndex).trim()
+
+//                                .addListenerForSingleValueEvent(object:ValueEventListener{
+//                                    override fun onDataChange(snapshot: DataSnapshot) {
+//                                        studName = snapshot.value.toString()
+////                                        Log.d("studName",studName)
+////                                        Toast.makeText(this@ViewAttendanceActivity,snapshot.value.toString(),Toast.LENGTH_SHORT).show()
+//                                    }
+//                                    override fun onCancelled(error: DatabaseError) {
+//                                    }
+//                                })
+
                             rollno.children.forEach { month ->
                                 month.children.forEach { dates ->
                                     dates.children.forEach { subs ->
@@ -821,16 +870,21 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             }
                             try {
                                 val per = ((p / a) * 100).toInt()
-                                studAttendList.add(
-                                    StudentData(
-                                        rollNo,
-                                        studName,/*Percentage*/
-                                        "${per}%"
-                                    )
-                                )
-                                binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").get().addOnSuccessListener {
+                                        studAttendList.add(
+                                            StudentData(
+                                                rollNo,
+                                                it.value.toString(),/*Percentage*/
+                                                "${per}%"
+                                            )
+                                        )
+                                        binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                    }
+
+//                                binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
                             } catch (e: Exception) {
-//                                Log.e("errrr",e.message,e)
+                                Log.e("errrr",e.message,e)
                             }
                         }
                     }
@@ -843,8 +897,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
     }
 
     private fun fetchAttendanceDataBYMonth() {
-        fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear)
+        fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
+            .child(binding.ACTVSelectYear.text.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -852,9 +906,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
                         snapshot.children.forEach { rollno ->
                             var p = 0F
                             var a = 0F
+
                             val rollNo = rollno.key.toString()
-                                .removeRange(2, rollno.key.toString().lastIndex).trim()
-                            val studName = rollno.key.toString().removeRange(0, 4).trim()
                             rollno.child(binding.ACTVMonth.text.toString()).children.forEach { dates ->
                                 dates.children.forEach { subs ->
                                     if (subs.child("status").value.toString() == "P") {
@@ -868,14 +921,17 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             }
                             try {
                                 val per = ((p / a) * 100).toInt()
-                                studAttendList.add(
-                                    StudentData(
-                                        rollNo,
-                                        studName,/*Percentage*/
-                                        "${per}%"
-                                    )
-                                )
-                                binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").get().addOnSuccessListener {
+                                        studAttendList.add(
+                                            StudentData(
+                                                rollNo,
+                                                it.value.toString(),/*Percentage*/
+                                                "${per}%"
+                                            )
+                                        )
+                                        binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                    }
 
                             } catch (e: Exception) {
 //                                Log.e("errrr",e.message,e)
@@ -892,8 +948,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
     }
 
     private fun fetchAttendanceDataBYSub() {
-        fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear)
+        fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
+            .child(binding.ACTVSelectYear.text.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -902,8 +958,6 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             var p = 0F
                             var a = 0F
                             val rollNo = rollno.key.toString()
-                                .removeRange(2, rollno.key.toString().lastIndex).trim()
-                            val studName = rollno.key.toString().removeRange(0, 4).trim()
                             rollno.children.forEach { month ->
                                 month.children.forEach { dates ->
                                     dates.children.forEach { subs ->
@@ -920,14 +974,17 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             }
                             try {
                                 val per = ((p / a) * 100).toInt()
-                                studAttendList.add(
-                                    StudentData(
-                                        rollNo,
-                                        studName,/*Percentage*/
-                                        "${per}%"
-                                    )
-                                )
-                                binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").get().addOnSuccessListener {
+                                        studAttendList.add(
+                                            StudentData(
+                                                rollNo,
+                                                it.value.toString(),/*Percentage*/
+                                                "${per}%"
+                                            )
+                                        )
+                                        binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                    }
 
                             } catch (e: Exception) {
 //                                Log.e("errrr",e.message,e)
@@ -943,8 +1000,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
     }
 
     private fun fetchAttendanceDataBYMonthNSub() {
-        fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear)
+        fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
+            .child(binding.ACTVSelectYear.text.toString())
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -953,8 +1010,6 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             var p = 0F
                             var a = 0F
                             val rollNo = rollno.key.toString()
-                                .removeRange(2, rollno.key.toString().lastIndex).trim()
-                            val studName = rollno.key.toString().removeRange(0, 4).trim()
                             rollno.child(binding.ACTVMonth.text.toString()).children.forEach { dates ->
                                 dates.children.forEach { subs ->
                                     if (subs.key.toString() == binding.ACTVSelectSubject.text.toString()) {
@@ -967,14 +1022,17 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             }
                             try {
                                 val per = ((p / a) * 100).toInt()
-                                studAttendList.add(
-                                    StudentData(
-                                        rollNo,
-                                        studName,/*Percentage*/
-                                        "${per}%"
-                                    )
-                                )
-                                binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
+                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").get().addOnSuccessListener {
+                                        studAttendList.add(
+                                            StudentData(
+                                                rollNo,
+                                                it.value.toString(),/*Percentage*/
+                                                "${per}%"
+                                            )
+                                        )
+                                        binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                    }
 
                             } catch (e: Exception) {
 //                                Log.e("errrr",e.message,e)
@@ -1002,7 +1060,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
             binding.ACTVSelectSubject.text.clear()
             val subjects = ArrayList<String>()
             FirebaseFirestore.getInstance()
-                .collection("${itemsYear[i]}${MainActivity.studentDep}-Subjects")
+                .collection("${itemsYear[i]}${TeacherDashboard.loggedTeacherDep}-Subjects")
                 .addSnapshotListener { value, error ->
                     subjects.clear()
                     if (error != null) {
