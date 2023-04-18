@@ -63,22 +63,17 @@ class AttendanceActivity : AppCompatActivity() {
                 SimpleDateFormat("LLL", Locale.getDefault())
             val month = sdfMonth.format(Calendar.getInstance().time)
             val sdfDate =
-                SimpleDateFormat("HH:mm:ss", Locale.getDefault())
-////                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
+//                SimpleDateFormat("HH:mm:ss", Locale.getDefault())
+                SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
             val Cdate = sdfDate.format(Calendar.getInstance().time)
 
 
             AttendanceAdapter.attendanceList.forEach { it2 ->
                 fireDb.child("Student Attendance").child(MainActivity.studentDep).child(MainActivity.studentYear)
-                    .child("${it2.rollNo}").child(month).child(Cdate).child(subName)
+                    .child(it2.rollNo).child(it2.studName).child(month).child(Cdate).child(subName)
                     .child("status").setValue(it2.status).addOnSuccessListener {
                         Toast.makeText(this@AttendanceActivity,"Attendance Taken Successfully!!",Toast.LENGTH_SHORT).show()
                     }
-//                if (it2.status == "P") {
-//                    fireDb.child("Student Attendance").child(MainActivity.studentDep).child(MainActivity.studentYear)
-//                        .child(it2.rollNo).child(month).child(Cdate)
-//                        .child("status").setValue(it2.status)
-//                }
             }
         }
 

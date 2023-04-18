@@ -48,6 +48,10 @@
             android:icon="@drawable/img_college_location"
             android:title="Map" />
         <item
+            android:id="@+id/menu_share_apk"
+            android:icon="@drawable/img_college_location"
+            android:title="Share" />
+        <item
             android:id="@+id/menu_term_n_condition"
             android:icon="@drawable/ic_notice"
             android:title="Term And Condition" />

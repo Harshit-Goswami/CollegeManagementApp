@@ -4,14 +4,19 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
+import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
+import android.os.StrictMode
+import android.os.StrictMode.VmPolicy
 import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -34,6 +39,7 @@ import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.*
+import java.io.*
 
 
 class HomeFragment : Fragment() {
@@ -44,7 +50,7 @@ class HomeFragment : Fragment() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var drawerLayout: DrawerLayout
     private val fireDb = FirebaseDatabase.getInstance().reference
-
+    var arrayListapkFilepath: ArrayList<Uri>? = null
 
     var studOldPassword = ""
     private var studNewPassword = ""
@@ -95,6 +101,10 @@ class HomeFragment : Fragment() {
         socialMediaIconClicks()
         magazineClickSetUp()
 
+        // for sharing Harshit's Apk
+        //
+        val builder = VmPolicy.Builder()
+        StrictMode.setVmPolicy(builder.build())
 
         return binding.root
     }
@@ -118,14 +128,18 @@ class HomeFragment : Fragment() {
 
     private fun navigationSetUp() {
         val hView: View = binding.navView.getHeaderView(0)
-        hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
+
+
         if (MainActivity.user == "student" || MainActivity.isCR){
             binding.navView.menu.getItem(0).isVisible = true
+            hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
         }
         if (MainActivity.user == "other") {
             binding.navView.menu.getItem(0).isVisible = false
             binding.navView.menu.getItem(5).isVisible = false
             binding.navView.menu.getItem(6).isVisible = false
+            hView.findViewById<ImageView>(R.id.nav_had_imageView).visibility = View.GONE
+            hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
         }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -164,6 +178,26 @@ class HomeFragment : Fragment() {
 //        }
                 }
                 R.id.menu_map -> {
+
+                }
+                R.id.menu_share_apk->{
+                    arrayListapkFilepath = ArrayList<Uri>()
+
+                    shareAPK(requireContext().packageName)
+                    // you can pass bundle id of installed app in your device instead of getPackageName()
+                    // you can pass bundle id of installed app in your device instead of getPackageName()
+                    val intent = Intent(Intent.ACTION_SEND_MULTIPLE)
+                    intent.type = "application/vnd.android.package-archive"
+                    intent.putParcelableArrayListExtra(
+                        Intent.EXTRA_STREAM,
+                        arrayListapkFilepath
+                    )
+                    startActivity(
+                        Intent.createChooser(
+                            intent, "Share " +
+                                    arrayListapkFilepath!!.size.toString() + " Files Via"
+                        )
+                    )
 
                 }
                 R.id.menu_term_n_condition -> {
@@ -548,22 +582,16 @@ class HomeFragment : Fragment() {
 
     private fun fetchAttendanceDataDefault() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
                         var p = 0F
                         var a = 0F
-//                        val rollNo = MainActivity.studRollNo
-//                                .removeRange(2, rollno.key.toString().lastIndex).trim()
-//                        val studName = MainActivity.studName
-//                                rollno.key.toString().removeRange(0, 4).trim()
                         snapshot.children.forEach { month ->
                             month.children.forEach { dates ->
                                 dates.children.forEach { subs ->
                                     if (subs.child("status").value.toString() == "P") p += 1 else a += 1
-//                                    val sub = subs.key.toString()
-//                                    val status = subs.child("status").value.toString()
                                 }
                             }
                         }
@@ -586,7 +614,7 @@ class HomeFragment : Fragment() {
     }
     private fun fetchAttendanceDataBYMonth() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -622,7 +650,7 @@ class HomeFragment : Fragment() {
     }
     private fun fetchAttendanceDataBYSub() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -664,7 +692,7 @@ class HomeFragment : Fragment() {
     }
     private fun fetchAttendanceDataBYMonthNSub() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child("${MainActivity.studRollNo} ${MainActivity.studName}")
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -765,5 +793,51 @@ class HomeFragment : Fragment() {
                 })
         }
     }
+    fun shareAPK(bundle_id: String) {
+        var f1: File
+        var f2: File? = null
+        val mainIntent = Intent(Intent.ACTION_MAIN, null)
+        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
+        val pkgAppsList: List<*> = requireContext().packageManager.queryIntentActivities(mainIntent, 0)
+        val z = 0
+        for (`object` in pkgAppsList) {
+            val info = `object` as ResolveInfo
+            if (info.activityInfo.packageName == bundle_id) {
+                f1 = File(info.activityInfo.applicationInfo.publicSourceDir)
+                Log.v(
+                    "file--",
+                    " " + f1.getName().toString().toString() + "----" + info.loadLabel(
+                        requireContext().packageManager
+                    )
+                )
+                try {
+                    val file_name = info.loadLabel(requireContext().packageManager).toString()
+                    Log.d("file_name--", " $file_name")
+                    f2 = File(Environment.getExternalStorageDirectory().toString() + "/Folder")
+                    f2.mkdirs()
+                    f2 = File(f2.getPath() + "/" + file_name + ".apk")
+                    f2.createNewFile()
+                    val `in`: InputStream = FileInputStream(f1)
+                    val out: OutputStream = FileOutputStream(f2)
 
+                    // byte[] buf = new byte[1024];
+                    val buf = ByteArray(4096)
+                    var len: Int
+                    while (`in`.read(buf).also { len = it } > 0) {
+                        out.write(buf, 0, len)
+                    }
+                    `in`.close()
+                    out.close()
+                    println("File copied.")
+                } catch (ex: FileNotFoundException) {
+                    println(ex.message + " in the specified directory.")
+                } catch (e: IOException) {
+                    System.out.println(e.message)
+                }
+            }
+        }
+        if (f2 != null) {
+            arrayListapkFilepath!!.add(Uri.fromFile(File(f2.getAbsolutePath())))
+        }
+    }
 }
