@@ -19,7 +19,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
-        android:layout_toStartOf="@+id/I_img_download">
+        android:layout_toStartOf="@+id/delete_notes_assignment">
 
         <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/pdf_icon"
@@ -66,38 +66,61 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/I_pdf_subject"
-            android:layout_centerHorizontal="true"
-            android:layout_marginStart="10dp"
             android:layout_marginBottom="10dp"
-            android:padding="2dp"
+            android:layout_toEndOf="@+id/pdf_icon"
             android:background="#FFEBEE"
+            android:padding="2dp"
             android:text="no description"
             android:textAllCaps="false"
             android:textColor="@color/shrine_pink_900"
             android:textSize="16dp" />
-    </RelativeLayout>
 
+<!--
+        <com.google.android.material.textview.MaterialTextView
+            android:id="@+id/I_pdf_delete"
+            style="@style/Widget.MaterialComponents.TextView"
+            android:layout_width="match_parent"
+            android:layout_height="28dp"
+            android:layout_below="@id/I_pdf_description"
+            android:layout_centerHorizontal="true"
+            android:background="#F44336"
+            android:gravity="center"
+            android:padding="2dp"
+            android:text="Delete"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="16dp"
+            android:textStyle="bold"
+
+            />
+-->
+    </RelativeLayout>
+<LinearLayout
+    android:id="@+id/delete_notes_assignment"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:layout_alignParentEnd="true"
+    android:layout_centerVertical="true"
+    >
     <com.google.android.material.imageview.ShapeableImageView
         android:id="@+id/I_img_download"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_alignParentEnd="true"
-        android:layout_centerVertical="true"
         android:src="@drawable/ic__file_download"
-        android:tint="@color/shrine_pink_900" />
-    </RelativeLayout>
-
-
-    <!-- <com.google.android.material.imageview.ShapeableImageView
-         android:id="@+id/iRSstudImg"
-         android:layout_width="80dp"
-         android:layout_height="80dp"
-         android:layout_alignParentStart="true"
-         android:layout_gravity="center_vertical"
-         android:background="@drawable/circular_img_bg"
-         android:scaleType="centerCrop"
-         app:shapeAppearanceOverlay="@style/circular"
-         />-->
-
+        android:tint="@color/shrine_pink_900"
+        android:layout_margin="5dp"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/I_img_delete"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="5dp"
+        android:src="@drawable/ic_delete"
+        android:tint="@color/shrine_pink_900"
+        android:layout_below="@+id/I_img_download"
+        />
+</LinearLayout>
+</RelativeLayout>
 
 </com.google.android.material.card.MaterialCardView>

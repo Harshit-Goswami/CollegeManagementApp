@@ -7,13 +7,13 @@
         android:visible="false" />-->
     <item
         android:id="@+id/menu_view_attendance"
-        android:icon="@drawable/ic_home"
+        android:icon="@drawable/ic_view_attendance"
         android:title="View Attendance"
         android:visible="false" />
 
     <item
         android:id="@+id/menu_campus_life"
-        android:icon="@drawable/img_parking"
+        android:icon="@drawable/ic_gallery"
         android:title="Campus life" />
 
     <item
@@ -22,12 +22,8 @@
         android:title="Important Links" />
     <item
         android:id="@+id/menu_faculty"
-        android:icon="@drawable/ic__file_download"
+        android:icon="@drawable/ic_user_circle"
         android:title="Faculty" />
-    <item
-        android:id="@+id/menu_theme"
-        android:icon="@drawable/ic_book"
-        android:title="Theme" />
     <item
         android:id="@+id/menu_change_password"
         android:icon="@drawable/ic_lock"
@@ -45,17 +41,12 @@
             android:title="Developer" />
         <item
             android:id="@+id/menu_map"
-            android:icon="@drawable/img_college_location"
+            android:icon="@drawable/ic_inside_map"
             android:title="Map" />
         <item
             android:id="@+id/menu_share_apk"
-            android:icon="@drawable/img_college_location"
+            android:icon="@drawable/ic_share"
             android:title="Share" />
-        <item
-            android:id="@+id/menu_term_n_condition"
-            android:icon="@drawable/ic_notice"
-            android:title="Term And Condition" />
-
     </group>
 
     <item

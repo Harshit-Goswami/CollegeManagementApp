@@ -50,12 +50,12 @@ class MyClassFragment : Fragment() {
 
         binding.FMCCardAssignment.setOnClickListener {
             val intent = Intent(context, AssignmentNotesActivity::class.java)
-            intent.putExtra("cardClick", "assignment")
+            intent.putExtra("cardClick", "S_assignment")
             startActivity(intent)
         }
         binding.FMCCardNotes.setOnClickListener {
             val intent = Intent(context, AssignmentNotesActivity::class.java)
-            intent.putExtra("cardClick", "notes")
+            intent.putExtra("cardClick", "S_notes")
             startActivity(intent)
         }
         binding.FMCCardPreviousPapers.setOnClickListener {

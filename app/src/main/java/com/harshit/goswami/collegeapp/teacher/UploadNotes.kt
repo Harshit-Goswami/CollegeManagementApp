@@ -99,8 +99,9 @@ class UploadNotes : AppCompatActivity() {
     private fun uploadFileAndData() {
         bindind.UNProgressBox.visibility = View.VISIBLE
         if (clickedButton == "notes") {
-            storageRef.child("Notes").child(TeacherDashboard.loggedTeacherDep)
-                .child("TY")
+            storageRef.child("Notes").child(TeacherDashboard.loggedTeacherDep)  .child(bindind.selectClass.text.toString())
+                .child(TeacherDashboard.loggedTeacherName)
+
                 .child(bindind.selectSubject.text.toString())
                 .child(bindind.edtBookTitle.text.toString())
                 .putFile(fileUri!!)
@@ -132,8 +133,9 @@ class UploadNotes : AppCompatActivity() {
                 }
         }
         if (clickedButton == "assignment") {
-            storageRef.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep)
-                .child("TY")
+            storageRef.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep) .child(bindind.selectClass.text.toString())
+                .child(TeacherDashboard.loggedTeacherName)
+
                 .child(bindind.selectSubject.text.toString())
                 .child(bindind.edtBookTitle.text.toString())
                 .putFile(fileUri!!)
@@ -168,8 +170,8 @@ class UploadNotes : AppCompatActivity() {
 
     private fun uploadData() {
         if (clickedButton == "notes") {
-            fireDb.child("Notes").child(TeacherDashboard.loggedTeacherDep)
-                .child("TY")
+            fireDb.child("Notes").child(TeacherDashboard.loggedTeacherDep).child(bindind.selectClass.text.toString())
+                .child(TeacherDashboard.loggedTeacherName)
                 .child(bindind.selectSubject.text.toString())
                 .child(bindind.edtBookTitle.text.toString())
                 .setValue(
@@ -177,6 +179,8 @@ class UploadNotes : AppCompatActivity() {
                         bindind.edtBookTitle.text.toString(),
                         downloadUri,
                         bindind.selectSubject.text.toString(),
+                        TeacherDashboard.loggedTeacherName,
+                        bindind.selectClass.text.toString(),
                         bindind.edtDescription.text.toString()
                     )
                 )
@@ -191,15 +195,17 @@ class UploadNotes : AppCompatActivity() {
                 }
         }
         if (clickedButton == "assignment") {
-            fireDb.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep)
-                .child("TY")
+            fireDb.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep).child(bindind.selectClass.text.toString())
+                .child(TeacherDashboard.loggedTeacherName)
                 .child(bindind.selectSubject.text.toString())
                 .child(bindind.edtBookTitle.text.toString())
                 .setValue(
                     NotesData(
                         bindind.edtBookTitle.text.toString(),
                         downloadUri,
+                        bindind.selectSubject.text.toString(),
                         TeacherDashboard.loggedTeacherName,
+                        bindind.selectClass.text.toString(),
                         bindind.edtDescription.text.toString()
                     )
                 )

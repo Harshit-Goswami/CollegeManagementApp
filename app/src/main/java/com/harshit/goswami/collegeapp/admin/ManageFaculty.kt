@@ -32,7 +32,7 @@ class ManageFaculty : AppCompatActivity() {
         loggedUser = intent.getStringExtra("userType").toString()
         studDep = intent.getStringExtra("department").toString()
         retrieveFacultyData()
-        if (loggedUser == "student"){
+        if (loggedUser == "student"||loggedUser == "other"){
             binding.addFaculty.visibility = View.GONE
         }
         binding.addFaculty.setOnClickListener {
@@ -90,6 +90,34 @@ class ManageFaculty : AppCompatActivity() {
                 })
         }
         if (loggedUser == "admin") {
+            try {
+                FirebaseDatabase.getInstance().reference.child("Faculty Data")
+                    .addValueEventListener(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            if (snapshot.exists()) {
+                                facultyList.clear()
+                                snapshot.children.forEach { dep ->
+//                                    Log.d("facultyData", dep.key.toString())
+                                    dep.children.forEach {data->
+//                                        Log.d("facultyData", data.key.toString())
+                                        if (data.getValue(FacultyData::class.java)!!.teacherType == "HOD") {
+                                            facultyList.add(data.getValue(FacultyData::class.java)!!)
+                                        }
+                                    }
+                                }
+                                binding.rsvFaculty.adapter?.notifyDataSetChanged()
+                                binding.facultyProgbar.visibility = View.GONE
+                            }
+                        }
+
+                        override fun onCancelled(error: DatabaseError) {
+                        }
+                    })
+            } catch (e: Exception) {
+                Toast.makeText(this@ManageFaculty, e.message.toString(), Toast.LENGTH_SHORT).show()
+            }
+        }
+        if (loggedUser == "other") {
             try {
                 FirebaseDatabase.getInstance().reference.child("Faculty Data")
                     .addValueEventListener(object : ValueEventListener {

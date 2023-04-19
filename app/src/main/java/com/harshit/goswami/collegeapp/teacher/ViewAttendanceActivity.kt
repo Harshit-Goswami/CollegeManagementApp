@@ -3,6 +3,7 @@ package com.harshit.goswami.collegeapp.teacher
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
@@ -39,26 +40,31 @@ class ViewAttendanceActivity : AppCompatActivity() {
     private val fireDb = FirebaseDatabase.getInstance().reference
     val studAttendList = ArrayList<StudentData>()
     val allAttendanceList = ArrayList<AllAttendanceData>()
+    private val requestPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted: Boolean ->
+        if (isGranted) {
+        } else {
+            // Explain to the user that the feature is unavailable because the
+            // features requires a permission that the user has denied. At the
+            // same time, respect the user's decision. Don't link to system
+            // settings in an effort to convince the user to change their
+            // decision.
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityViewAttendanceBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        val requestPermissionLauncher =
-            registerForActivityResult(
-                ActivityResultContracts.RequestPermission()
-            ) { isGranted: Boolean ->
-                if (isGranted) {
-//                    writeExcel()
-                }
-                /*else {
-                        // Explain to the user that the feature is unavailable because the
-                        // feature requires a permission that the user has denied. At the
-                        // same time, respect the user's decision. Don't link to system
-                        // settings in an effort to convince the user to change their
-                        // decision.
-                    }*/
-            }
+        if (PackageManager.PERMISSION_GRANTED != ContextCompat
+                .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        ) {
+                requestPermissionLauncher.launch(
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                )
+        }
+
         autoCompleteTextViewSetUp()
 
         binding.rsvAllViewAttendance.layoutManager =
@@ -99,12 +105,9 @@ class ViewAttendanceActivity : AppCompatActivity() {
             }
         }
         binding.exportAttendanseExcel.setOnClickListener {
-            when (PackageManager.PERMISSION_GRANTED) {
-                ContextCompat.checkSelfPermission(
-                    this,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ) -> {
-//                    Log.d("rollname", "${studAttendList[0].rollNo}")
+            if (PackageManager.PERMISSION_GRANTED == ContextCompat
+                    .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+            ) {
                     if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
                         if (binding.ACTVSelectYear.text.isNotEmpty()) {
                             if (binding.ACTVMonth.text.isNotEmpty()) {
@@ -133,16 +136,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             writeExcel()
                         } else binding.TILSelectYear.error = "Please Select Year"
                     }
-
                 }
-                else -> {
-                    // You can directly ask for the permission.
-                    // The registered ActivityResultCallback gets the result of this request.
-                    requestPermissionLauncher.launch(
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    )
-                }
-            }
+            else Toast.makeText(this@ViewAttendanceActivity,"Permission is Not Granted!!",Toast.LENGTH_SHORT).show()
         }
         binding.VAIcSort.setOnClickListener {
             val popupMenu = PopupMenu(this@ViewAttendanceActivity, binding.VAIcSort)

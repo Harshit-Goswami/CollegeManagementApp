@@ -36,6 +36,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.data.StudentData
 import com.harshit.goswami.collegeapp.databinding.*
@@ -150,13 +151,11 @@ class HomeFragment : Fragment() {
                     startActivity(Intent(requireContext(), GalleryActivity::class.java))
                 }
                 R.id.menu_imp_links -> {
-
-                }
-                R.id.menu_theme -> {
-
                 }
                 R.id.menu_faculty -> {
-
+                    val i = Intent(requireContext(),ManageFaculty::class.java)
+                    i.putExtra("userType","other")
+                    startActivity(i)
                 }
                 R.id.menu_change_password -> {
                     studentChangePasswordSetUp()
@@ -181,28 +180,9 @@ class HomeFragment : Fragment() {
 
                 }
                 R.id.menu_share_apk->{
-                    arrayListapkFilepath = ArrayList<Uri>()
-
-                    shareAPK(requireContext().packageName)
-                    // you can pass bundle id of installed app in your device instead of getPackageName()
-                    // you can pass bundle id of installed app in your device instead of getPackageName()
-                    val intent = Intent(Intent.ACTION_SEND_MULTIPLE)
-                    intent.type = "application/vnd.android.package-archive"
-                    intent.putParcelableArrayListExtra(
-                        Intent.EXTRA_STREAM,
-                        arrayListapkFilepath
-                    )
-                    startActivity(
-                        Intent.createChooser(
-                            intent, "Share " +
-                                    arrayListapkFilepath!!.size.toString() + " Files Via"
-                        )
-                    )
-
+                    getByUrl("")
                 }
-                R.id.menu_term_n_condition -> {
 
-                }
             }
             true
         }
@@ -745,9 +725,6 @@ class HomeFragment : Fragment() {
                 subjects.add(ds["subjectName"].toString())
             }
         }
-//    subjects.forEach {
-//        Log.i("subjects", it)
-//    }
     val adapterSubject = ArrayAdapter(
         requireContext(),
         androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
@@ -791,53 +768,6 @@ class HomeFragment : Fragment() {
                         studentLogOutSetUp()
                     }
                 })
-        }
-    }
-    fun shareAPK(bundle_id: String) {
-        var f1: File
-        var f2: File? = null
-        val mainIntent = Intent(Intent.ACTION_MAIN, null)
-        mainIntent.addCategory(Intent.CATEGORY_LAUNCHER)
-        val pkgAppsList: List<*> = requireContext().packageManager.queryIntentActivities(mainIntent, 0)
-        val z = 0
-        for (`object` in pkgAppsList) {
-            val info = `object` as ResolveInfo
-            if (info.activityInfo.packageName == bundle_id) {
-                f1 = File(info.activityInfo.applicationInfo.publicSourceDir)
-                Log.v(
-                    "file--",
-                    " " + f1.getName().toString().toString() + "----" + info.loadLabel(
-                        requireContext().packageManager
-                    )
-                )
-                try {
-                    val file_name = info.loadLabel(requireContext().packageManager).toString()
-                    Log.d("file_name--", " $file_name")
-                    f2 = File(Environment.getExternalStorageDirectory().toString() + "/Folder")
-                    f2.mkdirs()
-                    f2 = File(f2.getPath() + "/" + file_name + ".apk")
-                    f2.createNewFile()
-                    val `in`: InputStream = FileInputStream(f1)
-                    val out: OutputStream = FileOutputStream(f2)
-
-                    // byte[] buf = new byte[1024];
-                    val buf = ByteArray(4096)
-                    var len: Int
-                    while (`in`.read(buf).also { len = it } > 0) {
-                        out.write(buf, 0, len)
-                    }
-                    `in`.close()
-                    out.close()
-                    println("File copied.")
-                } catch (ex: FileNotFoundException) {
-                    println(ex.message + " in the specified directory.")
-                } catch (e: IOException) {
-                    System.out.println(e.message)
-                }
-            }
-        }
-        if (f2 != null) {
-            arrayListapkFilepath!!.add(Uri.fromFile(File(f2.getAbsolutePath())))
         }
     }
 }

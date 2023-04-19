@@ -27,16 +27,6 @@ class UserSelectionActivity : AppCompatActivity() {
         ActivityResultContracts.RequestPermission()
     ) { isGranted: Boolean ->
         if (isGranted) {
-            // Permission is granted. Continue the action or workflow in your
-//
-//            FCMnotificationSender(
-//                "/topics/all", "Notification title", "this is notice notification body",
-//                "BIGTEXT",
-//                "", //applicationContext,
-//                this@UserSelectionActivity
-//            )
-//                .sendNotifications()
-
         } else {
             // Explain to the user that the feature is unavailable because the
             // features requires a permission that the user has denied. At the

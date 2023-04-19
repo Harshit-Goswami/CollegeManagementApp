@@ -39,6 +39,7 @@ import com.harshit.goswami.collegeapp.databinding.ActivityTeacherDashboardBindin
 import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding
 import com.harshit.goswami.collegeapp.databinding.DialogTeacherAddCrBinding
+import com.harshit.goswami.collegeapp.student.AssignmentNotesActivity
 import java.io.IOException
 
 class TeacherDashboard : AppCompatActivity() {
@@ -231,17 +232,17 @@ class TeacherDashboard : AppCompatActivity() {
         binding.TDUploadNotes.setOnClickListener {
             val i = Intent(
                 this,
-                UploadNotes::class.java
+                AssignmentNotesActivity::class.java
             )
-            i.putExtra("clickedButton", "notes")
+            i.putExtra("cardClick", "T_notes")
             startActivity(i)
         }
         binding.TDUploadAssignment.setOnClickListener {
             val i = Intent(
                 this,
-                UploadNotes::class.java
+                AssignmentNotesActivity::class.java
             )
-            i.putExtra("clickedButton", "assignment")
+            i.putExtra("cardClick", "T_assignment")
             startActivity(i)
         }
         binding.TDTeacherImage.setOnClickListener {

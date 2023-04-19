@@ -40,7 +40,7 @@ class FacultyAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(facultyList[position]) {
-                if (ManageFaculty.loggedUser == "student"){
+                if (ManageFaculty.loggedUser == "student" || ManageFaculty.loggedUser == "other" ){
                     binding.IFiBtnMoreOption.visibility = View.GONE
                 }
                 binding.IFiTvFacultyName.text = this.name
@@ -48,12 +48,12 @@ class FacultyAdapter(
                 binding.IFiTxtContactNo.text = this.contactNo
                 if (this.downloadUrl != "null") {
                     Glide.with(context).load(this.downloadUrl).placeholder(R.drawable.ic_person).into(binding.IFiFacultyDp)
-
                     binding.IFiFacultyDp.setOnClickListener {
                     val i = Intent(context, ViewImageActivity::class.java)
                     i.putExtra("imageUrl",this.downloadUrl)
                     context.startActivity(i)
                     }
+
                 }
                 binding.IFiBtnMoreOption.setOnClickListener {
 
