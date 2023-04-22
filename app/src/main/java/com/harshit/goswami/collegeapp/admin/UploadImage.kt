@@ -23,12 +23,14 @@ import java.util.*
 
 class UploadImage : AppCompatActivity() {
     private lateinit var binding: ActivityAdminUploadImageBinding
-//    private var category: String? = null
+
+    //    private var category: String? = null
     private var imgUri: Uri? = null
     private var storage: FirebaseStorage? = null
     private var storageRef: StorageReference? = null
     private var database: FirebaseDatabase? = null
-//    private var dbRef: DatabaseReference? = null
+
+    //    private var dbRef: DatabaseReference? = null
     private var downloadImgUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -41,8 +43,12 @@ class UploadImage : AppCompatActivity() {
 
         val items = arrayOf("Select category:", "Convocation", "Independence Day", "Other events")
         binding.imageCategory.adapter =
-            ArrayAdapter(this, com.google.android.material.R.layout.support_simple_spinner_dropdown_item, items)
-       // binding.imageCategory.setOnItemClickListener { _, _, _, _ ->  }
+            ArrayAdapter(
+                this,
+                com.google.android.material.R.layout.support_simple_spinner_dropdown_item,
+                items
+            )
+        // binding.imageCategory.setOnItemClickListener { _, _, _, _ ->  }
         binding.imageCategory.selectedItem.toString()
         binding.selectImgGallery.setOnClickListener { getResult.launch("image/*") }
         binding.btnUploadImage.setOnClickListener {
@@ -62,7 +68,8 @@ class UploadImage : AppCompatActivity() {
             progressDialog.setTitle("Uploading...")
             progressDialog.show()
             // Defining the child of storageReference
-            storageRef = storage?.reference?.child("GalleryImages")?.child( binding.imageCategory.selectedItem.toString())
+            storageRef = storage?.reference?.child("GalleryImages")
+                ?.child(binding.imageCategory.selectedItem.toString())
                 ?.child(UUID.randomUUID().toString())
             // adding listeners on upload
             // or failure of image
@@ -102,9 +109,17 @@ class UploadImage : AppCompatActivity() {
     }
 
     private fun uploadData() {
+        val key = UUID.randomUUID().toString()
         FirebaseFirestore.getInstance().collection("Campus Gallery Images")
             .document(binding.imageCategory.selectedItem.toString())
-            .collection("images").document().set(mapOf("url" to downloadImgUrl.toString()) )
+            .collection("images").document(key)
+            .set(
+                mapOf(
+                    "url" to downloadImgUrl.toString(),
+                    "category" to binding.imageCategory.selectedItem.toString(),
+                    "key" to key
+                )
+            )
             .addOnSuccessListener {
                 Toast
                     .makeText(

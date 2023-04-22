@@ -30,6 +30,7 @@ import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDashboardBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding
+import com.harshit.goswami.collegeapp.student.GalleryActivity
 import java.io.IOException
 
 
@@ -358,12 +359,12 @@ class AdminDashboard : AppCompatActivity() {
             )
         }
         binding.uploadImage.setOnClickListener {
-            startActivity(
-                Intent(
-                    this,
-                    UploadImage::class.java
-                )
+          val i =  Intent(
+                this,
+                GalleryActivity::class.java
             )
+            i.putExtra("by","admin")
+            startActivity(i)
         }
         binding.addStudent.setOnClickListener {
             val i = Intent(

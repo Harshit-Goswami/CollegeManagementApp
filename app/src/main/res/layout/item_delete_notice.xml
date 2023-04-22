@@ -80,7 +80,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:scaleType="fitXY"
+            android:scaleType="fitCenter"
+            android:src="@drawable/college_logo"
             android:layout_gravity="center"
              />
        <!-- android:elevation="3dp"

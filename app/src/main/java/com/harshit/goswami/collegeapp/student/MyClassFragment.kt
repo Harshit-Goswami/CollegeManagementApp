@@ -69,7 +69,7 @@ class MyClassFragment : Fragment() {
             startActivity(intent)
         }
         binding.FMCCardResult.setOnClickListener {
-            val uri = Uri.parse("https://drive.google.com/drive/folders/1BA0mwqKdf3AQs0jI3YXHgdThwfSU6U39?usp=share_link")
+            val uri = Uri.parse("https://drive.google.com/drive/folders/1MQui0813LKQ1vreGlFIezeHR_-29YGJM?usp=share_link")
             startActivity(Intent(Intent.ACTION_VIEW, uri))
         }
 

@@ -60,13 +60,13 @@ class ViewAttendanceActivity : AppCompatActivity() {
         if (PackageManager.PERMISSION_GRANTED != ContextCompat
                 .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
         ) {
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
                 requestPermissionLauncher.launch(
                     Manifest.permission.WRITE_EXTERNAL_STORAGE
                 )
+            }
         }
-
         autoCompleteTextViewSetUp()
-
         binding.rsvAllViewAttendance.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         binding.rsvAllViewAttendance.adapter = AttendanceAdapter(studAttendList, this, "view")
@@ -105,39 +105,24 @@ class ViewAttendanceActivity : AppCompatActivity() {
             }
         }
         binding.exportAttendanseExcel.setOnClickListener {
-            if (PackageManager.PERMISSION_GRANTED == ContextCompat
-                    .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-            ) {
-                    if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
-                        if (binding.ACTVSelectYear.text.isNotEmpty()) {
-                            if (binding.ACTVMonth.text.isNotEmpty()) {
-                                writeExcel()
-                            } else binding.TILMonth.error = "Please Select Month"
-                        } else binding.TILSelectYear.error = "Please Select Year"
-                    }
-                    if (!binding.TILMonth.isVisible && binding.TILSelectSubject.isVisible) {
-                        if (binding.ACTVSelectYear.text.isNotEmpty()) {
-                            if (binding.ACTVSelectSubject.text.isNotEmpty()) {
-                                writeExcel()
-                            } else binding.TILSelectSubject.error = "Please Select Subject"
-                        } else binding.TILSelectYear.error = "Please Select Year"
-                    }
-                    if (binding.TILMonth.isVisible && binding.TILSelectSubject.isVisible) {
-                        if (binding.ACTVSelectYear.text.isNotEmpty()) {
-                            if (binding.ACTVMonth.text.isNotEmpty()) {
-                                if (binding.ACTVSelectSubject.text.isNotEmpty()) {
-                                    writeExcel()
-                                } else binding.TILSelectSubject.error = "Please Select Subject"
-                            } else binding.TILMonth.error = "Please Select Month"
-                        } else binding.TILSelectYear.error = "Please Select Year"
-                    }
-                    if (!binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
-                        if (binding.ACTVSelectYear.text.isNotEmpty()) {
-                            writeExcel()
-                        } else binding.TILSelectYear.error = "Please Select Year"
-                    }
+            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU) {
+                if (PackageManager.PERMISSION_GRANTED == ContextCompat
+                        .checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                ) {
+                    setUpExcel()
+                } else {
+                    Toast.makeText(
+                        this@ViewAttendanceActivity,
+                        "Permission not granted!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                    requestPermissionLauncher.launch(
+                        Manifest.permission.WRITE_EXTERNAL_STORAGE
+                    )
                 }
-            else Toast.makeText(this@ViewAttendanceActivity,"Permission is Not Granted!!",Toast.LENGTH_SHORT).show()
+            } else {
+                setUpExcel()
+            }
         }
         binding.VAIcSort.setOnClickListener {
             val popupMenu = PopupMenu(this@ViewAttendanceActivity, binding.VAIcSort)
@@ -164,6 +149,37 @@ class ViewAttendanceActivity : AppCompatActivity() {
                 true
             }
             popupMenu.show()
+        }
+    }
+
+    private fun setUpExcel() {
+        if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
+            if (binding.ACTVSelectYear.text.isNotEmpty()) {
+                if (binding.ACTVMonth.text.isNotEmpty()) {
+                    writeExcel()
+                } else binding.TILMonth.error = "Please Select Month"
+            } else binding.TILSelectYear.error = "Please Select Year"
+        }
+        if (!binding.TILMonth.isVisible && binding.TILSelectSubject.isVisible) {
+            if (binding.ACTVSelectYear.text.isNotEmpty()) {
+                if (binding.ACTVSelectSubject.text.isNotEmpty()) {
+                    writeExcel()
+                } else binding.TILSelectSubject.error = "Please Select Subject"
+            } else binding.TILSelectYear.error = "Please Select Year"
+        }
+        if (binding.TILMonth.isVisible && binding.TILSelectSubject.isVisible) {
+            if (binding.ACTVSelectYear.text.isNotEmpty()) {
+                if (binding.ACTVMonth.text.isNotEmpty()) {
+                    if (binding.ACTVSelectSubject.text.isNotEmpty()) {
+                        writeExcel()
+                    } else binding.TILSelectSubject.error = "Please Select Subject"
+                } else binding.TILMonth.error = "Please Select Month"
+            } else binding.TILSelectYear.error = "Please Select Year"
+        }
+        if (!binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
+            if (binding.ACTVSelectYear.text.isNotEmpty()) {
+                writeExcel()
+            } else binding.TILSelectYear.error = "Please Select Year"
         }
     }
 
@@ -235,88 +251,81 @@ class ViewAttendanceActivity : AppCompatActivity() {
                         if (binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible && binding.ACTVMonth.text.isNotEmpty()) {
                             val month = binding.ACTVMonth.text.toString()
                             snapshot.child("${studAttendList[0].rollNo}")
-                                .children.forEach {studName->
-                                studName.child(month).children.forEach { date ->
-                                    var subjCount = 0
-                                    row0.apply {
-                                        createCell(cellIndexDate).apply {
-                                            setCellValue(XSSFRichTextString(date.key.toString()))
-                                            cellStyle = workbook.createCellStyle().apply {
-                                                setAlignment(HorizontalAlignment.CENTER)
-                                                setFont(workbook.createFont().apply {
-                                                    bold = true
-                                                })
+                                .children.forEach { studName ->
+                                    studName.child(month).children.forEach { date ->
+                                        var subjCount = 0
+                                        row0.apply {
+                                            createCell(cellIndexDate).apply {
+                                                setCellValue(XSSFRichTextString(date.key.toString()))
+                                                cellStyle = workbook.createCellStyle().apply {
+                                                    setAlignment(HorizontalAlignment.CENTER)
+                                                    setFont(workbook.createFont().apply {
+                                                        bold = true
+                                                    })
+                                                }
                                             }
                                         }
-                                    }
-                                    date.children.forEach { sub ->
-                                        subjCount += 1
-                                        row1.apply {
-                                            createCell(cellIndexSub).setCellValue(
-                                                XSSFRichTextString(
-                                                    sub.key.toString()
+                                        date.children.forEach { sub ->
+                                            subjCount += 1
+                                            row1.apply {
+                                                createCell(cellIndexSub).setCellValue(
+                                                    XSSFRichTextString(
+                                                        sub.key.toString()
+                                                    )
                                                 )
-                                            )
+                                            }
+                                            cellIndexSub += 1
                                         }
-                                        cellIndexSub += 1
+                                        firstSheet.addMergedRegion(
+                                            CellRangeAddress(
+                                                0,
+                                                0,
+                                                cellIndexDate,
+                                                cellIndexDate + subjCount - 1
+                                            )
+                                        )
+                                        cellIndexDate += subjCount
                                     }
-                                    firstSheet.addMergedRegion(
-                                        CellRangeAddress(
-                                            0,
-                                            0,
-                                            cellIndexDate,
-                                            cellIndexDate + subjCount - 1
+                                }
+                            snapshot.children.forEach { rollNo ->
+                                rollNo.children.forEach { studName ->
+                                    var p = 0F
+                                    var a = 0F
+                                    var cellIndexA = 5
+                                    val dataRow = firstSheet.createRow(rowIndex)
+                                    dataRow.createCell(0).setCellValue(
+                                        XSSFRichTextString(
+                                            rollNo.key.toString()
                                         )
                                     )
-                                    cellIndexDate += subjCount
-                                }}
-                            snapshot.children.forEach { rollNo ->
-                                rollNo.children.forEach {studName->
-                                var p = 0F
-                                var a = 0F
-                                var cellIndexA = 5
-                                val dataRow = firstSheet.createRow(rowIndex)
-                                dataRow.createCell(0).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString()
-                                    )
-                                )
                                     dataRow.createCell(1).setCellValue(
                                         XSSFRichTextString(
                                             studName.key.toString()
                                         )
                                     )
 
-                                studName.child(month).children.forEach { date ->
-                                    date.children.forEach { sub ->
-                                        if (sub.child("status").value == "P") p += 1 else a += 1
-                                        dataRow.createCell(cellIndexA)
-                                            .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
-                                        cellIndexA += 1
+                                    studName.child(month).children.forEach { date ->
+                                        date.children.forEach { sub ->
+                                            if (sub.child("status").value == "P") p += 1 else a += 1
+                                            dataRow.createCell(cellIndexA)
+                                                .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
+                                            cellIndexA += 1
+                                        }
                                     }
+                                    dataRow.createCell(2)
+                                        .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
+                                    try {
+                                        val per = ((p / (p + a)) * 100)
+                                        dataRow.createCell(3)
+                                            .setCellValue(XSSFRichTextString("${per}%"))
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    rowIndex += 1
                                 }
-                                dataRow.createCell(2)
-                                    .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
-                                try {
-                                    val per = ((p / (p + a)) * 100)
-                                    dataRow.createCell(3)
-                                        .setCellValue(XSSFRichTextString("${per}%"))
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                                rowIndex += 1
-                            }
                             }
                             val fos: FileOutputStream? = null
                             try {
-//                            val file_path =
-//                                Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
-//                                    .toString()
-//
-//                            val file = File(file_path, "attendance.xlsx")
-//                            fos = FileOutputStream(file)
-//                            workbook.write(fos)
-
                                 val file = File(
                                     "${Environment.getExternalStorageDirectory()}/Documents/(${binding.ACTVSelectYear.text.toString()})${month}_Attendance.xlsx"
                                 )
@@ -351,97 +360,100 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                                 Toast.makeText(
                                     this@ViewAttendanceActivity,
-                                    "Excel Sheet Generated",
+                                    "Excel Sheet Saved in\n /Documents Folder",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                         }
                         if (binding.TILSelectSubject.isVisible && !binding.TILMonth.isVisible && binding.ACTVSelectSubject.text.isNotEmpty()) {
                             snapshot.child("${studAttendList[0].rollNo}")
-                                .children.forEach {studName->
-                                studName.children.forEach { month ->
-                                    month.children.forEach { date ->
-                                        var subjCount = 0
-                                        date.children.forEach { sub ->
-                                            if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
-                                                subjCount += 1
-                                                row1.apply {
-                                                    createCell(cellIndexSub).apply {
-                                                        setCellValue(XSSFRichTextString(sub.key.toString()))
-                                                        cellStyle =
-                                                            workbook.createCellStyle().apply {
-                                                                setAlignment(HorizontalAlignment.CENTER)
-                                                                setFont(
-                                                                    workbook.createFont().apply {
-                                                                        bold = true
+                                .children.forEach { studName ->
+                                    studName.children.forEach { month ->
+                                        month.children.forEach { date ->
+                                            var subjCount = 0
+                                            date.children.forEach { sub ->
+                                                if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
+                                                    subjCount += 1
+                                                    row1.apply {
+                                                        createCell(cellIndexSub).apply {
+                                                            setCellValue(XSSFRichTextString(sub.key.toString()))
+                                                            cellStyle =
+                                                                workbook.createCellStyle().apply {
+                                                                    setAlignment(HorizontalAlignment.CENTER)
+                                                                    setFont(
+                                                                        workbook.createFont()
+                                                                            .apply {
+                                                                                bold = true
 
-                                                                    })
-                                                            }
+                                                                            })
+                                                                }
+                                                        }
                                                     }
+                                                    row0.apply {
+                                                        createCell(cellIndexDate).setCellValue(
+                                                            XSSFRichTextString(date.key.toString())
+                                                        )
+                                                    }
+                                                    cellIndexSub += 1
                                                 }
-                                                row0.apply {
-                                                    createCell(cellIndexDate).setCellValue(
-                                                        XSSFRichTextString(date.key.toString())
+                                            }
+                                            try {
+                                                firstSheet.addMergedRegion(
+                                                    CellRangeAddress(
+                                                        0,
+                                                        0,
+                                                        cellIndexDate,
+                                                        cellIndexDate + subjCount - 1
                                                     )
-                                                }
-                                                cellIndexSub += 1
-                                            }
-                                        }
-                                        try {
-                                            firstSheet.addMergedRegion(
-                                                CellRangeAddress(
-                                                    0,
-                                                    0,
-                                                    cellIndexDate,
-                                                    cellIndexDate + subjCount - 1
                                                 )
-                                            )
-                                        } catch (e: Exception) {
-                                            e.printStackTrace()
+                                            } catch (e: Exception) {
+                                                e.printStackTrace()
+                                            }
+                                            cellIndexDate += subjCount
                                         }
-                                        cellIndexDate += subjCount
                                     }
-                                }}
+                                }
                             snapshot.children.forEach { rollNo ->
-                                rollNo.children.forEach {studName->
-                                var p = 0F
-                                var a = 0F
-                                var cellIndexA = 5
-                                val dataRow = firstSheet.createRow(rowIndex)
-                                dataRow.createCell(0).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString()
+                                rollNo.children.forEach { studName ->
+                                    var p = 0F
+                                    var a = 0F
+                                    var cellIndexA = 5
+                                    val dataRow = firstSheet.createRow(rowIndex)
+                                    dataRow.createCell(0).setCellValue(
+                                        XSSFRichTextString(
+                                            rollNo.key.toString()
+                                        )
                                     )
-                                )
                                     dataRow.createCell(1).setCellValue(
-                                    XSSFRichTextString(
-                                       studName.key.toString()
+                                        XSSFRichTextString(
+                                            studName.key.toString()
+                                        )
                                     )
-                                )
-                                studName.children.forEach { month ->
-                                    month.children.forEach { date ->
-                                        date.children.forEach { sub ->
-                                            if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
+                                    studName.children.forEach { month ->
+                                        month.children.forEach { date ->
+                                            date.children.forEach { sub ->
+                                                if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
 //                                     val cell = row
-                                                if (sub.child("status").value == "P") p += 1 else a += 1
-                                                dataRow.createCell(cellIndexA)
-                                                    .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
-                                                cellIndexA += 1
+                                                    if (sub.child("status").value == "P") p += 1 else a += 1
+                                                    dataRow.createCell(cellIndexA)
+                                                        .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
+                                                    cellIndexA += 1
+                                                }
                                             }
                                         }
                                     }
+                                    dataRow.createCell(2)
+                                        .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
+                                    try {
+                                        val per = ((p / (p + a)) * 100)
+                                        dataRow.createCell(3)
+                                            .setCellValue(XSSFRichTextString("${per}%"))
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    rowIndex += 1
                                 }
-                                dataRow.createCell(2)
-                                    .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
-                                try {
-                                    val per = ((p / (p + a)) * 100)
-                                    dataRow.createCell(3)
-                                        .setCellValue(XSSFRichTextString("${per}%"))
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                                rowIndex += 1
-                            }}
+                            }
                             var fos: FileOutputStream? = null
                             try {
 
@@ -479,7 +491,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                                 Toast.makeText(
                                     this@ViewAttendanceActivity,
-                                    "Excel Sheet Generated",
+                                    "Excel Sheet Saved in\n /Documents Folder",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
@@ -490,8 +502,8 @@ class ViewAttendanceActivity : AppCompatActivity() {
                             && binding.ACTVSelectSubject.text.isNotEmpty()
                         ) {
                             val month = binding.ACTVMonth.text.toString()
-                            snapshot.child(studAttendList[0].rollNo).children.forEach {studName->
-                               studName.child(month).children.forEach { date ->
+                            snapshot.child(studAttendList[0].rollNo).children.forEach { studName ->
+                                studName.child(month).children.forEach { date ->
                                     var subjCount = 0
                                     date.children.forEach { sub ->
                                         if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
@@ -530,46 +542,48 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                     }
 
                                     cellIndexDate += subjCount
-                                }}
+                                }
+                            }
 
                             snapshot.children.forEach { rollNo ->
-                                rollNo.children.forEach {studName->
-                                var p = 0F
-                                var a = 0F
-                                var cellIndexA = 5
-                                val dataRow = firstSheet.createRow(rowIndex)
-                                dataRow.createCell(0).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString()
+                                rollNo.children.forEach { studName ->
+                                    var p = 0F
+                                    var a = 0F
+                                    var cellIndexA = 5
+                                    val dataRow = firstSheet.createRow(rowIndex)
+                                    dataRow.createCell(0).setCellValue(
+                                        XSSFRichTextString(
+                                            rollNo.key.toString()
+                                        )
                                     )
-                                )
-                                dataRow.createCell(1).setCellValue(
-                                    XSSFRichTextString(
-                                        studName.key.toString()
+                                    dataRow.createCell(1).setCellValue(
+                                        XSSFRichTextString(
+                                            studName.key.toString()
+                                        )
                                     )
-                                )
-                                studName.child(month).children.forEach { date ->
-                                    date.children.forEach { sub ->
-                                        if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
+                                    studName.child(month).children.forEach { date ->
+                                        date.children.forEach { sub ->
+                                            if (sub.key.toString() == binding.ACTVSelectSubject.text.toString()) {
 //                                     val cell = row
-                                            if (sub.child("status").value == "P") p += 1 else a += 1
-                                            dataRow.createCell(cellIndexA)
-                                                .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
-                                            cellIndexA += 1
+                                                if (sub.child("status").value == "P") p += 1 else a += 1
+                                                dataRow.createCell(cellIndexA)
+                                                    .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
+                                                cellIndexA += 1
+                                            }
                                         }
                                     }
+                                    dataRow.createCell(2)
+                                        .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
+                                    try {
+                                        val per = ((p / (p + a)) * 100)
+                                        dataRow.createCell(3)
+                                            .setCellValue(XSSFRichTextString("${per}%"))
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    rowIndex += 1
                                 }
-                                dataRow.createCell(2)
-                                    .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
-                                try {
-                                    val per = ((p / (p + a)) * 100)
-                                    dataRow.createCell(3)
-                                        .setCellValue(XSSFRichTextString("${per}%"))
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                                rowIndex += 1
-                            }}
+                            }
                             val fos: FileOutputStream? = null
                             try {
 
@@ -607,92 +621,93 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                                 Toast.makeText(
                                     this@ViewAttendanceActivity,
-                                    "Excel Sheet Generated",
+                                    "Excel Sheet Saved in\n /Documents Folder",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                         }
                         if (!binding.TILMonth.isVisible && !binding.TILSelectSubject.isVisible) {
-                            snapshot.child(studAttendList[0].rollNo).children.forEach {studName ->
+                            snapshot.child(studAttendList[0].rollNo).children.forEach { studName ->
                                 studName.children.forEach { month ->
-                                month.children.forEach { date ->
-                                    var subjCount = 0
-                                    row0.apply {
-                                        createCell(cellIndexDate)
-                                            .apply {
-                                                setCellValue(XSSFRichTextString(date.key.toString()))
-                                                cellStyle = workbook.createCellStyle().apply {
-                                                    setAlignment(HorizontalAlignment.CENTER)
-                                                    setFont(workbook.createFont().apply {
-                                                        bold = true
-                                                        underline
+                                    month.children.forEach { date ->
+                                        var subjCount = 0
+                                        row0.apply {
+                                            createCell(cellIndexDate)
+                                                .apply {
+                                                    setCellValue(XSSFRichTextString(date.key.toString()))
+                                                    cellStyle = workbook.createCellStyle().apply {
+                                                        setAlignment(HorizontalAlignment.CENTER)
+                                                        setFont(workbook.createFont().apply {
+                                                            bold = true
+                                                            underline
 
-                                                    })
+                                                        })
+                                                    }
+                                                }
+                                        }
+                                        date.children.forEach { sub ->
+                                            subjCount += 1
+                                            row1.apply {
+                                                createCell(cellIndexSub).apply {
+                                                    setCellValue(XSSFRichTextString(sub.key.toString()))
                                                 }
                                             }
-                                    }
-                                    date.children.forEach { sub ->
-                                        subjCount += 1
-                                        row1.apply {
-                                            createCell(cellIndexSub).apply {
-                                                setCellValue(XSSFRichTextString(sub.key.toString()))
-                                            }
+                                            cellIndexSub += 1
                                         }
-                                        cellIndexSub += 1
-                                    }
-                                    firstSheet.addMergedRegion(
-                                        CellRangeAddress(
-                                            0,
-                                            0,
-                                            cellIndexDate,
-                                            cellIndexDate + subjCount - 1
+                                        firstSheet.addMergedRegion(
+                                            CellRangeAddress(
+                                                0,
+                                                0,
+                                                cellIndexDate,
+                                                cellIndexDate + subjCount - 1
+                                            )
                                         )
-                                    )
 
-                                    cellIndexDate += subjCount
-                                }
+                                        cellIndexDate += subjCount
+                                    }
                                 }
                             }
                             snapshot.children.forEach { rollNo ->
-                               rollNo .children.forEach {studName ->
-                                   Log.d("studName",studName.key.toString())
-                                var p = 0F
-                                var a = 0F
-                                var cellIndexA = 5
-                                val dataRow = firstSheet.createRow(rowIndex)
-                                dataRow.createCell(0).setCellValue(
-                                    XSSFRichTextString(
-                                        rollNo.key.toString()
+                                rollNo.children.forEach { studName ->
+                                    Log.d("studName", studName.key.toString())
+                                    var p = 0F
+                                    var a = 0F
+                                    var cellIndexA = 5
+                                    val dataRow = firstSheet.createRow(rowIndex)
+                                    dataRow.createCell(0).setCellValue(
+                                        XSSFRichTextString(
+                                            rollNo.key.toString()
+                                        )
                                     )
-                                )
-                                dataRow.createCell(1).setCellValue(
-                                            XSSFRichTextString(
-                                                studName.key.toString()
-                                            )
-                                )
+                                    dataRow.createCell(1).setCellValue(
+                                        XSSFRichTextString(
+                                            studName.key.toString()
+                                        )
+                                    )
 
-                                studName.children.forEach { month ->
-                                    month.children.forEach { date ->
-                                        date.children.forEach { sub ->
+                                    studName.children.forEach { month ->
+                                        month.children.forEach { date ->
+                                            date.children.forEach { sub ->
 //                                     val cell = row
-                                            if (sub.child("status").value == "P") p += 1 else a += 1
-                                            dataRow.createCell(cellIndexA)
-                                                .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
-                                            cellIndexA += 1
+                                                if (sub.child("status").value == "P") p += 1 else a += 1
+                                                dataRow.createCell(cellIndexA)
+                                                    .setCellValue(XSSFRichTextString(sub.child("status").value.toString()))
+                                                cellIndexA += 1
+                                            }
                                         }
                                     }
+                                    dataRow.createCell(2)
+                                        .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
+                                    try {
+                                        val per = ((p / (p + a)) * 100)
+                                        dataRow.createCell(3)
+                                            .setCellValue(XSSFRichTextString("${per}%"))
+                                    } catch (e: Exception) {
+                                        e.printStackTrace()
+                                    }
+                                    rowIndex += 1
                                 }
-                                dataRow.createCell(2)
-                                    .setCellValue(XSSFRichTextString("${p.toInt()} / ${a.toInt() + p.toInt()}"))
-                                try {
-                                    val per = ((p / (p + a)) * 100)
-                                    dataRow.createCell(3)
-                                        .setCellValue(XSSFRichTextString("${per}%"))
-                                } catch (e: Exception) {
-                                    e.printStackTrace()
-                                }
-                                rowIndex += 1
-                            }}
+                            }
                             var fos: FileOutputStream? = null
                             try {
 //                            val file_path =
@@ -737,14 +752,17 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                                 Toast.makeText(
                                     this@ViewAttendanceActivity,
-                                    "Excel Sheet Generated",
+                                    "Excel Sheet Saved in\n /Documents Folder",
                                     Toast.LENGTH_SHORT
                                 ).show()
                             }
                         }
 
-                    }
-                    else  Toast.makeText(this@ViewAttendanceActivity,"Attendance Data Not Exist!!",Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(
+                        this@ViewAttendanceActivity,
+                        "Attendance Data Not Exist!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -766,7 +784,7 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 var a = 0F
                                 val rollNo = rollno.key.toString()
                                 val studname = studName.key.toString()
-                                Log.d("studName",studName.key.toString())
+                                Log.d("studName", studName.key.toString())
                                 studName.children.forEach { month ->
                                     month.children.forEach { dates ->
                                         dates.children.forEach { subs ->
@@ -795,14 +813,19 @@ class ViewAttendanceActivity : AppCompatActivity() {
                                 }
                             }
                         }
-                    }
-                    else  Toast.makeText(this@ViewAttendanceActivity,"Attendance Data Not Exist!!",Toast.LENGTH_SHORT).show()
-                    }
+                    } else Toast.makeText(
+                        this@ViewAttendanceActivity,
+                        "Attendance Data Not Exist!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("errrr", error.message, error.toException())
                 }
             })
     }
+
     private fun fetchAttendanceDataBYMonth() {
         fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
             .child(binding.ACTVSelectYear.text.toString())
@@ -811,50 +834,55 @@ class ViewAttendanceActivity : AppCompatActivity() {
                     if (snapshot.exists()) {
                         studAttendList.clear()
                         snapshot.children.forEach { rollno ->
-                            rollno.children.forEach {studName->{
-                            var p = 0F
-                            var a = 0F
-                            val rollNo = rollno.key.toString()
-                            studName.child(binding.ACTVMonth.text.toString()).children.forEach { dates ->
-                                dates.children.forEach { subs ->
-                                    if (subs.child("status").value.toString() == "P") {
-                                        p += 1
-                                    }
-                                    //Subjects
-                                    a += 1
+                            rollno.children.forEach { studName ->
+                                var p = 0F
+                                var a = 0F
+                                val rollNo = rollno.key.toString()
+                                studName.child(binding.ACTVMonth.text.toString()).children.forEach { dates ->
+                                    dates.children.forEach { subs ->
+                                        if (subs.child("status").value.toString() == "P") {
+                                            p += 1
+                                        }
+                                        //Subjects
+                                        a += 1
 //                                    val sub = subs.key.toString()
 //                                    val status = subs.child("status").value.toString()
+                                    }
+                                }
+                                try {
+                                    val per = ((p / a) * 100).toInt()
+                                    fireDb.child("Students")
+                                        .child(TeacherDashboard.loggedTeacherDep)
+                                        .child(binding.ACTVSelectYear.text.toString()).child(rollNo)
+                                        .child("fullName").get().addOnSuccessListener {
+                                            studAttendList.add(
+                                                StudentData(
+                                                    rollNo,
+                                                    studName.key.toString(),/*Percentage*///Harshit
+                                                    "${per}%"
+                                                )
+                                            )
+                                            binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                        }
+
+                                } catch (e: Exception) {
+//                                Log.e("errrr",e.message,e)
                                 }
                             }
-                            try {
-                                val per = ((p / a) * 100).toInt()
-                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
-                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").get().addOnSuccessListener {
-                                        studAttendList.add(
-                                            StudentData(
-                                                rollNo,
-                                                studName.key.toString(),/*Percentage*///Harshit
-                                                "${per}%"
-                                            )
-                                        )
-                                        binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
-                                    }
-
-                            } catch (e: Exception) {
-//                                Log.e("errrr",e.message,e)
-                            }
-                        }}
-                    }
+                        }
+                    } else Toast.makeText(
+                        this@ViewAttendanceActivity,
+                        "Attendance Data Not Exist!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
-                    else  Toast.makeText(this@ViewAttendanceActivity,"Attendance Data Not Exist!!",Toast.LENGTH_SHORT).show()
-                }
-
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("errrr", error.message, error.toException())
                 }
             })
     }
+
     private fun fetchAttendanceDataBYSub() {
         fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
             .child(binding.ACTVSelectYear.text.toString())
@@ -863,50 +891,58 @@ class ViewAttendanceActivity : AppCompatActivity() {
                     if (snapshot.exists()) {
                         studAttendList.clear()
                         snapshot.children.forEach { rollno ->
-                            rollno.children.forEach { studName->
-                            var p = 0F
-                            var a = 0F
-                            val rollNo = rollno.key.toString()
-                            studName.children.forEach { month ->
-                                month.children.forEach { dates ->
-                                    dates.children.forEach { subs ->
-                                        if (subs.key.toString() == binding.ACTVSelectSubject.text.toString()) {
-                                            if (subs.child("status").value.toString() == "P") {
-                                                p += 1
-                                            } //Subjects
-                                            a += 1
+                            rollno.children.forEach { studName ->
+                                var p = 0F
+                                var a = 0F
+                                val rollNo = rollno.key.toString()
+                                studName.children.forEach { month ->
+                                    month.children.forEach { dates ->
+                                        dates.children.forEach { subs ->
+                                            if (subs.key.toString() == binding.ACTVSelectSubject.text.toString()) {
+                                                if (subs.child("status").value.toString() == "P") {
+                                                    p += 1
+                                                } //Subjects
+                                                a += 1
 //                                    val sub = subs.key.toString()
 //                                    val status = subs.child("status").value.toString()
+                                            }
                                         }
                                     }
                                 }
-                            }
-                            try {
-                                val per = ((p / a) * 100).toInt()
-                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
-                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").get().addOnSuccessListener {
-                                        studAttendList.add(
-                                            StudentData(
-                                                rollNo,
-                                                studName.key.toString(),/*Percentage*/
-                                                "${per}%"
+                                try {
+                                    val per = ((p / a) * 100).toInt()
+                                    fireDb.child("Students")
+                                        .child(TeacherDashboard.loggedTeacherDep)
+                                        .child(binding.ACTVSelectYear.text.toString()).child(rollNo)
+                                        .child("fullName").get().addOnSuccessListener {
+                                            studAttendList.add(
+                                                StudentData(
+                                                    rollNo,
+                                                    studName.key.toString(),/*Percentage*/
+                                                    "${per}%"
+                                                )
                                             )
-                                        )
-                                        binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
-                                    }
+                                            binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                        }
 
-                            } catch (e: Exception) {
+                                } catch (e: Exception) {
 //                                Log.e("errrr",e.message,e)
+                                }
                             }
-                        }}
-                    }
-                    else  Toast.makeText(this@ViewAttendanceActivity,"Attendance Data Not Exist!!",Toast.LENGTH_SHORT).show()
+                        }
+                    } else Toast.makeText(
+                        this@ViewAttendanceActivity,
+                        "Attendance Data Not Exist!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("errrr", error.message, error.toException())
                 }
             })
     }
+
     private fun fetchAttendanceDataBYMonthNSub() {
         fireDb.child("Student Attendance").child(TeacherDashboard.loggedTeacherDep)
             .child(binding.ACTVSelectYear.text.toString())
@@ -915,38 +951,44 @@ class ViewAttendanceActivity : AppCompatActivity() {
                     if (snapshot.exists()) {
                         studAttendList.clear()
                         snapshot.children.forEach { rollno ->
-                            rollno.children.forEach {studName->
-                            var p = 0F
-                            var a = 0F
-                            val rollNo = rollno.key.toString()
-                            studName.child(binding.ACTVMonth.text.toString()).children.forEach { dates ->
-                                dates.children.forEach { subs ->
-                                    if (subs.key.toString() == binding.ACTVSelectSubject.text.toString()) {
-                                        if (subs.child("status").value.toString() == "P") p += 1
-                                        a += 1
+                            rollno.children.forEach { studName ->
+                                var p = 0F
+                                var a = 0F
+                                val rollNo = rollno.key.toString()
+                                studName.child(binding.ACTVMonth.text.toString()).children.forEach { dates ->
+                                    dates.children.forEach { subs ->
+                                        if (subs.key.toString() == binding.ACTVSelectSubject.text.toString()) {
+                                            if (subs.child("status").value.toString() == "P") p += 1
+                                            a += 1
+                                        }
                                     }
                                 }
-                            }
-                            try {
-                                val per = ((p / a) * 100).toInt()
-                                fireDb.child("Students").child(TeacherDashboard.loggedTeacherDep)
-                                    .child(binding.ACTVSelectYear.text.toString()).child(rollNo).child("fullName").get().addOnSuccessListener {
-                                        studAttendList.add(
-                                            StudentData(
-                                                rollNo,
-                                                it.value.toString(),/*Percentage*/
-                                                "${per}%"
+                                try {
+                                    val per = ((p / a) * 100).toInt()
+                                    fireDb.child("Students")
+                                        .child(TeacherDashboard.loggedTeacherDep)
+                                        .child(binding.ACTVSelectYear.text.toString()).child(rollNo)
+                                        .child("fullName").get().addOnSuccessListener {
+                                            studAttendList.add(
+                                                StudentData(
+                                                    rollNo,
+                                                    it.value.toString(),/*Percentage*/
+                                                    "${per}%"
+                                                )
                                             )
-                                        )
-                                        binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
-                                    }
+                                            binding.rsvAllViewAttendance.adapter?.notifyDataSetChanged()
+                                        }
 
-                            } catch (e: Exception) {
+                                } catch (e: Exception) {
 //                                Log.e("errrr",e.message,e)
+                                }
                             }
-                        }}
-                    }
-                    else  Toast.makeText(this@ViewAttendanceActivity,"Attendance Data Not Exist!!",Toast.LENGTH_SHORT).show()
+                        }
+                    } else Toast.makeText(
+                        this@ViewAttendanceActivity,
+                        "Attendance Data Not Exist!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
 

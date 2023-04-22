@@ -15,6 +15,8 @@ import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.FrameLayout
+import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
@@ -115,6 +117,13 @@ class TeacherDashboard : AppCompatActivity() {
         onClicklisteners()
         if (loggedTeacherType == "teacher") {
             binding.TDHodContainer.visibility = View.GONE
+            val params = FrameLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+            ).apply {
+                gravity = Gravity.CENTER
+            }
+            binding.mainLL.layoutParams = params
         }
 
     }
@@ -205,10 +214,18 @@ class TeacherDashboard : AppCompatActivity() {
                                 year.children.forEach { rollno->
                                     fireDb.child("Students").child(loggedTeacherDep)
                                         .child(year.key.toString()).child(rollno.key.toString())
-                                        .addValueEventListener(object :ValueEventListener{
-                                            override fun onDataChange(snapshot: DataSnapshot) {
-                                                studentList.add(snapshot.getValue(StudentData::class.java)!!)
-                                                addCrBinding.rsvDialogAddCr.adapter!!.notifyDataSetChanged()
+                                        .addListenerForSingleValueEvent(object :ValueEventListener{
+                                            override fun onDataChange(snapshot1: DataSnapshot){
+                                                if (snapshot1.exists()){
+                                                    studentList.add(snapshot1.getValue(StudentData::class.java)!!)
+                                                    addCrBinding.rsvDialogAddCr.adapter!!.notifyDataSetChanged()
+                                                }else{
+                                                    fireDb.child("CR Data")
+                                                        .child(loggedTeacherDep).child(year.key.toString()).child(rollno.key.toString()).removeValue()
+                                                        .addOnSuccessListener {
+                                                            Toast.makeText(this@TeacherDashboard,"${rollno.child("Name").value} Not exist!!",Toast.LENGTH_SHORT).show()
+                                                        }
+                                                    }
                                             }
                                             override fun onCancelled(error: DatabaseError) {
                                                 Log.e("firebaseError",error.message,error.toException())
@@ -359,6 +376,7 @@ class TeacherDashboard : AppCompatActivity() {
                     if (snapshot.exists()) {
                         Glide.with(this@TeacherDashboard)
                             .load(snapshot.getValue(FacultyData::class.java)!!.downloadUrl)
+                            .placeholder(R.drawable.ic_person)
                             .into(viewProfileBinding.DVPImgAdmin)
 
                         viewProfileBinding.DVPAdminName.text =
@@ -544,6 +562,7 @@ class TeacherDashboard : AppCompatActivity() {
                             try {
                                 Glide.with(this@TeacherDashboard)
                                     .load(snapshot.getValue(FacultyData::class.java)!!.downloadUrl)
+                                    .placeholder(R.drawable.ic_person)
                                     .into(binding.TDTeacherImage)
                             } catch (_: Exception) {
                             }

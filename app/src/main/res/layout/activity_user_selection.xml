@@ -172,6 +172,7 @@
                     android:layout_height="130dp"
                     android:src="@drawable/logo_teacher"
                     android:scaleType="centerCrop"
+                    android:layout_marginTop="8dp"
                     app:shapeAppearanceOverlay="@style/circular" />
 
                 <TextView
@@ -180,7 +181,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"
                     android:text="Teacher"
-                    android:layout_marginTop="20dp"
+                    android:layout_marginTop="13dp"
                     android:textSize="30sp"
                     android:textStyle="bold" />
             </LinearLayout>

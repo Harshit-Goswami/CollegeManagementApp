@@ -24,18 +24,19 @@ class AddFaculty : AppCompatActivity() {
     private var facultyDepartment = ""
     private var facultyName = ""
     private var facultyContactNo = ""
-//    private var facultyQualifications = ""
+
+    //    private var facultyQualifications = ""
 //    private var facultyPassword = ""
     private var imgUri: Uri? = null
     private var storageRef: StorageReference? = null
-    private var  dbRef = FirebaseDatabase.getInstance().reference.child("Faculty Data")
+    private var dbRef = FirebaseDatabase.getInstance().reference.child("Faculty Data")
     private var downloadImgUrl: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAdminAddFacultyBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        if (ManageFaculty.loggedUser == "HOD"){
+        if (ManageFaculty.loggedUser == "HOD") {
             binding.TILdepartment.visibility = View.GONE
         }
         settingAutoCompleteTextView()
@@ -110,13 +111,18 @@ class AddFaculty : AppCompatActivity() {
         } else {
             binding.ContactNo.error = "Please enter Valid Number"
         }
-if (ManageFaculty.loggedUser == "admin") {
-    if (binding.department.text.toString().isNotEmpty()) {
-            facultyDepartment = binding.department.text.toString()
-        } else {
-            binding.department.error = "please select department"
+        if (ManageFaculty.loggedUser == "admin") {
+            if (binding.department.text.toString().isNotEmpty()) {
+                facultyDepartment = binding.department.text.toString()
+            } else {
+                binding.department.error = "please select department"
+            }
         }
-}
+        if (ManageFaculty.loggedUser == "HOD") {
+                facultyDepartment = TeacherDashboard.loggedTeacherDep
+            }
+        }
+
 //
 //        if (binding.Qualification.text.toString().isNotEmpty()) {
 //            facultyQualifications = binding.Qualification.text.toString()
@@ -131,7 +137,7 @@ if (ManageFaculty.loggedUser == "admin") {
 //        }else{
 //            binding.loginPass.error = "password length should be greater than 5."
 //        }
-    }
+
 
     private fun uploadImageAndData() {
         if (imgUri != null) {
@@ -140,7 +146,7 @@ if (ManageFaculty.loggedUser == "admin") {
                     // Defining the child of storageReference
                     storageRef =
                         FirebaseStorage.getInstance().reference.child("Faculty Images")
-                            .child(facultyName+"(${facultyDepartment})")
+                            .child(facultyName + "(${facultyDepartment})")
                     storageRef!!.putFile(imgUri!!)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
@@ -171,7 +177,7 @@ if (ManageFaculty.loggedUser == "admin") {
                     // Defining the child of storageReference
                     storageRef =
                         FirebaseStorage.getInstance().reference.child("Faculty Images")
-                            .child(facultyName+"(${facultyDepartment})")
+                            .child(facultyName + "(${facultyDepartment})")
                     storageRef!!.putFile(imgUri!!)
                         .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
@@ -202,19 +208,19 @@ if (ManageFaculty.loggedUser == "admin") {
 
     private fun uploadData() {
         if (facultyName != "" && facultyContactNo != "") {
-            if (ManageFaculty.loggedUser == "HOD"){
-               dbRef.child(TeacherDashboard.loggedTeacherDep)
-                   .child(facultyName)
-                   .setValue(
-                    FacultyData(
-                        facultyName,
-                        TeacherDashboard.loggedTeacherDep,
-                        downloadImgUrl.toString(),
-                        facultyContactNo,
-                        facultyContactNo,
-                        "teacher"
+            if (ManageFaculty.loggedUser == "HOD") {
+                dbRef.child(TeacherDashboard.loggedTeacherDep)
+                    .child(facultyName)
+                    .setValue(
+                        FacultyData(
+                            facultyName,
+                            TeacherDashboard.loggedTeacherDep,
+                            downloadImgUrl.toString(),
+                            facultyContactNo,
+                            facultyContactNo,
+                            "teacher"
+                        )
                     )
-                )
                     .addOnSuccessListener {
                         Toast
                             .makeText(
@@ -232,20 +238,21 @@ if (ManageFaculty.loggedUser == "admin") {
                             )
                             .show()
                     }
-            }}
+            }
+        }
         if (facultyName != "" && facultyDepartment != "" && facultyContactNo != "") {
-            if (ManageFaculty.loggedUser == "admin"){
+            if (ManageFaculty.loggedUser == "admin") {
                 dbRef.child(binding.department.text.toString())
-                .child(facultyName).setValue(
-                    FacultyData(
-                        facultyName,
-                        facultyDepartment,
-                        downloadImgUrl.toString(),
-                        facultyContactNo,
-                        facultyContactNo,
-                        "HOD"
+                    .child(facultyName).setValue(
+                        FacultyData(
+                            facultyName,
+                            facultyDepartment,
+                            downloadImgUrl.toString(),
+                            facultyContactNo,
+                            facultyContactNo,
+                            "HOD"
+                        )
                     )
-                )
                     .addOnSuccessListener {
                         Toast
                             .makeText(
@@ -263,6 +270,7 @@ if (ManageFaculty.loggedUser == "admin") {
                             )
                             .show()
                     }
-            }}
+            }
         }
     }
+}

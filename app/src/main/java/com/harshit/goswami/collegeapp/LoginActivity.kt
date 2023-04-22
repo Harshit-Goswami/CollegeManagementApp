@@ -4,6 +4,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AppCompatActivity
 import com.google.android.material.R
@@ -37,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         settingAutoCompleteTextView()
         val user = intent.getStringExtra("SelectedUser")
+        if (user=="admin") binding.TILDepartment.visibility = View.GONE
         when (user) {
             "admin" -> {
                 val adminPref: SharedPreferences = getSharedPreferences("adminPref", MODE_PRIVATE)

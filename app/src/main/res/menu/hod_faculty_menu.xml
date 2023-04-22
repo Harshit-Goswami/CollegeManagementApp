@@ -15,5 +15,6 @@
 <item
         android:id="@+id/menu_send_massage"
         android:title="Send a massage"
+        android:visible="false"
         />
 </menu>

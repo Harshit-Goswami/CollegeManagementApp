@@ -851,6 +851,7 @@
                         </com.google.android.material.card.MaterialCardView>
                     </LinearLayout>
                 </HorizontalScrollView>
+<!--
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_alumni"
@@ -930,13 +931,14 @@
                                 android:textColor="#000"
                                 android:textStyle="bold" />
                         </LinearLayout>
-                        <!--                            android:shadowColor="@color/shrine"-->
-                        <!--                            android:shadowDx="0.4"-->
-                        <!--                            android:shadowDy="0.4"-->
-                        <!--                            android:shadowRadius="3"-->
+                        &lt;!&ndash;                            android:shadowColor="@color/shrine"&ndash;&gt;
+                        &lt;!&ndash;                            android:shadowDx="0.4"&ndash;&gt;
+                        &lt;!&ndash;                            android:shadowDy="0.4"&ndash;&gt;
+                        &lt;!&ndash;                            android:shadowRadius="3"&ndash;&gt;
 
                     </LinearLayout>
                 </com.google.android.material.card.MaterialCardView>
+-->
 
                 <com.google.android.material.textview.MaterialTextView
                     android:id="@+id/txt_testimonial"
@@ -1001,7 +1003,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:padding="2dp"
-                                        android:text="Rahul"
+                                        android:text="Harshit"
                                         android:textColor="#000"
                                         android:textStyle="bold" />
                                 </LinearLayout>
@@ -1048,7 +1050,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:padding="2dp"
-                                        android:text="Rahul"
+                                        android:text="Uddhav"
                                         android:textColor="#000"
                                         android:textStyle="bold" />
                                 </LinearLayout>
@@ -1095,7 +1097,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_gravity="center"
                                         android:padding="2dp"
-                                        android:text="Rahul"
+                                        android:text="Vinay"
                                         android:textColor="#000"
                                         android:textStyle="bold" />
                                 </LinearLayout>

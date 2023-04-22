@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.ViewImageActivity
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
@@ -196,10 +197,13 @@ class FacultyAdapter(
                                             .child(this.department)
                                             .child(this.name).removeValue()
                                             .addOnSuccessListener {
-                                                Toast.makeText(
-                                                    context, "Deleted!",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+                                                FirebaseStorage.getInstance().getReferenceFromUrl(this.downloadUrl).delete().addOnSuccessListener {
+                                                    Toast.makeText(
+                                                        context, "Deleted!",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+
                                             }
                                             .addOnFailureListener { e ->
                                                 Toast.makeText(
@@ -215,10 +219,12 @@ class FacultyAdapter(
                                             .child(this.department)
                                             .child(this.name).removeValue()
                                             .addOnSuccessListener {
-                                                Toast.makeText(
-                                                    context, "Deleted!",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
+                                                FirebaseStorage.getInstance().getReferenceFromUrl(this.downloadUrl).delete().addOnSuccessListener {
+                                                    Toast.makeText(
+                                                        context, "Deleted!",
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
                                             }
                                             .addOnFailureListener {
                                                 Toast.makeText(

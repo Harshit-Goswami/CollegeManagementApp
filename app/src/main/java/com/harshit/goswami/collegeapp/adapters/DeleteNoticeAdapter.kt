@@ -52,17 +52,11 @@ class DeleteNoticeAdapter(
                 binding.deleteNoticeBtn.setOnClickListener {
                     FirebaseFirestore.getInstance().collection("Notices")
                         .document(this.date+this.time).delete().addOnSuccessListener {
-                            Toast.makeText(
-                                context,
-                                "${this.title} Notice deleted",
-                                Toast.LENGTH_SHORT
-                            )
-                                .show()
                             FirebaseStorage.getInstance().getReferenceFromUrl(this.downloadUrl)
                                 .delete().addOnSuccessListener {
                                     Toast.makeText(
                                         context,
-                                        "${this.title} Notice Image deleted",
+                                        "${this.title} Deleted",
                                         Toast.LENGTH_SHORT
                                     )
                                         .show()
@@ -78,7 +72,7 @@ class DeleteNoticeAdapter(
                         .document(this.date+this.time).delete().addOnSuccessListener {
                             Toast.makeText(
                                 context,
-                                "${this.title} Notice deleted",
+                                "${this.title}  Deleted",
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
@@ -86,7 +80,7 @@ class DeleteNoticeAdapter(
                                 .delete().addOnSuccessListener {
                                     Toast.makeText(
                                         context,
-                                        "${this.title} Notice Image deleted",
+                                        "${this.title}  Image Deleted",
                                         Toast.LENGTH_SHORT
                                     )
                                         .show()

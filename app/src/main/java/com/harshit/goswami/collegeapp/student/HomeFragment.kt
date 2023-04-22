@@ -4,10 +4,8 @@ import android.app.Activity
 import android.app.Dialog
 import android.content.Intent
 import android.content.SharedPreferences
-import android.content.pm.ResolveInfo
 import android.net.Uri
 import android.os.Bundle
-import android.os.Environment
 import android.os.StrictMode
 import android.os.StrictMode.VmPolicy
 import android.util.Log
@@ -34,6 +32,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
+import com.harshit.goswami.collegeapp.BuildConfig
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
@@ -51,7 +50,6 @@ class HomeFragment : Fragment() {
     private lateinit var toolbar: MaterialToolbar
     private lateinit var drawerLayout: DrawerLayout
     private val fireDb = FirebaseDatabase.getInstance().reference
-    var arrayListapkFilepath: ArrayList<Uri>? = null
 
     var studOldPassword = ""
     private var studNewPassword = ""
@@ -137,10 +135,10 @@ class HomeFragment : Fragment() {
         }
         if (MainActivity.user == "other") {
             binding.navView.menu.getItem(0).isVisible = false
+            binding.navView.menu.getItem(4).isVisible = false
             binding.navView.menu.getItem(5).isVisible = false
-            binding.navView.menu.getItem(6).isVisible = false
             hView.findViewById<ImageView>(R.id.nav_had_imageView).visibility = View.GONE
-            hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
+            hView.findViewById<TextView>(R.id.nav_stud_name).text = ""
         }
         binding.navView.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -148,9 +146,35 @@ class HomeFragment : Fragment() {
                     viewAttendanceSetupByHarshit()
                 }
                 R.id.menu_campus_life -> {
-                    startActivity(Intent(requireContext(), GalleryActivity::class.java))
+                    val i =  Intent(
+                        requireContext(),
+                        GalleryActivity::class.java
+                    )
+                    i.putExtra("by","student")
+                    startActivity(i)
                 }
                 R.id.menu_imp_links -> {
+                    try {
+                        val viewBinding= DialogImpLinksBinding.inflate(LayoutInflater.from(context))
+                        val impLinkDialog = AlertDialog.Builder(
+                            requireContext(),
+                            com.google.android.material.R.style.Base_Theme_Material3_Light_Dialog
+                        ).create()
+                        impLinkDialog.window?.setGravity(Gravity.CENTER)
+                        impLinkDialog.setCancelable(true)
+                        impLinkDialog.setView(viewBinding.root)
+                        impLinkDialog.setCanceledOnTouchOutside(true)
+
+                        viewBinding.facebookLink.setOnClickListener {getByUrl("https://www.facebook.com/profile.php?id=100064103347725")  }
+                        viewBinding.instaLink.setOnClickListener {getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en")  }
+                        viewBinding.webLink.setOnClickListener {getByUrl("https://www.chetanacollege.in/")  }
+                        viewBinding.twitterLink.setOnClickListener {getByUrl("https://twitter.com/chetanas_inst?lang=en")  }
+                        viewBinding.linkdinLink.setOnClickListener {getByUrl("https://www.linkedin.com/company/chetana-college/")  }
+                        viewBinding.youtubeLink.setOnClickListener {getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")  }
+                        impLinkDialog.show()
+                    } catch (e: Exception) {
+                        Log.d("dialog Error-", "${e.message}")
+                    }
                 }
                 R.id.menu_faculty -> {
                     val i = Intent(requireContext(),ManageFaculty::class.java)
@@ -165,22 +189,33 @@ class HomeFragment : Fragment() {
                 }
 
                 R.id.menu_developer -> {
-//        try {
                        val developerProfileDialog = DialogDeveloperProfileBinding.inflate(layoutInflater)
                         val bottomDialog = Dialog(requireContext(), R.style.BottomSheetStyle)
                         bottomDialog.setContentView(developerProfileDialog.root)
                         bottomDialog
                             .setCanceledOnTouchOutside(false)
                         bottomDialog.show()
-//        } catch (e: Exception) {
-//            Log.d("dialogError","${e.message}")
-//        }
+                    //https://www.instagram.com/_harshitgoswami/
+                    //https://www.facebook.com/harshit.goswami.98096
+                    //https://www.linkedin.com/in/harshit-goswami-380649233/
                 }
                 R.id.menu_map -> {
 
                 }
                 R.id.menu_share_apk->{
-                    getByUrl("")
+                    try {
+                        val shareIntent = Intent(Intent.ACTION_SEND)
+                        shareIntent.type = "text/plain"
+                        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Chetana's App")
+                        var shareMessage = "\nLet me recommend you this application\n\n"
+                        shareMessage =
+                            "${shareMessage}https://drive.google.com/file/d/13e65yLcC0YouxfpSpAtwM3-fYVvhysFZ/view?usp=share_link".trimIndent()
+                        shareIntent.putExtra(Intent.EXTRA_TEXT, shareMessage)
+                        startActivity(Intent.createChooser(shareIntent, "choose one"))
+                    } catch (e: java.lang.Exception) {
+                        //e.toString();
+                    }
+//                    getByUrl("https://drive.google.com/file/d/13e65yLcC0YouxfpSpAtwM3-fYVvhysFZ/view?usp=share_link")
                 }
 
             }
@@ -205,7 +240,7 @@ class HomeFragment : Fragment() {
         val i = Intent(requireContext(), LoginActivity::class.java)
         i.putExtra("SelectedUser", "student")
         startActivity(i)
-
+        activity?.finish()
     }
 
     private fun studentChangePasswordSetUp() {
