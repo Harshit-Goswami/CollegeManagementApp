@@ -33,7 +33,7 @@ class NoticeFragment : Fragment() {
                 DeleteNoticeAdapter(
                     noticeList,
                     it,
-                    "NoticeFragment"
+                    "viewNotice"
                 )
             }
         binding.FNRsvNotices.setHasFixedSize(true)

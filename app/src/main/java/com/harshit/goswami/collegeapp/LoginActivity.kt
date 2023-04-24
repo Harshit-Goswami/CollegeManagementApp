@@ -289,11 +289,11 @@ class LoginActivity : AppCompatActivity() {
                                         }
                                         if (binding.username.text.toString() == item.getValue(
                                                 StudentData::class.java
-                                            )?.contactNo.toString()
+                                            )?.fullName.toString()
                                         ) {
                                             userName = item.getValue(
                                                 StudentData::class.java
-                                            )?.contactNo.toString()
+                                            )?.fullName.toString()
                                         }
                                         if (binding.password.text.toString() == item.getValue(
                                                 StudentData::class.java

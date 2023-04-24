@@ -33,7 +33,7 @@ class UploadedEvents : AppCompatActivity() {
         retrieveEvents()
         binding.UERsvEvents.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.UERsvEvents.adapter = DeleteNoticeAdapter(eventList, this, "EventActivity")
+        binding.UERsvEvents.adapter = DeleteNoticeAdapter(eventList, this, "deleteEvent")
         binding.UERsvEvents.setHasFixedSize(true)
 
 
@@ -50,15 +50,16 @@ class UploadedEvents : AppCompatActivity() {
 
     private fun retrieveEvents() {
         eventList = ArrayList()
-    FirebaseFirestore.getInstance().collection("Events").addSnapshotListener { value, error ->
-        if (error == null){
-          value?.forEach {
-        eventList.add(it.toObject(NoticeData::class.java))
-        binding.UERsvEvents.adapter?.notifyDataSetChanged()
-        binding.UEProgressIndicator.visibility = View.GONE
-          }
+        FirebaseFirestore.getInstance().collection("Events").addSnapshotListener { value, error ->
+            if (error == null) {
+                eventList.clear()
+                value?.forEach {
+                    eventList.add(it.toObject(NoticeData::class.java))
+                    binding.UEProgressIndicator.visibility = View.GONE
+                }
+                binding.UERsvEvents.adapter?.notifyDataSetChanged()
+            }
         }
-     }
-        eventList.sortWith(compareByDescending { "${it.date}${it.time}"})
+        eventList.sortWith(compareByDescending { "${it.date}${it.time}" })
     }
 }

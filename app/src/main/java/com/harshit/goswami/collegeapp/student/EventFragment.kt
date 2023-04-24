@@ -39,8 +39,9 @@ class EventFragment : Fragment() {
                 DeleteNoticeAdapter(
                     eventList,
                     it,
-                    "NoticeFragment"
+                    "viewEvent"
                 )
+
             }
         binding.rsvEvent.setHasFixedSize(true)
         binding.rsvEvent.adapter?.notifyDataSetChanged()
@@ -53,14 +54,14 @@ class EventFragment : Fragment() {
         eventList = ArrayList()
         eventList = ArrayList()
         FirebaseFirestore.getInstance().collection("Events").addSnapshotListener { value, error ->
-            if (error == null){
+            if (error == null) {
                 value?.forEach {
                     eventList.add(it.toObject(NoticeData::class.java))
                     binding.rsvEvent.adapter?.notifyDataSetChanged()
                 }
             }
         }
-        eventList.sortWith(compareByDescending { "${it.date}${it.time}"})
+        eventList.sortWith(compareByDescending { "${it.date}${it.time}" })
     }
 }
 

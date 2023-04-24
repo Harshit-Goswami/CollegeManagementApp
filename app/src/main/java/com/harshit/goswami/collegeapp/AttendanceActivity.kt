@@ -24,6 +24,7 @@ class AttendanceActivity : AppCompatActivity() {
     private val studentList = ArrayList<StudentData>()
     private var subName = ""
     private var date = ""
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,28 +36,28 @@ class AttendanceActivity : AppCompatActivity() {
 
         binding.rsvTakeAttendance.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rsvTakeAttendance.adapter = AttendanceAdapter(studentList, this,"take")
+        binding.rsvTakeAttendance.adapter = AttendanceAdapter(studentList, this, "take")
         binding.rsvTakeAttendance.setHasFixedSize(true)
         binding.rsvTakeAttendance.adapter?.notifyDataSetChanged()
 
-            fireDb.child("Students")
-                .child("BScIT")
-                .child("TY").addListenerForSingleValueEvent(object : ValueEventListener {
-                    override fun onDataChange(snapshot: DataSnapshot) {
-                        if (snapshot.exists()) {
-                            snapshot.children.forEach {
-                                it.getValue(StudentData::class.java)
-                                    ?.let { it1 -> studentList.add(it1) }
-                            }
-                            binding.rsvTakeAttendance.adapter?.notifyDataSetChanged()
+        fireDb.child("Students")
+            .child("BScIT")
+            .child("TY").addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        snapshot.children.forEach {
+                            it.getValue(StudentData::class.java)
+                                ?.let { it1 -> studentList.add(it1) }
                         }
-
+                        binding.rsvTakeAttendance.adapter?.notifyDataSetChanged()
                     }
 
-                    override fun onCancelled(error: DatabaseError) {
-                    }
+                }
 
-                })
+                override fun onCancelled(error: DatabaseError) {
+                }
+
+            })
 
         binding.submit.setOnClickListener {
             val sdfMonth =
@@ -69,10 +70,15 @@ class AttendanceActivity : AppCompatActivity() {
 
 
             AttendanceAdapter.attendanceList.forEach { it2 ->
-                fireDb.child("Student Attendance").child(MainActivity.studentDep).child(MainActivity.studentYear)
+                fireDb.child("Student Attendance").child(MainActivity.studentDep)
+                    .child(MainActivity.studentYear)
                     .child(it2.rollNo).child(it2.studName).child(month).child(Cdate).child(subName)
                     .child("status").setValue(it2.status).addOnSuccessListener {
-                        Toast.makeText(this@AttendanceActivity,"Attendance Taken Successfully!!",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            this@AttendanceActivity,
+                            "Attendance Taken Successfully!!",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
             }
         }

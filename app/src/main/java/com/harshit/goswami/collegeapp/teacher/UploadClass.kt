@@ -256,6 +256,7 @@ class UploadClass : AppCompatActivity() {
                 subjectListTY,
                 this
             )
+        deleteClassBinding.dialogTxtAddSubject.text = "Delete Subject"
 //        deleteClassBinding.rsvDialogDeleteClassTY.adapter?.notifyDataSetChanged()
 
         ////////     Recycler SY   //////////

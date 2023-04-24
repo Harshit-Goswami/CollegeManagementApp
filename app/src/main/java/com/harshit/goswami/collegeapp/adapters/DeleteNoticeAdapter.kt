@@ -38,38 +38,65 @@ class DeleteNoticeAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(noticeList[position]) {
-                if (activity == "NoticeFragment") {
+                if (activity == "viewNotice") {
                     binding.deleteNoticeBtn.visibility = View.GONE
                 }
+                if (activity == "viewEvent") {
+                    binding.deleteNoticeBtn.visibility = View.GONE
+                    binding.noticeDescription.visibility = View.VISIBLE
+                }
+                if (activity == "deleteEvent") {
+                    binding.noticeDescription.visibility = View.VISIBLE
+                }
+//                if (activity == "deleteNotice") {
+//                }
                 binding.noticeDateAndTime.text = "${this.date} : ${this.time}"
                 binding.noticeTite.text = this.title
                 Glide.with(context).load(this.downloadUrl).into(binding.noticeImage)
                 binding.noticeImage.setOnClickListener {
                     val i = Intent(context, ViewImageActivity::class.java)
-                    i.putExtra("imageUrl",this.downloadUrl)
+                    i.putExtra("imageUrl", this.downloadUrl)
                     context.startActivity(i)
                 }
+                if (this.description == "") binding.noticeDescription.visibility = View.GONE
+                binding.noticeDescription.text = this.description
                 binding.deleteNoticeBtn.setOnClickListener {
-                    FirebaseFirestore.getInstance().collection("Notices")
-                        .document(this.date+this.time).delete().addOnSuccessListener {
-                            FirebaseStorage.getInstance().getReferenceFromUrl(this.downloadUrl)
-                                .delete().addOnSuccessListener {
-                                    Toast.makeText(
-                                        context,
-                                        "${this.title} Deleted",
-                                        Toast.LENGTH_SHORT
-                                    )
-                                        .show()
+                    if (activity == "deleteEvent") {
+                        FirebaseFirestore.getInstance().collection("Events")
+                            .document(this.date + this.time).delete().addOnSuccessListener {
+                                FirebaseStorage.getInstance().getReferenceFromUrl(this.downloadUrl)
+                                    .delete().addOnSuccessListener {
+                                        Toast.makeText(
+                                            context,
+                                            "${this.title} Deleted",
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
+                                    }
+                            }
+                    } else if (activity == "deleteNotice") {
+                        FirebaseFirestore.getInstance().collection("Notices")
+                            .document(this.date + this.time).delete().addOnSuccessListener {
+                                if (this.downloadUrl != "null") {
+                                    FirebaseStorage.getInstance()
+                                        .getReferenceFromUrl(this.downloadUrl)
+                                        .delete()
                                 }
-                        }
-
+                                Toast.makeText(
+                                    context,
+                                    "${this.title} Deleted",
+                                    Toast.LENGTH_SHORT
+                                )
+                                    .show()
+                            }
+                    }
                 }
                 val sdfDate =
                     SimpleDateFormat("dd-MM-yyyy", Locale.getDefault())
                 val date = sdfDate.format(Calendar.getInstance().time)
                 if (date == this.deletionDate) {
                     FirebaseFirestore.getInstance().collection("Notices")
-                        .document(this.date+this.time).delete().addOnSuccessListener {
+                        .document(this.date + this.time).delete().addOnSuccessListener {
                             Toast.makeText(
                                 context,
                                 "${this.title}  Deleted",

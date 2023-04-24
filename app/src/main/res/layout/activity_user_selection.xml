@@ -7,7 +7,6 @@
     android:background="#E6E6E6"
     android:orientation="vertical"
     tools:context=".UserSelectionActivity">
-
     <TextView
         android:id="@+id/txt_logAS"
         style="@style/TextAppearance.AppCompat.Headline"
@@ -170,9 +169,9 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     android:layout_width="wrap_content"
                     android:layout_height="130dp"
-                    android:src="@drawable/logo_teacher"
-                    android:scaleType="centerCrop"
                     android:layout_marginTop="8dp"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/logo_teacher"
                     app:shapeAppearanceOverlay="@style/circular" />
 
                 <TextView
@@ -180,8 +179,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center|bottom"
-                    android:text="Teacher"
                     android:layout_marginTop="13dp"
+                    android:text="Teacher"
                     android:textSize="30sp"
                     android:textStyle="bold" />
             </LinearLayout>

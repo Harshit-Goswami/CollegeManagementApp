@@ -29,7 +29,7 @@ open class DeleteNotice : AppCompatActivity() {
         retrieveNotices()
         binding.rsvNotices.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        binding.rsvNotices.adapter = DeleteNoticeAdapter(noticeList, this, "DeleteNotice")
+        binding.rsvNotices.adapter = DeleteNoticeAdapter(noticeList, this, "deleteNotice")
         binding.rsvNotices.setHasFixedSize(true)
         binding.FABaddNotice.setOnClickListener {
             startActivity(
@@ -50,6 +50,7 @@ open class DeleteNotice : AppCompatActivity() {
                 Toast.makeText(this@DeleteNotice, "Error found is $error", Toast.LENGTH_SHORT)
                     .show()
             }
+            noticeList.clear()
             value?.documents?.forEach{
                 noticeList.add(it.toObject(NoticeData::class.java)!!)
             }

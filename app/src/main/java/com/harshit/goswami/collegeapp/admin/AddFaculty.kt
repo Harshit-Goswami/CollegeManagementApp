@@ -119,9 +119,9 @@ class AddFaculty : AppCompatActivity() {
             }
         }
         if (ManageFaculty.loggedUser == "HOD") {
-                facultyDepartment = TeacherDashboard.loggedTeacherDep
-            }
+            facultyDepartment = TeacherDashboard.loggedTeacherDep
         }
+    }
 
 //
 //        if (binding.Qualification.text.toString().isNotEmpty()) {

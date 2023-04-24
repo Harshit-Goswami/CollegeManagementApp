@@ -101,7 +101,6 @@ class UploadNotes : AppCompatActivity() {
         if (clickedButton == "notes") {
             storageRef.child("Notes").child(TeacherDashboard.loggedTeacherDep)  .child(bindind.selectClass.text.toString())
                 .child(TeacherDashboard.loggedTeacherName)
-
                 .child(bindind.selectSubject.text.toString())
                 .child(bindind.edtBookTitle.text.toString())
                 .putFile(fileUri!!)
@@ -135,7 +134,6 @@ class UploadNotes : AppCompatActivity() {
         if (clickedButton == "assignment") {
             storageRef.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep) .child(bindind.selectClass.text.toString())
                 .child(TeacherDashboard.loggedTeacherName)
-
                 .child(bindind.selectSubject.text.toString())
                 .child(bindind.edtBookTitle.text.toString())
                 .putFile(fileUri!!)

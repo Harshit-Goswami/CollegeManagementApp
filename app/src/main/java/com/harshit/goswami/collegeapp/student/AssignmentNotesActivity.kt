@@ -20,8 +20,9 @@ import com.harshit.goswami.collegeapp.teacher.UploadNotes
 class AssignmentNotesActivity : AppCompatActivity() {
     private val fireDb = FirebaseDatabase.getInstance().reference
     private val list_NA = ArrayList<NotesData>()
-    companion object{
-        lateinit var cardClick:String
+
+    companion object {
+        lateinit var cardClick: String
     }
 
     private lateinit var binding: ActivityStudentAssignmentBinding
@@ -31,14 +32,14 @@ class AssignmentNotesActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         cardClick = intent.getStringExtra("cardClick").toString()
-Log.d("cardClick", cardClick)
-        if (cardClick == "S_notes" || cardClick == "S_assignment" ) {
+        Log.d("cardClick", cardClick)
+        if (cardClick == "S_notes" || cardClick == "S_assignment") {
             binding.btnAddNotesAssignment.visibility = View.GONE
         }
         binding.btnAddNotesAssignment.setOnClickListener {
-            val intent = Intent( this, UploadNotes::class.java)
-            if (cardClick =="T_notes" ) intent.putExtra("clickedButton", "notes")
-            if (cardClick =="T_assignment" ) intent.putExtra("clickedButton", "assignment")
+            val intent = Intent(this, UploadNotes::class.java)
+            if (cardClick == "T_notes") intent.putExtra("clickedButton", "notes")
+            if (cardClick == "T_assignment") intent.putExtra("clickedButton", "assignment")
             startActivity(intent)
         }
 
@@ -64,15 +65,20 @@ Log.d("cardClick", cardClick)
                     if (snapshot.exists()) {
                         list_NA.clear()
                         snapshot.children.forEach { t ->
-                            t.children.forEach {subs->
+                            t.children.forEach { subs ->
                                 subs.children.forEach {
                                     list_NA.add(it.getValue(NotesData::class.java)!!)
                                 }
-                            }}
+                            }
+                        }
                         binding.rsvNotesAssignment.adapter?.notifyDataSetChanged()
-                    }
-                    else Toast.makeText(this@AssignmentNotesActivity,"Notes not Exist!!",Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(
+                        this@AssignmentNotesActivity,
+                        "Notes not Exist!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Toast.makeText(
                         this@AssignmentNotesActivity,
@@ -82,6 +88,7 @@ Log.d("cardClick", cardClick)
                 }
             })
     }
+
     private fun fetchAssignments() {
         fireDb.child("Given Assignments").child(MainActivity.studentDep)
             .child(MainActivity.studentYear).addValueEventListener(object : ValueEventListener {
@@ -96,7 +103,11 @@ Log.d("cardClick", cardClick)
                             }
                         }
                         binding.rsvNotesAssignment.adapter?.notifyDataSetChanged()
-                    }else Toast.makeText(this@AssignmentNotesActivity,"Assignments not Exist!!",Toast.LENGTH_SHORT).show()
+                    } else Toast.makeText(
+                        this@AssignmentNotesActivity,
+                        "Assignments not Exist!!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -108,6 +119,7 @@ Log.d("cardClick", cardClick)
                 }
             })
     }
+
     private fun fetchNotesTeacher() {
         fireDb.child("Notes").child(TeacherDashboard.loggedTeacherDep)
             .addValueEventListener(object : ValueEventListener {
@@ -116,8 +128,8 @@ Log.d("cardClick", cardClick)
                         list_NA.clear()
                         snapshot.children.forEach { y ->
                             y.children.forEach { t ->
-                                if (t.key.toString() == TeacherDashboard.loggedTeacherName){
-                                    t.children.forEach {subs->
+                                if (t.key.toString() == TeacherDashboard.loggedTeacherName) {
+                                    t.children.forEach { subs ->
                                         subs.children.forEach {
                                             list_NA.add(it.getValue(NotesData::class.java)!!)
                                         }
@@ -140,6 +152,7 @@ Log.d("cardClick", cardClick)
                 }
             })
     }
+
     private fun fetchAssignmentsTeacher() {
         fireDb.child("Given Assignments").child(TeacherDashboard.loggedTeacherDep)
             .addValueEventListener(object : ValueEventListener {
@@ -148,8 +161,8 @@ Log.d("cardClick", cardClick)
                         list_NA.clear()
                         snapshot.children.forEach { y ->
                             y.children.forEach { t ->
-                                if (t.key.toString() == TeacherDashboard.loggedTeacherName){
-                                    t.children.forEach {subs->
+                                if (t.key.toString() == TeacherDashboard.loggedTeacherName) {
+                                    t.children.forEach { subs ->
                                         subs.children.forEach {
                                             list_NA.add(it.getValue(NotesData::class.java)!!)
                                         }

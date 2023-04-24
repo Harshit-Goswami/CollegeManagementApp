@@ -43,8 +43,8 @@ import java.io.*
 
 
 class HomeFragment : Fragment() {
-    private lateinit var bindingAttendance:ActivityStudentViewAttendanceBinding
-    private lateinit var changePasswordBinding:DialogAdminChangePasswordBinding
+    private lateinit var bindingAttendance: ActivityStudentViewAttendanceBinding
+    private lateinit var changePasswordBinding: DialogAdminChangePasswordBinding
     private lateinit var binding: FragmentHomeBinding
     private lateinit var toggle: ActionBarDrawerToggle
     private lateinit var toolbar: MaterialToolbar
@@ -54,6 +54,7 @@ class HomeFragment : Fragment() {
     var studOldPassword = ""
     private var studNewPassword = ""
     var studReNewPassword = ""
+
     // ********************** admission guidelines variables ***************
     private var isAdmissionNotice = false
     private var isAdmissionGuidelines = false
@@ -107,29 +108,30 @@ class HomeFragment : Fragment() {
 
         return binding.root
     }
-    private fun magazineClickSetUp(){
-    binding.magazineCard1.setOnClickListener {
-        getByUrl("https://drive.google.com/file/d/1uQYjyG6rdXkDgrhloCpbKXDj_I25U7RI/view?usp=sharing")
+
+    private fun magazineClickSetUp() {
+        binding.magazineCard1.setOnClickListener {
+            getByUrl("https://drive.google.com/file/d/1uQYjyG6rdXkDgrhloCpbKXDj_I25U7RI/view?usp=sharing")
+        }
+        binding.magazineCard2.setOnClickListener {
+            getByUrl("https://drive.google.com/file/d/17d4wWzlWa3Sl36_EM8cnfwbsa4_f_N07/view?usp=sharing")
+        }
+        binding.magazineCard3.setOnClickListener {
+            getByUrl("https://drive.google.com/file/d/1Gb-fHbwNJpJectmOA3E6FaUXqIdWI8bf/view?usp=sharing")
+        }
+        binding.magazineCard4.setOnClickListener {
+            getByUrl("https://drive.google.com/file/d/1krANEJjWq33XPvEn4OgCa8ei2cVHcRMp/view?usp=sharing")
+        }
+        binding.magazineCard5.setOnClickListener {
+            getByUrl("https://drive.google.com/file/d/1854ejko5AnoS7OL22-fgh8OBTGeXqXhr/view?usp=sharing")
+        }
     }
-    binding.magazineCard2.setOnClickListener {
-        getByUrl("https://drive.google.com/file/d/17d4wWzlWa3Sl36_EM8cnfwbsa4_f_N07/view?usp=sharing")
-    }
-    binding.magazineCard3.setOnClickListener {
-        getByUrl("https://drive.google.com/file/d/1Gb-fHbwNJpJectmOA3E6FaUXqIdWI8bf/view?usp=sharing")
-    }
-    binding.magazineCard4.setOnClickListener {
-        getByUrl("https://drive.google.com/file/d/1krANEJjWq33XPvEn4OgCa8ei2cVHcRMp/view?usp=sharing")
-    }
-    binding.magazineCard5.setOnClickListener {
-        getByUrl("https://drive.google.com/file/d/1854ejko5AnoS7OL22-fgh8OBTGeXqXhr/view?usp=sharing")
-    }
-}
 
     private fun navigationSetUp() {
         val hView: View = binding.navView.getHeaderView(0)
 
 
-        if (MainActivity.user == "student" || MainActivity.isCR){
+        if (MainActivity.user == "student" || MainActivity.isCR) {
             binding.navView.menu.getItem(0).isVisible = true
             hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
         }
@@ -146,16 +148,17 @@ class HomeFragment : Fragment() {
                     viewAttendanceSetupByHarshit()
                 }
                 R.id.menu_campus_life -> {
-                    val i =  Intent(
+                    val i = Intent(
                         requireContext(),
                         GalleryActivity::class.java
                     )
-                    i.putExtra("by","student")
+                    i.putExtra("by", "student")
                     startActivity(i)
                 }
                 R.id.menu_imp_links -> {
                     try {
-                        val viewBinding= DialogImpLinksBinding.inflate(LayoutInflater.from(context))
+                        val viewBinding =
+                            DialogImpLinksBinding.inflate(LayoutInflater.from(context))
                         val impLinkDialog = AlertDialog.Builder(
                             requireContext(),
                             com.google.android.material.R.style.Base_Theme_Material3_Light_Dialog
@@ -165,20 +168,20 @@ class HomeFragment : Fragment() {
                         impLinkDialog.setView(viewBinding.root)
                         impLinkDialog.setCanceledOnTouchOutside(true)
 
-                        viewBinding.facebookLink.setOnClickListener {getByUrl("https://www.facebook.com/profile.php?id=100064103347725")  }
-                        viewBinding.instaLink.setOnClickListener {getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en")  }
-                        viewBinding.webLink.setOnClickListener {getByUrl("https://www.chetanacollege.in/")  }
-                        viewBinding.twitterLink.setOnClickListener {getByUrl("https://twitter.com/chetanas_inst?lang=en")  }
-                        viewBinding.linkdinLink.setOnClickListener {getByUrl("https://www.linkedin.com/company/chetana-college/")  }
-                        viewBinding.youtubeLink.setOnClickListener {getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")  }
+                        viewBinding.facebookLink.setOnClickListener { getByUrl("https://www.facebook.com/profile.php?id=100064103347725") }
+                        viewBinding.instaLink.setOnClickListener { getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en") }
+                        viewBinding.webLink.setOnClickListener { getByUrl("https://www.chetanacollege.in/") }
+                        viewBinding.twitterLink.setOnClickListener { getByUrl("https://twitter.com/chetanas_inst?lang=en") }
+                        viewBinding.linkdinLink.setOnClickListener { getByUrl("https://www.linkedin.com/company/chetana-college/") }
+                        viewBinding.youtubeLink.setOnClickListener { getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ") }
                         impLinkDialog.show()
                     } catch (e: Exception) {
                         Log.d("dialog Error-", "${e.message}")
                     }
                 }
                 R.id.menu_faculty -> {
-                    val i = Intent(requireContext(),ManageFaculty::class.java)
-                    i.putExtra("userType","other")
+                    val i = Intent(requireContext(), ManageFaculty::class.java)
+                    i.putExtra("userType", "other")
                     startActivity(i)
                 }
                 R.id.menu_change_password -> {
@@ -189,12 +192,13 @@ class HomeFragment : Fragment() {
                 }
 
                 R.id.menu_developer -> {
-                       val developerProfileDialog = DialogDeveloperProfileBinding.inflate(layoutInflater)
-                        val bottomDialog = Dialog(requireContext(), R.style.BottomSheetStyle)
-                        bottomDialog.setContentView(developerProfileDialog.root)
-                        bottomDialog
-                            .setCanceledOnTouchOutside(false)
-                        bottomDialog.show()
+                    val developerProfileDialog =
+                        DialogDeveloperProfileBinding.inflate(layoutInflater)
+                    val bottomDialog = Dialog(requireContext(), R.style.BottomSheetStyle)
+                    bottomDialog.setContentView(developerProfileDialog.root)
+                    bottomDialog
+                        .setCanceledOnTouchOutside(false)
+                    bottomDialog.show()
                     //https://www.instagram.com/_harshitgoswami/
                     //https://www.facebook.com/harshit.goswami.98096
                     //https://www.linkedin.com/in/harshit-goswami-380649233/
@@ -202,7 +206,7 @@ class HomeFragment : Fragment() {
                 R.id.menu_map -> {
 
                 }
-                R.id.menu_share_apk->{
+                R.id.menu_share_apk -> {
                     try {
                         val shareIntent = Intent(Intent.ACTION_SEND)
                         shareIntent.type = "text/plain"
@@ -234,7 +238,7 @@ class HomeFragment : Fragment() {
         editor.putString("studentDep", "").apply()
         editor.putString("studentYear", "").apply()
         editor.putString("studentName", "").apply()
-        if(MainActivity.isCR){
+        if (MainActivity.isCR) {
             editor.putBoolean("isCR", false).apply()
         }
         val i = Intent(requireContext(), LoginActivity::class.java)
@@ -246,23 +250,24 @@ class HomeFragment : Fragment() {
     private fun studentChangePasswordSetUp() {
         changePasswordBinding = DialogAdminChangePasswordBinding.inflate(layoutInflater)
         try {
-                val changePasswordDialog = AlertDialog.Builder(
-                    requireContext(),
-                    R.style.CustomAlertDialogEditProfile
-                ).create()
-                changePasswordDialog.window?.setGravity(Gravity.TOP)
-                changePasswordDialog.setCancelable(true)
-                changePasswordDialog.setView(changePasswordBinding.root)
-                changePasswordDialog.setCanceledOnTouchOutside(false)
-                changePasswordDialog.show()
-            } catch (e: Exception) {
-                Log.d("dialog Error-", "${e.message}")
-            }
-            changePasswordBinding.DEPBtnSubmit.setOnClickListener {
-                changePasswordValidation()
-                uploadPasswordData()
-            }
+            val changePasswordDialog = AlertDialog.Builder(
+                requireContext(),
+                R.style.CustomAlertDialogEditProfile
+            ).create()
+            changePasswordDialog.window?.setGravity(Gravity.TOP)
+            changePasswordDialog.setCancelable(true)
+            changePasswordDialog.setView(changePasswordBinding.root)
+            changePasswordDialog.setCanceledOnTouchOutside(false)
+            changePasswordDialog.show()
+        } catch (e: Exception) {
+            Log.d("dialog Error-", "${e.message}")
+        }
+        changePasswordBinding.DEPBtnSubmit.setOnClickListener {
+            changePasswordValidation()
+            uploadPasswordData()
+        }
     }
+
     private fun changePasswordValidation() {
         if (changePasswordBinding.DEPEdtOldPassword.text.toString().isNotEmpty()) studOldPassword =
             changePasswordBinding.DEPEdtOldPassword.text.toString()
@@ -279,48 +284,51 @@ class HomeFragment : Fragment() {
             changePasswordBinding.DEPEdtReNewPassword.text.toString()
         else changePasswordBinding.DEPEdtReNewPassword.error = "Password Does not match!!"
     }
+
     private fun uploadPasswordData() {
         if (studOldPassword != "" && studReNewPassword != "") {
             fireDb.child("Students").child(MainActivity.studentDep).child(MainActivity.studentYear)
-                .child(MainActivity.studRollNo).addListenerForSingleValueEvent(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    if (snapshot.exists()) {
-                        if (studOldPassword == snapshot.getValue(AdminLoginData::class.java)?.password) {
-                            fireDb.child("Students").child(MainActivity.studentDep).child(MainActivity.studentYear)
-                                .child(MainActivity.studRollNo)
-                                .setValue(
-                                    StudentData(
-                                        snapshot.getValue(StudentData::class.java)?.rollNo.toString(),
-                                        snapshot.getValue(StudentData::class.java)?.fullName.toString(),
-                                        snapshot.getValue(StudentData::class.java)?.department.toString(),
-                                        snapshot.getValue(StudentData::class.java)?.year.toString(),
-                                        snapshot.getValue(StudentData::class.java)?.contactNo.toString(),
-                                        studReNewPassword,
-                                    )
-                                ).addOnSuccessListener {
-                                    Toast
-                                        .makeText(
-                                            requireContext(),
-                                            "Password Updated Successfully!",
-                                            Toast.LENGTH_SHORT
+                .child(MainActivity.studRollNo)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
+                    override fun onDataChange(snapshot: DataSnapshot) {
+                        if (snapshot.exists()) {
+                            if (studOldPassword == snapshot.getValue(AdminLoginData::class.java)?.password) {
+                                fireDb.child("Students").child(MainActivity.studentDep)
+                                    .child(MainActivity.studentYear)
+                                    .child(MainActivity.studRollNo)
+                                    .setValue(
+                                        StudentData(
+                                            snapshot.getValue(StudentData::class.java)?.rollNo.toString(),
+                                            snapshot.getValue(StudentData::class.java)?.fullName.toString(),
+                                            snapshot.getValue(StudentData::class.java)?.department.toString(),
+                                            snapshot.getValue(StudentData::class.java)?.year.toString(),
+                                            snapshot.getValue(StudentData::class.java)?.contactNo.toString(),
+                                            studReNewPassword,
                                         )
-                                        .show()
-                                }
-                        } else changePasswordBinding.DEPEdtOldPassword.error =
-                            "Incorrect Old Password!!"
+                                    ).addOnSuccessListener {
+                                        Toast
+                                            .makeText(
+                                                requireContext(),
+                                                "Password Updated Successfully!",
+                                                Toast.LENGTH_SHORT
+                                            )
+                                            .show()
+                                    }
+                            } else changePasswordBinding.DEPEdtOldPassword.error =
+                                "Incorrect Old Password!!"
+                        }
                     }
-                }
 
-                override fun onCancelled(error: DatabaseError) {
-                    Toast
-                        .makeText(
-                            requireContext(),
-                            "Something went wong!!",
-                            Toast.LENGTH_SHORT
-                        )
-                        .show()
-                }
-            })
+                    override fun onCancelled(error: DatabaseError) {
+                        Toast
+                            .makeText(
+                                requireContext(),
+                                "Something went wong!!",
+                                Toast.LENGTH_SHORT
+                            )
+                            .show()
+                    }
+                })
         }
     }
 
@@ -336,8 +344,7 @@ class HomeFragment : Fragment() {
             dialog.setView(bindingAttendance.root)
             dialog.setCanceledOnTouchOutside(false)
             dialog.show()
-        }
-        catch (e: Exception) {
+        } catch (e: Exception) {
             Log.d("dialog Error-", "${e.message}")
         }
         bindingAttendance.VAIcSort.setOnClickListener {
@@ -399,10 +406,11 @@ class HomeFragment : Fragment() {
         autoCompleteTV()
         fetchAttendanceDataDefault()
     }
+
     private fun socialMediaIconClicks() {
         binding.FHInstaIcon.setOnClickListener { getByUrl("https://www.instagram.com/chetanas_sfc/?hl=en") }
         binding.FHFacebookIcon.setOnClickListener { getByUrl("https://www.facebook.com/profile.php?id=100064103347725") }
-        binding.FHLinkedinIcon.setOnClickListener {getByUrl("https://www.linkedin.com/company/chetana-college/")}
+        binding.FHLinkedinIcon.setOnClickListener { getByUrl("https://www.linkedin.com/company/chetana-college/") }
         binding.FHYoutubeIcon.setOnClickListener {
             getByUrl("https://www.youtube.com/channel/UCr2658Nq363khQvTSIxntwQ")
         }
@@ -597,7 +605,8 @@ class HomeFragment : Fragment() {
 
     private fun fetchAttendanceDataDefault() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo)
+            .child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -611,7 +620,7 @@ class HomeFragment : Fragment() {
                             }
                         }
                         try {
-                            val per = ((p/(a+p)) * 100).toInt()
+                            val per = ((p / (a + p)) * 100).toInt()
                             bindingAttendance.txtAttendanceHeading.text = "Total Attendance"
                             bindingAttendance.txtPercentage.text = "${per}%"
                             bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
@@ -627,9 +636,11 @@ class HomeFragment : Fragment() {
                 }
             })
     }
+
     private fun fetchAttendanceDataBYMonth() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo)
+            .child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -647,8 +658,9 @@ class HomeFragment : Fragment() {
                             }
                         }
                         try {
-                            val per = ((p/(a+p)) * 100).toInt()
-                            bindingAttendance.txtAttendanceHeading.text = "${bindingAttendance.ACTVMonth.text} Attendance"
+                            val per = ((p / (a + p)) * 100).toInt()
+                            bindingAttendance.txtAttendanceHeading.text =
+                                "${bindingAttendance.ACTVMonth.text} Attendance"
                             bindingAttendance.txtPercentage.text = "$per%"
                             bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
                             bindingAttendance.txtAbsentCount.text = "Absent - ${a.toInt()}"
@@ -663,9 +675,11 @@ class HomeFragment : Fragment() {
                 }
             })
     }
+
     private fun fetchAttendanceDataBYSub() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo)
+            .child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -687,12 +701,13 @@ class HomeFragment : Fragment() {
                             }
                         }
                         try {
-                            val per = ((p/(a+p)) * 100).toInt()
-                            bindingAttendance.txtAttendanceHeading.text = "${bindingAttendance.ACTVSelectSubject.text} Attendance"
+                            val per = ((p / (a + p)) * 100).toInt()
+                            bindingAttendance.txtAttendanceHeading.text =
+                                "${bindingAttendance.ACTVSelectSubject.text} Attendance"
                             bindingAttendance.txtPercentage.text = "$per%"
                             bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
                             bindingAttendance.txtAbsentCount.text = "Absent - ${a.toInt()}"
-                            Log.d("attendance","$p / ${a+p} = ${((p/(a+p))*100).toInt()}")
+                            Log.d("attendance", "$p / ${a + p} = ${((p / (a + p)) * 100).toInt()}")
                         } catch (e: Exception) {
 //                                Log.e("errrr",e.message,e)
                         }
@@ -705,9 +720,11 @@ class HomeFragment : Fragment() {
                 }
             })
     }
+
     private fun fetchAttendanceDataBYMonthNSub() {
         fireDb.child("Student Attendance").child(MainActivity.studentDep)
-            .child(MainActivity.studentYear).child(MainActivity.studRollNo).child(MainActivity.studName)
+            .child(MainActivity.studentYear).child(MainActivity.studRollNo)
+            .child(MainActivity.studName)
             .addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if (snapshot.exists()) {
@@ -727,8 +744,9 @@ class HomeFragment : Fragment() {
                             }
                         }
                         try {
-                            val per = ((p/(a+p)) * 100).toInt()
-                            bindingAttendance.txtAttendanceHeading.text = "${bindingAttendance.ACTVMonth.text} ${bindingAttendance.ACTVSelectSubject.text} Attendance"
+                            val per = ((p / (a + p)) * 100).toInt()
+                            bindingAttendance.txtAttendanceHeading.text =
+                                "${bindingAttendance.ACTVMonth.text} ${bindingAttendance.ACTVSelectSubject.text} Attendance"
                             bindingAttendance.txtPercentage.text = "$per%"
                             bindingAttendance.txtPresentCount.text = "Present - ${p.toInt()}"
                             bindingAttendance.txtAbsentCount.text = "Absent - ${a.toInt()}"
@@ -737,69 +755,79 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("errrr", error.message, error.toException())
                 }
             })
     }
-    private fun autoCompleteTV(){
-    val subjects = ArrayList<String>()
-    FirebaseFirestore.getInstance()
-        .collection("${MainActivity.studentYear}${MainActivity.studentDep}-Subjects")
-        .addSnapshotListener { value, error ->
-            subjects.clear()
-            if (error != null) {
-                Toast.makeText(
-                    requireContext(),
-                    "Error found is $error",
-                    Toast.LENGTH_SHORT
-                )
-                    .show()
+
+    private fun autoCompleteTV() {
+        val subjects = ArrayList<String>()
+        FirebaseFirestore.getInstance()
+            .collection("${MainActivity.studentYear}${MainActivity.studentDep}-Subjects")
+            .addSnapshotListener { value, error ->
+                subjects.clear()
+                if (error != null) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Error found is $error",
+                        Toast.LENGTH_SHORT
+                    )
+                        .show()
+                }
+                value?.forEach { ds ->
+                    subjects.add(ds["subjectName"].toString())
+                }
             }
-            value?.forEach { ds ->
-                subjects.add(ds["subjectName"].toString())
-            }
-        }
-    val adapterSubject = ArrayAdapter(
-        requireContext(),
-        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-        subjects
-    )
+        val adapterSubject = ArrayAdapter(
+            requireContext(),
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            subjects
+        )
         bindingAttendance.ACTVSelectSubject.setAdapter(adapterSubject)
 
-    val itemsMonth = listOf(
-        "Jan",
-        "Feb",
-        "Mar",
-        "Apr",
-        "May",
-        "Jun",
-        "Jul",
-        "Aug",
-        "Sep",
-        "Oct",
-        "Nov",
-        "Dec"
-    )
-    val adapterMonth = ArrayAdapter(
-        requireContext(),
-        androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
-        itemsMonth
-    )
-    bindingAttendance.ACTVMonth.setAdapter(adapterMonth)
-}
-    private fun studentCheck(){
-        if (MainActivity.user == "student"){
+        val itemsMonth = listOf(
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec"
+        )
+        val adapterMonth = ArrayAdapter(
+            requireContext(),
+            androidx.appcompat.R.layout.support_simple_spinner_dropdown_item,
+            itemsMonth
+        )
+        bindingAttendance.ACTVMonth.setAdapter(adapterMonth)
+    }
+
+    private fun studentCheck() {
+        if (MainActivity.user == "student") {
             fireDb.child("Students").child(MainActivity.studentDep).child(MainActivity.studentYear)
-                .child(MainActivity.studRollNo).addListenerForSingleValueEvent(object:ValueEventListener{
+                .child(MainActivity.studRollNo)
+                .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        if (!snapshot.exists()){
+                        if (!snapshot.exists()) {
                             studentLogOutSetUp()
-                            Toast.makeText(requireContext(),"Student Not exist!!",Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Student Not exist!!",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
+
                     override fun onCancelled(error: DatabaseError) {
-                        Toast.makeText(requireContext(),"${error.message}!!",Toast.LENGTH_SHORT).show()
+                        Toast.makeText(requireContext(), "${error.message}!!", Toast.LENGTH_SHORT)
+                            .show()
                         studentLogOutSetUp()
                     }
                 })

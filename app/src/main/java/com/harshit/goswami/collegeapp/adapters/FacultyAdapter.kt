@@ -41,18 +41,19 @@ class FacultyAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         with(holder) {
             with(facultyList[position]) {
-                if (ManageFaculty.loggedUser == "student" || ManageFaculty.loggedUser == "other" ){
+                if (ManageFaculty.loggedUser == "student" || ManageFaculty.loggedUser == "other") {
                     binding.IFiBtnMoreOption.visibility = View.GONE
                 }
                 binding.IFiTvFacultyName.text = this.name
                 binding.IFiTvFacultyDepartment.text = this.department
                 binding.IFiTxtContactNo.text = this.contactNo
                 if (this.downloadUrl != "null") {
-                    Glide.with(context).load(this.downloadUrl).placeholder(R.drawable.ic_person).into(binding.IFiFacultyDp)
+                    Glide.with(context).load(this.downloadUrl).placeholder(R.drawable.ic_person)
+                        .into(binding.IFiFacultyDp)
                     binding.IFiFacultyDp.setOnClickListener {
-                    val i = Intent(context, ViewImageActivity::class.java)
-                    i.putExtra("imageUrl",this.downloadUrl)
-                    context.startActivity(i)
+                        val i = Intent(context, ViewImageActivity::class.java)
+                        i.putExtra("imageUrl", this.downloadUrl)
+                        context.startActivity(i)
                     }
 
                 }
@@ -176,8 +177,7 @@ class FacultyAdapter(
 
                                         })
 
-                                } catch (e: Exception)
-                                {
+                                } catch (e: Exception) {
                                     Toast.makeText(
                                         context,
                                         e.message.toString(),
@@ -191,48 +191,59 @@ class FacultyAdapter(
 
                             }
                             R.id.menu_deleteFaculty -> {
-                                if (ManageFaculty.loggedUser == "HOD") {
-                                    if (this.teacherType == "teacher") {
-                                        FirebaseDatabase.getInstance().reference.child("Faculty Data")
-                                            .child(this.department)
-                                            .child(this.name).removeValue()
-                                            .addOnSuccessListener {
-                                                FirebaseStorage.getInstance().getReferenceFromUrl(this.downloadUrl).delete().addOnSuccessListener {
+                                try {
+                                    if (ManageFaculty.loggedUser == "HOD") {
+                                        if (this.teacherType == "teacher") {
+                                            FirebaseDatabase.getInstance().reference.child("Faculty Data")
+                                                .child(this.department)
+                                                .child(this.name).removeValue()
+                                                .addOnSuccessListener {
+                                                    if (this.downloadUrl != "null"){
+                                                        FirebaseStorage.getInstance()
+                                                            .getReferenceFromUrl(this.downloadUrl)
+                                                            .delete()
+                                                            .addOnSuccessListener {
+                                                                Toast.makeText(
+                                                                    context, "Deleted!",
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                            }
+                                                    }
+                                                }
+                                                .addOnFailureListener { e ->
                                                     Toast.makeText(
-                                                        context, "Deleted!",
+                                                        context, "ERR!-${e.message}",
                                                         Toast.LENGTH_SHORT
                                                     ).show()
                                                 }
-
-                                            }
-                                            .addOnFailureListener { e ->
-                                                Toast.makeText(
-                                                    context, "ERR!-${e.message}",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
+                                        }
                                     }
-                                }
-                                if (ManageFaculty.loggedUser == "admin") {
-                                    if (this.teacherType == "HOD") {
-                                        FirebaseDatabase.getInstance().reference.child("Faculty Data")
-                                            .child(this.department)
-                                            .child(this.name).removeValue()
-                                            .addOnSuccessListener {
-                                                FirebaseStorage.getInstance().getReferenceFromUrl(this.downloadUrl).delete().addOnSuccessListener {
+                                    if (ManageFaculty.loggedUser == "admin") {
+                                        if (this.teacherType == "HOD") {
+                                            FirebaseDatabase.getInstance().reference.child("Faculty Data")
+                                                .child(this.department)
+                                                .child(this.name).removeValue()
+                                                .addOnSuccessListener {
+                                                    if (this.downloadUrl != "null"){
+                                                        FirebaseStorage.getInstance()
+                                                            .getReferenceFromUrl(this.downloadUrl)
+                                                            .delete().addOnSuccessListener {
+                                                                Toast.makeText(
+                                                                    context, "Deleted!",
+                                                                    Toast.LENGTH_SHORT
+                                                                ).show()
+                                                            }
+                                                    }
+                                                }
+                                                .addOnFailureListener {
                                                     Toast.makeText(
-                                                        context, "Deleted!",
+                                                        context, "ERR_${it.message}",
                                                         Toast.LENGTH_SHORT
                                                     ).show()
                                                 }
-                                            }
-                                            .addOnFailureListener {
-                                                Toast.makeText(
-                                                    context, "ERR_${it.message}",
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
-                                            }
+                                        }
                                     }
+                                } catch (_: Exception) {
                                 }
                             }
                             R.id.menu_send_massage -> {}

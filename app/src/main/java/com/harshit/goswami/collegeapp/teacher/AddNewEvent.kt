@@ -99,9 +99,8 @@ class AddNewEvent : AppCompatActivity() {
         val description: String =
             Objects.requireNonNull(binding.edtNoticeDescription.text).toString()
         dbRef = firebaseDatabase.reference
-//        val uniqueKey = dbRef!!.child("Events").push().key
 
-        val noticeData = NoticeData(title,downloadUrl.toString(),date,time,"")
+        val noticeData = NoticeData(title,description,downloadUrl.toString(),date,time,"")
         FirebaseFirestore.getInstance().collection("Events").document(date+time).set(noticeData)
             .addOnSuccessListener {
                 if (fileUri != null) {
@@ -110,8 +109,7 @@ class AddNewEvent : AppCompatActivity() {
                         "BIGPIC",
                         downloadUrl.toString(),//applicationContext,
                         this
-                    )
-                        .sendNotifications()
+                    ).sendNotifications()
                 }
             }
             .addOnFailureListener { e: Exception ->
@@ -145,7 +143,7 @@ class AddNewEvent : AppCompatActivity() {
                         progressDialog.dismiss()
                         Toast.makeText(
                             this,
-                            "Notice Uploaded!!",
+                            "Image Uploaded!!",
                             Toast.LENGTH_SHORT
                         )
                             .show()

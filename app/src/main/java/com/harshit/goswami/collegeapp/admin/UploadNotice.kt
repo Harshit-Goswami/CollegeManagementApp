@@ -98,7 +98,7 @@ class UploadNotice : AppCompatActivity() {
 
     private fun uploadData() {
         val title: String = Objects.requireNonNull(binding.edtNotice.text).toString()
-        val noticeData = NoticeData(title, downloadUrl.toString(), date, time, deletionDate)
+        val noticeData = NoticeData(title, "",downloadUrl.toString(), date, time, deletionDate)
         firestore.collection("Notices").document(date+time).set(noticeData)
             .addOnSuccessListener {
                 if (fileUri != null) {

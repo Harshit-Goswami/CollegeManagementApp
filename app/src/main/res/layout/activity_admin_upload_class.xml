@@ -135,7 +135,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_notes" />
+                android:src="@drawable/ic_delete" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -187,7 +187,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:scaleType="fitCenter"
-                android:src="@drawable/ic_notes" />
+                android:src="@drawable/ic_delete" />
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
