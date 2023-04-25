@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -18,10 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CollageApp"
-        tools:targetApi="31" >
+        tools:targetApi="31">
         <activity
             android:name=".ViewImageActivity"
-            android:exported="false" >
+            android:exported="false"
+            >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
@@ -29,80 +30,102 @@
         <activity
             android:name=".student.GalleryActivity"
             android:exported="false"
+            android:screenOrientation="portrait"
             android:label="@string/title_activity_gallery"
             android:theme="@style/Theme.CollageApp.NoActionBar" />
         <activity
             android:name=".teacher.ViewAttendanceActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AttendanceActivity"
-            android:exported="false" /><!--Harshit Goshwami-->
+            android:exported="false"
+            android:screenOrientation="portrait"/><!--Harshit Goshwami-->
         <activity
             android:name=".ViewPdfActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".teacher.UploadClass"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".student.AssignmentNotesActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".teacher.AddNewEvent"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".teacher.UploadedEvents"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.AddStudent"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <!--Created by HARSHIT-->
         <activity
             android:name=".admin.AddFaculty"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".teacher.UploadNotes"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.DeleteNotice"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.ManageStudent"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.ManageFaculty"
-            android:exported="true" />
+            android:exported="true"
+            android:screenOrientation="portrait"
+            />
         <activity
             android:name=".admin.UploadImage"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.UploadNotice"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <!--Developeded by Harshit Goshwami-->
         <activity
             android:name=".student.MainActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".teacher.TeacherDashboard"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".admin.AdminDashboard"
-            android:exported="false" />
+            android:exported="false"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".UserSelectionActivity"
-            android:exported="true" >
+            android:exported="true"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <service
             android:name=".FirebaseMessagingService"
-            android:exported="false" >
+            android:exported="false"
+            >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -116,7 +139,7 @@
             android:name="androidx.core.content.FileProvider"
             android:authorities="${applicationId}.provider"
             android:exported="false"
-            android:grantUriPermissions="true" >
+            android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
@@ -126,13 +149,4 @@
 </manifest>
 
 
-
-
-
-
-
-
-
-
-
-<!--Developeded by Harshit Goshwami-->
+    <!--Developeded by Harshit Goshwami-->

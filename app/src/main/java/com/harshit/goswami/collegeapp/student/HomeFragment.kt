@@ -35,6 +35,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.BuildConfig
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
+import com.harshit.goswami.collegeapp.ViewImageActivity
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.data.AdminLoginData
 import com.harshit.goswami.collegeapp.data.StudentData
@@ -130,10 +131,10 @@ class HomeFragment : Fragment() {
     private fun navigationSetUp() {
         val hView: View = binding.navView.getHeaderView(0)
 
-
         if (MainActivity.user == "student" || MainActivity.isCR) {
             binding.navView.menu.getItem(0).isVisible = true
-            hView.findViewById<TextView>(R.id.nav_stud_name).text = MainActivity.studName
+            hView.findViewById<TextView>(R.id.nav_stud_name).text =
+                "${MainActivity.studName} -${MainActivity.studentYear}${MainActivity.studentDep}"
         }
         if (MainActivity.user == "other") {
             binding.navView.menu.getItem(0).isVisible = false
@@ -199,12 +200,23 @@ class HomeFragment : Fragment() {
                     bottomDialog
                         .setCanceledOnTouchOutside(false)
                     bottomDialog.show()
-                    //https://www.instagram.com/_harshitgoswami/
-                    //https://www.facebook.com/harshit.goswami.98096
-                    //https://www.linkedin.com/in/harshit-goswami-380649233/
+                    developerProfileDialog.instagramHarshit.setOnClickListener {
+                        getByUrl("https://www.instagram.com/_harshitgoswami/")
+                    }
+                    developerProfileDialog.facebookHarshit.setOnClickListener {
+                        getByUrl("https://www.facebook.com/harshit.goswami.98096")
+                    }
+                    developerProfileDialog.linkdinHarshit.setOnClickListener {
+                        getByUrl("https://www.linkedin.com/in/harshit-goswami-380649233/")
+                    }
                 }
                 R.id.menu_map -> {
-
+                    val i = Intent(requireContext(), ViewImageActivity::class.java)
+                    i.putExtra(
+                        "imageUrl",
+                        "https://firebasestorage.googleapis.com/v0/b/collage-app-8b9e5.appspot.com/o/Map%20Image%2FTapScanner%2004-25-2023-13%EA%9E%8930.jpg?alt=media&token=c3eab714-b0ec-47b7-bf4b-c9c3fef56ccd"
+                    )
+                    startActivity(i)
                 }
                 R.id.menu_share_apk -> {
                     try {

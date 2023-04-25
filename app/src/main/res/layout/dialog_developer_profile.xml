@@ -124,24 +124,27 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginBottom="20dp"
         >
-       <com.google.android.material.imageview.ShapeableImageView
-           android:layout_width="48dp"
-           android:layout_height="48dp"
-           android:src="@drawable/img_instagram"
-           android:layout_margin = "5dp"
-           />
-       <com.google.android.material.imageview.ShapeableImageView
-           android:layout_width="48dp"
-           android:layout_height="48dp"
-           android:src="@drawable/img_facebook"
-           android:layout_margin = "5dp"
-           />
-       <com.google.android.material.imageview.ShapeableImageView
-           android:layout_width="48dp"
-           android:layout_height="48dp"
-           android:src="@drawable/ic_linkedin"
-           android:layout_margin = "5dp"
-           />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/instagram_harshit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/img_instagram" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/facebook_harshit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/img_facebook" />
+
+        <com.google.android.material.imageview.ShapeableImageView
+            android:id="@+id/linkdin_harshit"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/ic_linkedin" />
 
        </LinearLayout>
      </LinearLayout>
