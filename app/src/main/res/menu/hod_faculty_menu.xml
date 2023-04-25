@@ -11,6 +11,7 @@
     <item
         android:id="@+id/menu_edit_faculty"
         android:title="Edit Faculty"
+        android:visible="false"
         />
 <item
         android:id="@+id/menu_send_massage"

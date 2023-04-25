@@ -52,9 +52,9 @@ class EventFragment : Fragment() {
 
     private fun retrieveEvents() {
         eventList = ArrayList()
-        eventList = ArrayList()
         FirebaseFirestore.getInstance().collection("Events").addSnapshotListener { value, error ->
             if (error == null) {
+                eventList.clear()
                 value?.forEach {
                     eventList.add(it.toObject(NoticeData::class.java))
                     binding.rsvEvent.adapter?.notifyDataSetChanged()
