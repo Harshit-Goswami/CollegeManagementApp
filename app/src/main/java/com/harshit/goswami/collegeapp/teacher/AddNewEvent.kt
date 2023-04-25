@@ -86,7 +86,6 @@ class AddNewEvent : AppCompatActivity() {
                 time = sdfTime.format(Calendar.getInstance().time)
             }
             val title = binding.edtEventTitle.text.toString()
-            val desciption = binding.edtNoticeDescription.text.toString()
             if (title == "") {
                 binding.edtEventTitle.error = "title is empty"
                 binding.edtEventTitle.isFocusable = true

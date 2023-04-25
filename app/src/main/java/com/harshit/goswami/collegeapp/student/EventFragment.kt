@@ -57,11 +57,11 @@ class EventFragment : Fragment() {
                 eventList.clear()
                 value?.forEach {
                     eventList.add(it.toObject(NoticeData::class.java))
-                    binding.rsvEvent.adapter?.notifyDataSetChanged()
                 }
+                binding.rsvEvent.adapter?.notifyDataSetChanged()
+                eventList.sortWith(compareByDescending { "${it.date}${it.time}" })
             }
         }
-        eventList.sortWith(compareByDescending { "${it.date}${it.time}" })
     }
 }
 

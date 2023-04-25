@@ -73,7 +73,7 @@ class UploadNotes : AppCompatActivity() {
         )
         bindind.selectClass.setAdapter(adapterYear)
         bindind.selectClass.setOnItemClickListener { _, _, p2, _ ->
-
+            bindind.selectSubject.text.clear()
             val itemsSubj = ArrayList<String>()
              fireDb.child("Faculty Data")
                  .child(TeacherDashboard.loggedTeacherDep)

@@ -58,8 +58,9 @@ class UploadedEvents : AppCompatActivity() {
                     binding.UEProgressIndicator.visibility = View.GONE
                 }
                 binding.UERsvEvents.adapter?.notifyDataSetChanged()
+                eventList.sortWith(compareByDescending { "${it.date}${it.time}" })
             }
         }
-        eventList.sortWith(compareByDescending { "${it.date}${it.time}" })
+
     }
 }
