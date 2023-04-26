@@ -235,7 +235,7 @@
         android:layout_gravity="bottom|end"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginEnd="30dp"
         android:layout_marginBottom="10dp"
         android:backgroundTint="@color/shrine_pink_190"
         android:text="ADD Student"

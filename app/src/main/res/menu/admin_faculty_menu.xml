@@ -2,16 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/menu_deleteFaculty"
-        android:title="Delete Faculty"
-        />
+        android:title="Delete Faculty" />
     <item
         android:id="@+id/menu_edit_faculty"
         android:title="Edit Faculty"
-        android:visible="false"
-        />
-<item
+        android:visible="false" />
+    <item
         android:id="@+id/menu_send_massage"
         android:title="Send a massage"
-        />
+        android:visible="false" />
 
 </menu>
