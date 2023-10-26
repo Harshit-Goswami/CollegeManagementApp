@@ -33,6 +33,8 @@ The College Management App is a comprehensive application designed to simplify a
 ### Notice Management
 - Admins can post important notices for students and teachers.
 
+# Screenshots
+
 ## Installation
 
 Provide instructions on how to install and run your College Management App. Include any dependencies and setup steps.
