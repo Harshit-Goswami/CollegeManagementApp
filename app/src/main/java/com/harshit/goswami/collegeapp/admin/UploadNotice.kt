@@ -17,7 +17,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.FCMnotificationSender
-import com.harshit.goswami.collegeapp.data.NoticeData
+import com.harshit.goswami.collegeapp.modal.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadNoticeBinding
 import java.io.IOException
 import java.util.*

@@ -15,7 +15,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.adapters.ClassTimetableAdapter
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
-import com.harshit.goswami.collegeapp.data.ClassData
+import com.harshit.goswami.collegeapp.modal.ClassData
 import com.harshit.goswami.collegeapp.databinding.FragmentMyClassBinding
 
 class MyClassFragment : Fragment() {

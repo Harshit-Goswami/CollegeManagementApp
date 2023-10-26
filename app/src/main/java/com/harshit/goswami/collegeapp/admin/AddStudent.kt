@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.adapters.YourStudentAdapter
-import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.modal.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddStudentBinding
 import org.apache.poi.ss.usermodel.DataFormatter
 import org.apache.poi.xssf.usermodel.XSSFSheet

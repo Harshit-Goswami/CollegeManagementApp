@@ -14,7 +14,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.harshit.goswami.collegeapp.ViewImageActivity
-import com.harshit.goswami.collegeapp.data.NoticeData
+import com.harshit.goswami.collegeapp.modal.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ItemDeleteNoticeBinding
 import java.util.*
 

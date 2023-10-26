@@ -22,7 +22,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.ViewImageActivity
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
-import com.harshit.goswami.collegeapp.data.FacultyData
+import com.harshit.goswami.collegeapp.modal.FacultyData
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddSubjectBinding
 import com.harshit.goswami.collegeapp.databinding.ItemFacultyinfoBinding
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard

@@ -35,8 +35,8 @@ import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.adapters.YourStudentAdapter
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
 import com.harshit.goswami.collegeapp.admin.ManageStudent
-import com.harshit.goswami.collegeapp.data.FacultyData
-import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.modal.FacultyData
+import com.harshit.goswami.collegeapp.modal.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherDashboardBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding

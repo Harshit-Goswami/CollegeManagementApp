@@ -5,7 +5,6 @@ import android.database.Cursor
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
@@ -16,10 +15,9 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
-import com.harshit.goswami.collegeapp.data.NotesData
+import com.harshit.goswami.collegeapp.modal.NotesData
 import com.harshit.goswami.collegeapp.databinding.ActivityTeacherUploadNotesBinding
 
 

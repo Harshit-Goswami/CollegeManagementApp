@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
-import com.harshit.goswami.collegeapp.data.NoticeData
+import com.harshit.goswami.collegeapp.modal.NoticeData
 import com.harshit.goswami.collegeapp.databinding.FragmentNoticeBinding
 
 class NoticeFragment : Fragment() {

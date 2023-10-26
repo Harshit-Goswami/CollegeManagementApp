@@ -6,13 +6,9 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
-import com.harshit.goswami.collegeapp.data.NoticeData
+import com.harshit.goswami.collegeapp.modal.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDeleteNoticeBinding
 
 open class DeleteNotice : AppCompatActivity() {

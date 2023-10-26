@@ -21,7 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.adapters.ClassTimetableAdapter
 import com.harshit.goswami.collegeapp.adapters.DeleteSubjectAdapter
-import com.harshit.goswami.collegeapp.data.ClassData
+import com.harshit.goswami.collegeapp.modal.ClassData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddClassBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminAddSubjectBinding

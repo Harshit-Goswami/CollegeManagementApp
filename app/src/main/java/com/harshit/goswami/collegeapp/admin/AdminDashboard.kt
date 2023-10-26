@@ -26,7 +26,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.data.AdminLoginData
+import com.harshit.goswami.collegeapp.modal.AdminLoginData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminDashboardBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
 import com.harshit.goswami.collegeapp.databinding.DialogAdminViewProfileBinding

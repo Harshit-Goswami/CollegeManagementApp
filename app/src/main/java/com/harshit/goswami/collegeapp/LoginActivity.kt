@@ -13,9 +13,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.admin.AdminDashboard
-import com.harshit.goswami.collegeapp.data.AdminLoginData
-import com.harshit.goswami.collegeapp.data.FacultyData
-import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.modal.AdminLoginData
+import com.harshit.goswami.collegeapp.modal.FacultyData
+import com.harshit.goswami.collegeapp.modal.StudentData
 import com.harshit.goswami.collegeapp.databinding.ActivityLoginBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard

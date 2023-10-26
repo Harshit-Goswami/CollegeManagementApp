@@ -1,6 +1,5 @@
 package com.harshit.goswami.collegeapp.adapters
 /*DEVELOPED BY Harshit goshwami */
-import android.app.ActionBar.LayoutParams
 import android.content.Context
 import android.graphics.Color
 import android.view.LayoutInflater
@@ -8,8 +7,8 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.data.AttendanceDataModal
-import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.modal.AttendanceDataModal
+import com.harshit.goswami.collegeapp.modal.StudentData
 import com.harshit.goswami.collegeapp.databinding.ItemTakeAttendanceBinding
 
 class AttendanceAdapter(

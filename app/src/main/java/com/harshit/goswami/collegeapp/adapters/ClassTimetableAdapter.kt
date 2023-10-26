@@ -9,7 +9,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.harshit.goswami.collegeapp.AttendanceActivity
-import com.harshit.goswami.collegeapp.data.ClassData
+import com.harshit.goswami.collegeapp.modal.ClassData
 import com.harshit.goswami.collegeapp.databinding.ItemClassTimeTableBinding
 import com.harshit.goswami.collegeapp.student.MainActivity
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard
@@ -35,7 +35,7 @@ class ClassTimetableAdapter(
                 if (activity == "MyClass") {
                     binding.ICTBtnDelete.visibility = View.GONE
                 }
-                //created by Harshit GosHwami
+                //created by Harshit Goswami
                 binding.itemClassDate.text = this.date
                 binding.itemClassTime.text = this.time
                 binding.itemSubjectName.text = this.subject
@@ -59,7 +59,6 @@ class ClassTimetableAdapter(
                         true
                     }
                 }
-// H A R S H i T
             }
         }
     }

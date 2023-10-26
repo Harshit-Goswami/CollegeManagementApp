@@ -10,10 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
-import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.admin.ManageStudent
-import com.harshit.goswami.collegeapp.data.StudentData
-import com.harshit.goswami.collegeapp.databinding.DialogAdminChangePasswordBinding
+import com.harshit.goswami.collegeapp.modal.StudentData
 import com.harshit.goswami.collegeapp.databinding.DialogStudentDetailsBinding
 import com.harshit.goswami.collegeapp.databinding.ItemYourStudentsBinding
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard

@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.harshit.goswami.collegeapp.adapters.NotesAdapter
-import com.harshit.goswami.collegeapp.data.NotesData
+import com.harshit.goswami.collegeapp.modal.NotesData
 import com.harshit.goswami.collegeapp.databinding.ActivityStudentAssignmentBinding
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard
 import com.harshit.goswami.collegeapp.teacher.UploadNotes

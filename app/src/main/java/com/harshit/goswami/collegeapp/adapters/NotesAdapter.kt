@@ -9,12 +9,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.harshit.goswami.collegeapp.ViewPdfActivity
-import com.harshit.goswami.collegeapp.data.NotesData
+import com.harshit.goswami.collegeapp.modal.NotesData
 import com.harshit.goswami.collegeapp.databinding.ItemStudentNotesBinding
 import com.harshit.goswami.collegeapp.student.AssignmentNotesActivity
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard

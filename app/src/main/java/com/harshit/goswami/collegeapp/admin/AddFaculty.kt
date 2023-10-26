@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.harshit.goswami.collegeapp.data.FacultyData
+import com.harshit.goswami.collegeapp.modal.FacultyData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminAddFacultyBinding
 import com.harshit.goswami.collegeapp.teacher.TeacherDashboard
 import java.io.IOException

@@ -3,12 +3,9 @@ package com.harshit.goswami.collegeapp.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
-import com.harshit.goswami.collegeapp.R
-import com.harshit.goswami.collegeapp.data.AttendanceDataModal
-import com.harshit.goswami.collegeapp.data.StudentData
-import com.harshit.goswami.collegeapp.data.ViewAttendanceDataModal
+import com.harshit.goswami.collegeapp.modal.AttendanceDataModal
+import com.harshit.goswami.collegeapp.modal.ViewAttendanceDataModal
 import com.harshit.goswami.collegeapp.databinding.ItemTakeAttendanceBinding
 
 

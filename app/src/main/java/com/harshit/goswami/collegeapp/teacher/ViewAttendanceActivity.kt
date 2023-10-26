@@ -24,7 +24,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.adapters.AttendanceAdapter
-import com.harshit.goswami.collegeapp.data.*
+import com.harshit.goswami.collegeapp.modal.*
 import com.harshit.goswami.collegeapp.databinding.ActivityViewAttendanceBinding
 import org.apache.poi.ss.usermodel.HorizontalAlignment
 import org.apache.poi.ss.usermodel.VerticalAlignment

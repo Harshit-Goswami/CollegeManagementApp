@@ -1,4 +1,4 @@
-package com.harshit.goswami.collegeapp.data
+package com.harshit.goswami.collegeapp.modal
 
 data class ViewAttendanceDataModal(
     var rollNo: String = "",

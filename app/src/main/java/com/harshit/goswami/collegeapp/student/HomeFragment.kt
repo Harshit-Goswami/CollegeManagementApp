@@ -32,15 +32,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.firestore.FirebaseFirestore
-import com.harshit.goswami.collegeapp.BuildConfig
 import com.harshit.goswami.collegeapp.LoginActivity
 import com.harshit.goswami.collegeapp.R
 import com.harshit.goswami.collegeapp.ViewImageActivity
 import com.harshit.goswami.collegeapp.admin.ManageFaculty
-import com.harshit.goswami.collegeapp.data.AdminLoginData
-import com.harshit.goswami.collegeapp.data.StudentData
+import com.harshit.goswami.collegeapp.modal.AdminLoginData
+import com.harshit.goswami.collegeapp.modal.StudentData
 import com.harshit.goswami.collegeapp.databinding.*
-import java.io.*
 
 
 class HomeFragment : Fragment() {

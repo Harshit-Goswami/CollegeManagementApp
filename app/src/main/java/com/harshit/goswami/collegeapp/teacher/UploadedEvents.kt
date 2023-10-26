@@ -1,22 +1,14 @@
 package com.harshit.goswami.collegeapp.teacher
 
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.firestore.ktx.toObject
 import com.harshit.goswami.collegeapp.adapters.DeleteNoticeAdapter
-import com.harshit.goswami.collegeapp.admin.DeleteNotice
-import com.harshit.goswami.collegeapp.data.NoticeData
+import com.harshit.goswami.collegeapp.modal.NoticeData
 import com.harshit.goswami.collegeapp.databinding.ActivityAdminUploadedEventsBinding
 
 class UploadedEvents : AppCompatActivity() {
