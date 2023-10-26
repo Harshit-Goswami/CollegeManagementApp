@@ -37,18 +37,6 @@ The College Management App is a comprehensive application designed to simplify a
 
 Provide instructions on how to install and run your College Management App. Include any dependencies and setup steps.
 
-## Usage
-
-Explain how to use the app with examples or screenshots. Walk users through the various features and functionalities.
-
-## Contributing
-
-If you want others to contribute to your project, provide guidelines on how they can do so, including the process for submitting pull requests.
-
-## License
-
-This project is licensed under the XYZ License. See the [LICENSE](LICENSE) file for details.
-
 ## Contact
 
-Include contact information for questions or support related to your app.
+Gmail - harshitgoswami103@gmail.com
