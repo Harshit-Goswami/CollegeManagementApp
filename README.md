@@ -1,8 +1,20 @@
 # College Management App
 
 The College Management App is a comprehensive application designed to simplify administrative and academic tasks within a college or educational institution. It offers features including attendance management, event management, class management, admin control, student login, teacher login, and much more.
-# Screenshots
-<img src="CollegeApp/ScreenRecord/student_ui.gif" alt="Image 1" width="200" height="150">
+# Screens
+### Student ui
+
+<img src="ScreenRecords/student_ui.gif" alt="Image 1" width="300" height="450">
+
+### Teacher ui
+
+<img src="ScreenRecords/teacher_ui.gif" alt="Image 2" width="300" height="450">
+
+### Admin ui
+<img src="ScreenRecords/admin_ui.gif" alt="Image 1" width="300" height="450">
+
+### Other User ui
+<img src="ScreenRecords/other_ui.gif" alt="Image 1" width="300" height="450">
 
 ## Features
 
