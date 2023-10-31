@@ -4,29 +4,36 @@ The College Management App is a comprehensive application designed to simplify a
 # Screenshots
 <table>
 <tr>
-<td><img src="ScreenRecords/Screenshot_loginAs.png" width="290" height="450"></td>
-<td><img src="ScreenRecords/Screenshot_LoginScreen.png"  width="290" height="450"></td>
+<td><img src="Screenshots/Screenshot_loginAs.png" width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_LoginScreen.png"  width="290" height="450"></td>
 </tr>
 </table>
 
 ### Student
 <table>
 <tr>
-<td><img src="ScreenRecords/Screenshot_Student&Other_homePage.png"  width="290" height="450"></td>
-<td><img src="ScreenRecords/navigationDrawer.png"  width="290" height="450">
-<td><img src="ScreenRecords/Screenshot_student_attendance.png"  width="290" height="450"></td>
-<td><img src="ScreenRecords/Screenshot_student_notice.png"  width="290" height="450"></td>
-<td><img src="ScreenRecords/Screenshot_studentEvents.png"  width="290" height="450"></td>
-<td><img src="ScreenRecords/Screenshot_student_classRoom.png"  width="290" height="450"></td>
-<td><img src="ScreenRecords/Screenshot_student_attendance.png"  width="290" height="450"></td>
-<td><img src="ScreenRecords/Screenshot_about.png"  width="290" height="450"></td>
+<td><img src="Screenshots/home.gif"  width="290" height="450">
+<td><img src="Screenshots/Screenshot_navigationDrawer.png"  width="290" height="450">
+<td><img src="Screenshots/Screenshot_student_attendance.png"  width="290" height="450"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_student_notice.png"  width="290" height="450"></td>
+<td><img src="Screenshots/Screenshot_student_classRoom.png"  width="290" height="450"></td>
+<td><img src="Screenshots/Screenshot_takeAttendance.png"  width="290" height="450"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_studentEvents.png"  width="290" height="450"></td>
+<td><img src="Screenshots/about.gif"  width="290" height="450"></td>
 </tr>
 </table>
 
 ### Teacher
 
 ### Admin
-
 
 ## Features
 
