@@ -12,28 +12,70 @@ The College Management App is a comprehensive application designed to simplify a
 ### Student
 <table>
 <tr>
-<td><img src="Screenshots/home.gif"  width="290" height="450">
-<td><img src="Screenshots/Screenshot_navigationDrawer.png"  width="290" height="450">
-<td><img src="Screenshots/Screenshot_student_attendance.png"  width="290" height="450"></td>
+<td><img src="Screenshots/home.gif" alt="HomeActivity.gif" width="250" height="450">
+<td><img src="Screenshots/Screenshot_navigationDrawer.png"  width="250" height="450">
+<td><img src="Screenshots/Screenshot_student_attendance.png"  width="250" height="450"></td>
 </tr>
 </table>
 <table>
 <tr>
-<td><img src="Screenshots/Screenshot_student_notice.png"  width="290" height="450"></td>
-<td><img src="Screenshots/Screenshot_student_classRoom.png"  width="290" height="450"></td>
-<td><img src="Screenshots/Screenshot_takeAttendance.png"  width="290" height="450"></td>
+<td><img src="Screenshots/Screenshot_student_notice.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_student_classRoom.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_takeAttendance.png"  width="250" height="450"></td>
 </tr>
 </table>
 <table>
 <tr>
-<td><img src="Screenshots/Screenshot_studentEvents.png"  width="290" height="450"></td>
-<td><img src="Screenshots/about.gif"  width="290" height="450"></td>
+<td><img src="Screenshots/Screenshot_studentEvents.png"  width="250" height="450"></td>
+<td><img src="Screenshots/about.gif" alt="AboutActivity.gif" width="250" height="450"></td>
 </tr>
 </table>
 
 ### Teacher
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_HOD_screen.png" alt="HomeActivity.gif" width="250" height="450">
+<td><img src="Screenshots/Screenshot_manageClass.png"  width="250" height="450">
+<td><img src="Screenshots/Screenshot_AddClass.png"  width="250" height="450"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_addSubject.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_deleteSubject.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_deleteClass.png"  width="250" height="450"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_Add_deleteEvent.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_addCR.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_teacherViewAttendance.png"  width="250" height="450"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_teacherViewAttendance.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_teacherAddDeleteAssignment.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_teacherAddDeleteAssignment.png"  width="250" height="450"></td>
+</tr>
+</table>
 
 ### Admin
+<table>
+<tr>
+<td><img src="Screenshots/admin_screen.png" alt="HomeActivity.gif" width="250" height="450">
+<td><img src="Screenshots/Screenshot_Admin_addDeleteNotice.png"  width="250" height="450">
+<td><img src="Screenshots/Screenshot_Admin_UploadImage.png"  width="250" height="450"></td>
+</tr>
+</table>
+<table>
+<tr>
+<td><img src="Screenshots/Screenshot_adminAddStudent.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_AdminAllStudent.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_admin_addTeacher.png"  width="250" height="450"></td>
+</tr>
+</table>
 
 ## Features
 
