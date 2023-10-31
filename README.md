@@ -5,7 +5,7 @@ The College Management App is a comprehensive application designed to simplify a
 <table>
 <tr>
 <td><img src="Screenshots/Screenshot_loginAs.png" width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_LoginScreen.png"  width="290" height="450"></td>
+<td><img src="Screenshots/Screenshot_LoginScreen.png"  width="250" height="450"></td>
 </tr>
 </table>
 
@@ -55,8 +55,7 @@ The College Management App is a comprehensive application designed to simplify a
 </table>
 <table>
 <tr>
-<td><img src="Screenshots/Screenshot_teacher_AddDeleteAssignment.png"  width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_teacher_AddDeleteAssignment.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_teacher_addDeleteAssignment.png"  width="250" height="450"></td>
 </tr>
 </table>
 
@@ -70,8 +69,8 @@ The College Management App is a comprehensive application designed to simplify a
 </table>
 <table>
 <tr>
-<td><img src="Screenshots/Screenshot_adminAllStudents.png"  width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_AdminAddStudent.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_AdminAllStudent.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_AdminAddStudents.png"  width="250" height="450"></td>
 <td><img src="Screenshots/Screenshot_admin_addTeacher.png"  width="250" height="450"></td>
 </tr>
 </table>
