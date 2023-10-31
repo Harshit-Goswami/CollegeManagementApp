@@ -70,8 +70,8 @@ The College Management App is a comprehensive application designed to simplify a
 <table>
 <tr>
 <td><img src="Screenshots/Screenshot_AdminAllStudent.png"  width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_AdminAddStudents.png"  width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_admin_addTeacher.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_AdminAddStudent.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_admin_teachers.png"  width="250" height="450"></td>
 </tr>
 </table>
 
