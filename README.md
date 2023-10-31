@@ -1,18 +1,32 @@
 # College Management App
 
 The College Management App is a comprehensive application designed to simplify administrative and academic tasks within a college or educational institution. It offers features including attendance management, event management, class management, admin control, student login, teacher login, and much more.
-# Screens
-### Student UI
-<img src="ScreenRecords/student_ui.gif" alt="Image 1" width="300" height="450">
+# Screenshots
+<table>
+<tr>
+<td><img src="ScreenRecords/Screenshot_loginAs.png" width="290" height="450"></td>
+<td><img src="ScreenRecords/Screenshot_LoginScreen.png"  width="290" height="450"></td>
+</tr>
+</table>
 
-### Teacher UI
-<img src="ScreenRecords/teacher_ui.gif" alt="Image 2" width="300" height="450">
+### Student
+<table>
+<tr>
+<td><img src="ScreenRecords/Screenshot_Student&Other_homePage.png"  width="290" height="450"></td>
+<td><img src="ScreenRecords/navigationDrawer.png"  width="290" height="450">
+<td><img src="ScreenRecords/Screenshot_student_attendance.png"  width="290" height="450"></td>
+<td><img src="ScreenRecords/Screenshot_student_notice.png"  width="290" height="450"></td>
+<td><img src="ScreenRecords/Screenshot_studentEvents.png"  width="290" height="450"></td>
+<td><img src="ScreenRecords/Screenshot_student_classRoom.png"  width="290" height="450"></td>
+<td><img src="ScreenRecords/Screenshot_student_attendance.png"  width="290" height="450"></td>
+<td><img src="ScreenRecords/Screenshot_about.png"  width="290" height="450"></td>
+</tr>
+</table>
 
-### Admin UI
-<img src="ScreenRecords/admin_ui.gif" alt="Image 1" width="300" height="450">
+### Teacher
 
-### Other User UI
-<img src="ScreenRecords/other_ui.gif" alt="Image 1" width="300" height="450">
+### Admin
+
 
 ## Features
 
