@@ -55,24 +55,23 @@ The College Management App is a comprehensive application designed to simplify a
 </table>
 <table>
 <tr>
-<td><img src="Screenshots/Screenshot_teacherViewAttendance.png"  width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_teacherAddDeleteAssignment.png"  width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_teacherAddDeleteAssignment.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_teacher_AddDeleteAssignment.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_teacher_AddDeleteAssignment.png"  width="250" height="450"></td>
 </tr>
 </table>
 
 ### Admin
 <table>
 <tr>
-<td><img src="Screenshots/admin_screen.png" alt="HomeActivity.gif" width="250" height="450">
-<td><img src="Screenshots/Screenshot_Admin_addDeleteNotice.png"  width="250" height="450">
+<td><img src="Screenshots/Screenshot_admin_screen.png" width="250" height="450">
+<td><img src="Screenshots/Screenshot_Admin_AddDeleteNotice.png"  width="250" height="450">
 <td><img src="Screenshots/Screenshot_Admin_UploadImage.png"  width="250" height="450"></td>
 </tr>
 </table>
 <table>
 <tr>
-<td><img src="Screenshots/Screenshot_adminAddStudent.png"  width="250" height="450"></td>
-<td><img src="Screenshots/Screenshot_AdminAllStudent.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_adminAllStudents.png"  width="250" height="450"></td>
+<td><img src="Screenshots/Screenshot_AdminAddStudent.png"  width="250" height="450"></td>
 <td><img src="Screenshots/Screenshot_admin_addTeacher.png"  width="250" height="450"></td>
 </tr>
 </table>
