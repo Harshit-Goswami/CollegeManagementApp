@@ -81,3 +81,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 }
+//
+// some changes and bug fix
+//
