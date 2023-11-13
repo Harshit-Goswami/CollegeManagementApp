@@ -1,7 +1,6 @@
 package com.harshit.goswami.collegeapp.student
 
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.harshit.goswami.collegeapp.R
@@ -34,104 +33,49 @@ class MainActivity : AppCompatActivity() {
         }
         val homeFrag = supportFragmentManager.beginTransaction()
         homeFrag.replace(R.id.fragment_container, HomeFragment()).commit()
-        mainBinding.textViewHome.setTextColor(Color.parseColor("#FF6F00"))
-        mainBinding.imageViewHome.setColorFilter(Color.parseColor("#FF6F00"))
-        navButtonListeners()
-    }
+        mainBinding.bottomNavigationView.menu.getItem(0).isChecked = true
 
-    private fun navButtonListeners() {
-        mainBinding.MAABHome.setOnClickListener {
-            val homeFrag = supportFragmentManager.beginTransaction()
-            homeFrag.replace(R.id.fragment_container, HomeFragment()).commit()
+        mainBinding.bottomNavigationView.setOnItemSelectedListener {
+            when (it.itemId) {
+                R.id.menu_home -> {
+                    val homeFrag = supportFragmentManager.beginTransaction()
+                    homeFrag.replace(R.id.fragment_container, HomeFragment()).commit()
+                }
 
-            mainBinding.textViewHome.setTextColor(Color.parseColor("#FF6F00"))
-            mainBinding.imageViewHome.setColorFilter(Color.parseColor("#FF6F00"))
+                R.id.menu_notice -> {
+                    val homeFrag = supportFragmentManager.beginTransaction()
+                    homeFrag.replace(R.id.fragment_container, NoticeFragment()).commit()
+                }
 
-            mainBinding.textViewMyclass.setTextColor(Color.BLACK)
-            mainBinding.textViewNotice.setTextColor(Color.BLACK)
-            mainBinding.imageViewNotice.setColorFilter(Color.BLACK)
-            mainBinding.textViewEvent.setTextColor(Color.BLACK)
-            mainBinding.imageViewEvent.setColorFilter(Color.BLACK)
-            mainBinding.textViewAbout.setTextColor(Color.BLACK)
-            mainBinding.imageViewAbout.setColorFilter(Color.BLACK)
+                R.id.menu_event -> {
+                    val homeFrag = supportFragmentManager.beginTransaction()
+                    homeFrag.replace(R.id.fragment_container, EventFragment()).commit()
+                }
 
-        }
-        mainBinding.MAABNotice.setOnClickListener {
-            val homeFrag = supportFragmentManager.beginTransaction()
-            homeFrag.replace(R.id.fragment_container, NoticeFragment()).commit()
-
-            mainBinding.textViewNotice.setTextColor(Color.parseColor("#FF6F00"))
-            mainBinding.imageViewNotice.setColorFilter(Color.parseColor("#FF6F00"))
-
-            mainBinding.textViewMyclass.setTextColor(Color.BLACK)
-            mainBinding.textViewHome.setTextColor(Color.BLACK)
-            mainBinding.imageViewHome.setColorFilter(Color.BLACK)
-            mainBinding.textViewEvent.setTextColor(Color.BLACK)
-            mainBinding.imageViewEvent.setColorFilter(Color.BLACK)
-            mainBinding.textViewAbout.setTextColor(Color.BLACK)
-            mainBinding.imageViewAbout.setColorFilter(Color.BLACK)
+                R.id.menu_about -> {
+                    val homeFrag = supportFragmentManager.beginTransaction()
+                    homeFrag.replace(R.id.fragment_container, AboutCollegeFragment()).commit()
+                }
+            }
+            return@setOnItemSelectedListener true
         }
         mainBinding.MAABMyclass.setOnClickListener {
             val homeFrag = supportFragmentManager.beginTransaction()
             homeFrag.replace(R.id.fragment_container, MyClassFragment()).commit()
 
-            mainBinding.textViewMyclass.setTextColor(Color.parseColor("#FF6F00"))
 
-            mainBinding.imageViewHome.setColorFilter(Color.BLACK)
-            mainBinding.textViewHome.setTextColor(Color.BLACK)
-            mainBinding.textViewNotice.setTextColor(Color.BLACK)
-            mainBinding.imageViewNotice.setColorFilter(Color.BLACK)
-            mainBinding.textViewEvent.setTextColor(Color.BLACK)
-            mainBinding.imageViewEvent.setColorFilter(Color.BLACK)
-            mainBinding.textViewAbout.setTextColor(Color.BLACK)
-            mainBinding.imageViewAbout.setColorFilter(Color.BLACK)
-        }
-        mainBinding.MAABEvent.setOnClickListener {
-            val homeFrag = supportFragmentManager.beginTransaction()
-            homeFrag.replace(R.id.fragment_container, EventFragment()).commit()
-            mainBinding.textViewEvent.setTextColor(Color.parseColor("#FF6F00"))
-            mainBinding.imageViewEvent.setColorFilter(Color.parseColor("#FF6F00"))
-
-            mainBinding.textViewMyclass.setTextColor(Color.BLACK)
-            mainBinding.textViewNotice.setTextColor(Color.BLACK)
-            mainBinding.imageViewNotice.setColorFilter(Color.BLACK)
-            mainBinding.textViewHome.setTextColor(Color.BLACK)
-            mainBinding.imageViewHome.setColorFilter(Color.BLACK)
-            mainBinding.textViewAbout.setTextColor(Color.BLACK)
-            mainBinding.imageViewAbout.setColorFilter(Color.BLACK)
-        }
-        mainBinding.MAABAbout.setOnClickListener {
-            val homeFrag = supportFragmentManager.beginTransaction()
-            homeFrag.replace(R.id.fragment_container, AboutCollegeFragment()).commit()
-            mainBinding.textViewAbout.setTextColor(Color.parseColor("#FF6F00"))
-            mainBinding.imageViewAbout.setColorFilter(Color.parseColor("#FF6F00"))
-
-            mainBinding.textViewMyclass.setTextColor(Color.BLACK)
-            mainBinding.textViewNotice.setTextColor(Color.BLACK)
-            mainBinding.imageViewNotice.setColorFilter(Color.BLACK)
-            mainBinding.textViewEvent.setTextColor(Color.BLACK)
-            mainBinding.imageViewEvent.setColorFilter(Color.BLACK)
-            mainBinding.textViewHome.setTextColor(Color.BLACK)
-            mainBinding.imageViewHome.setColorFilter(Color.BLACK)
         }
     }
 
+
     override fun onBackPressed() {
-        if (mainBinding.textViewHome.currentTextColor != Color.parseColor("#FF6F00")) {
+        if (mainBinding.bottomNavigationView.menu.getItem(0).isChecked) {
+            super.onBackPressed()
+        } else {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, HomeFragment()).commit()
-            mainBinding.textViewHome.setTextColor(Color.parseColor("#FF6F00"))
-            mainBinding.imageViewHome.setColorFilter(Color.parseColor("#FF6F00"))
+            mainBinding.bottomNavigationView.menu.getItem(0).isChecked = true
 
-            mainBinding.textViewMyclass.setTextColor(Color.BLACK)
-            mainBinding.textViewNotice.setTextColor(Color.BLACK)
-            mainBinding.imageViewNotice.setColorFilter(Color.BLACK)
-            mainBinding.textViewEvent.setTextColor(Color.BLACK)
-            mainBinding.imageViewEvent.setColorFilter(Color.BLACK)
-            mainBinding.textViewAbout.setTextColor(Color.BLACK)
-            mainBinding.imageViewAbout.setColorFilter(Color.BLACK)
-        } else if (mainBinding.textViewHome.currentTextColor == Color.parseColor("#FF6F00")) {
-            super.onBackPressed()
         }
 
 
