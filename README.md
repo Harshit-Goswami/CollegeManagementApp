@@ -86,6 +86,13 @@ much more.
 ## Installation
 
 [https://github.com/Harshit-Goswami/CollegeManagementApp/blob/master/Screenshots/app-debug.apk](https://github.com/Harshit-Goswami/CollegeManagementApp/blob/master/Screenshots/app-debug.apk)
+
+               Student Login:-
+        department:"BScIT"   
+        username:"student1"   
+        password:"abcd@h"
+
+
 ## Contact
 
 Gmail - harshitgoswami103@gmail.com
